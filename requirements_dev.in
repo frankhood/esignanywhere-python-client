@@ -1,0 +1,17 @@
+invoke
+twine<3.5
+wheel
+zest.releaser
+bumpversion
+pre-commit
+coverage<6.3
+tox<3.24.5
+pip-tools~=5.5.0
+pydantic~=1.9.0
+importlib-metadata<4.1
+filelock<3.4.2
+identify<2.4.5
+keyring<23.4.2
+platformdirs<2.4.0
+rfc3986<1.5.1
+zipp<3.6.1

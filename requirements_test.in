@@ -1,0 +1,10 @@
+-r requirements_dev.in
+
+coverage
+mock
+flake8<4.0.2
+tox
+codecov
+
+
+# Additional test requirements go here
