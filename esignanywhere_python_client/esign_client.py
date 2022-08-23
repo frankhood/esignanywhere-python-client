@@ -41,7 +41,7 @@ class ESignAnyWhereClient(object):
             _request_headers.update({"Content-Type": "application/json"})
         return _request_headers
 
-    def _handle_response_errors(self, service_url, response, request_data=dict):
+    def _handle_response_errors(self, service_url, response, request_data: str = ""):
         if response.status_code == 401:
             raise ESawUnauthorizedRequest(
                 message=response.text
@@ -97,19 +97,18 @@ class ESignAnyWhereClient(object):
         :return: HTTP_200_OK
         """
         service_url = self.api_uri + version + "/authorization"
-        request_data = {}
         response = requests.get(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, data={}, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(f"Response from service_url : {service_url}: {response.text}")
             return response.text
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url, response=response, request_data=""
             )
 
-    def upload_file(self, file_path, version="v4.0"):
+    def upload_file(self, resource_to_upload, version="v4.0"):
         """
         Upload a file for further processing/using. Content-Type must be multipart/form-data.
 
@@ -117,13 +116,23 @@ class ESignAnyWhereClient(object):
         :return: UploadSspFileResult
         """
         service_url = self.api_uri + version + "/sspfile/uploadtemporary"
-        with open(file_path, "rb") as file_content:
+
+        if isinstance(resource_to_upload, str):
+            file_content = open(resource_to_upload, "rb")
             request_data = {"File": file_content}
-            response = requests.post(
-                url=service_url,  # https://demo.esignanywhere.net
-                files=request_data,
-                headers=self._get_request_headers(is_json=False),
+        else:
+            file_content = None
+            request_data = {"File": resource_to_upload}
+
+        response = requests.post(
+            url=service_url,  # https://demo.esignanywhere.net
+            files=request_data,
+            headers=self._get_request_headers(is_json=False),
             )
+
+        if file_content:
+            file_content.close()
+
         if response.status_code == 200:
             logger.info(f"Response from service_url : {service_url}: {response.json()}")
             response_data = response.json()
