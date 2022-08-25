@@ -41,7 +41,7 @@ class ESignAnyWhereClient(object):
             _request_headers.update({"Content-Type": "application/json"})
         return _request_headers
 
-    def _handle_response_errors(self, service_url, response, request_data: str = ""):
+    def _handle_response_errors(self, service_url, response, request_data: dict):
         if response.status_code == 401:
             raise ESawUnauthorizedRequest(
                 message=response.text
@@ -105,7 +105,7 @@ class ESignAnyWhereClient(object):
             return response.text
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=""
+                service_url, response=response, request_data={}
             )
 
     def upload_file(self, resource_to_upload, version="v4.0"):
@@ -116,39 +116,45 @@ class ESignAnyWhereClient(object):
         :return: UploadSspFileResult
         """
         service_url = self.api_uri + version + "/sspfile/uploadtemporary"
+        file_content = None
+        try:
+            if isinstance(resource_to_upload, str):
+                file_content = open(resource_to_upload, "rb")
+                request_data = {"File": file_content}
+            else:
 
-        if isinstance(resource_to_upload, str):
-            file_content = open(resource_to_upload, "rb")
-            request_data = {"File": file_content}
-        else:
-            file_content = None
-            request_data = {"File": resource_to_upload}
+                request_data = {"File": resource_to_upload}
 
-        response = requests.post(
-            url=service_url,  # https://demo.esignanywhere.net
-            files=request_data,
-            headers=self._get_request_headers(is_json=False),
-            )
-
-        if file_content:
-            file_content.close()
-
-        if response.status_code == 200:
-            logger.info(f"Response from service_url : {service_url}: {response.json()}")
-            response_data = response.json()
-            if "SspFileId" not in response_data.keys():
-                raise ESawUnexpectedResponse(
-                    message='Response has no attribute "SspFileId"',
-                    status_code=response.status_code,
-                    service_url=service_url,
-                    request_data=request_data,
-                    response_data=response_data,
+            response = requests.post(
+                url=service_url,  # https://demo.esignanywhere.net
+                files=request_data,
+                headers=self._get_request_headers(is_json=False),
                 )
-            return models.UploadSspFileResult(**response_data)
-        else:
-            self._handle_response_errors(
-                service_url, response=response, request_data=request_data
-            )
+
+            if response.status_code == 200:
+                logger.info(f"Response from service_url : {service_url}: {response.json()}")
+                response_data = response.json()
+                if "SspFileId" not in response_data.keys():
+                    raise ESawUnexpectedResponse(
+                        message='Response has no attribute "SspFileId"',
+                        status_code=response.status_code,
+                        service_url=service_url,
+                        request_data=request_data,
+                        response_data=response_data,
+                    )
+                return models.UploadSspFileResult(**response_data)
+            else:
+                self._handle_response_errors(
+                    service_url, response=response, request_data=request_data
+                )
+
+        finally:
+            try:
+                if file_content:
+                    file_content.close()
+            except Exception:
+                logger.exception("Unable to close file in upload_file method of Esign client")
+
 
     def create_and_send_envelope(
         self, envelope_data: models.EnvelopeSendModel, version="v4.0"
@@ -375,7 +381,7 @@ class ESignAnyWhereClient(object):
             return models.CreateDraftResult(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url, response=response, request_data=request_data.dict()
             )
 
     def create_envelope_from_template(
@@ -403,7 +409,7 @@ class ESignAnyWhereClient(object):
             return models.CreateDraftResult(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url, response=response, request_data=request_data.dict()
             )
 
     def find_envelope(self, descriptors: models.FindEnvelopesDescriptor, version="v4"):
@@ -482,7 +488,7 @@ class ESignAnyWhereClient(object):
             return models.PrepareSendEnvelopeStepsResult(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url, response=response, request_data=request_data.dict()
             )
 
     def restart_envelope_expiration_days(
