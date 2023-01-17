@@ -58,7 +58,7 @@ class ESignAnyWhereClient(object):
                 error_id = response.json().get("ErrorId", "")
                 support_id = response.json().get("SupportId", "")
                 if error_id:
-                    error_message = f"ErrorId: {error_id} [SupportID: {support_id}]"
+                    error_message = f"{response.text} [ErrorId: {error_id} SupportID: {support_id}]"
             raise ESawErrorResponse(
                 message=error_message,
                 status_code=response.status_code,
