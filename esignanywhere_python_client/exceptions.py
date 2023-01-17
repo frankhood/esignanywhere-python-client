@@ -24,8 +24,8 @@ class ESawUnexpectedResponse(BaseAPIESawErrorResponse):
         return (
             f"Unexpected Response from url {self.service_url}: {self.message}\n"
             f"status_code : {self.status_code}\n"
-            f"request_data : {self.request_data}\n"
-            f"response_data : {self.response_data}"
+            f"response_data : {self.response_data}\n"
+            f"request_data : {self.request_data}"
         )
 
 
@@ -34,6 +34,6 @@ class ESawErrorResponse(BaseAPIESawErrorResponse):
         return (
             f"Error Response from url {self.service_url}: {self.message}\n"
             f"status_code : {self.status_code}\n"
-            f"request_data : {self.request_data}\n"
-            f"response_data : {self.response_data}"
+            f"response_data : {self.response_data}\n"
+            f"request_data : {self.request_data}"
         )
