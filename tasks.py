@@ -53,7 +53,7 @@ def docs(c):
     c.run("sphinx-apidoc -o docs/ esignanywhere_python_client")
 
     c.run("sphinx-build -E -b html docs docs/_build")
-    open_browser(path='docs/_build/html/index.html')
+    open_browser(path="docs/_build/html/index.html")
 
 
 @task
@@ -61,6 +61,7 @@ def pip(c):
     c.run("pip install -q -U pip~=20.3.0 pip-tools~=5.5.0")
     c.run("pip-compile -q -U -o requirements_dev.txt requirements_dev.in")
     c.run("pip-compile -q -U -o requirements_test.txt requirements_test.in")
+
 
 @task
 def test_all(c):
@@ -95,21 +96,26 @@ def lint(c):
     c.run("flake8 esignanywhere-python-client tests")
 
 
-@task(help={'bumpsize': 'Bump either for a "feature" or "breaking" change'})
-def release(c, bumpsize=''):
+@task(help={"bumpsize": 'Bump either for a "feature" or "breaking" change'})
+def release(c, bumpsize=""):
     """
     Package and upload a release
     """
     clean(c)
     if bumpsize:
-        bumpsize = '--' + bumpsize
+        bumpsize = "--" + bumpsize
 
-    c.run("bumpversion {bump} --no-input".format(bump=bumpsize))
+    c.run(f"bumpversion {bumpsize} --no-input")
 
     import esignanywhere_python_client
+
     c.run("python setup.py sdist bdist_wheel")
     c.run("twine upload dist/*")
 
-    c.run('git tag -a {version} -m "New version: {version}"'.format(version=esignanywhere_python_client.__version__))
+    c.run(
+        'git tag -a {version} -m "New version: {version}"'.format(
+            version=esignanywhere_python_client.__version__
+        )
+    )
     c.run("git push --tags")
     c.run("git push origin master")

@@ -2,18 +2,14 @@ import logging
 
 import requests
 
+from . import exceptions
 from . import pydantic_models as models
-from .exceptions import (
-    ESawErrorResponse,
-    ESawUnauthorizedRequest,
-    ESawUnexpectedResponse,
-)
 from .pydantic_models import SendEnvelopeResult
 
 logger = logging.getLogger(__name__)
 
 
-class ESignAnyWhereClient(object):
+class ESignAnyWhereClient:
     """Base class client for eSignAnyWhere V5."""
 
     def __init__(self, api_token, api_domain=None, is_test_env=True):
@@ -43,7 +39,7 @@ class ESignAnyWhereClient(object):
 
     def _handle_response_errors(self, service_url, response, request_data: dict):
         if response.status_code == 401:
-            raise ESawUnauthorizedRequest(
+            raise exceptions.ESawUnauthorizedRequest(
                 message=response.text
                 and response.json().get("Message")
                 or f"Error with code {response.status_code}",
@@ -58,8 +54,10 @@ class ESignAnyWhereClient(object):
                 error_id = response.json().get("ErrorId", "")
                 support_id = response.json().get("SupportId", "")
                 if error_id:
-                    error_message = f"{response.text} [ErrorId: {error_id} SupportID: {support_id}]"
-            raise ESawErrorResponse(
+                    error_message = (
+                        f"{response.text} [ErrorId: {error_id} SupportID: {support_id}]"
+                    )
+            raise exceptions.ESawErrorResponse(
                 message=error_message,
                 status_code=response.status_code,
                 service_url=service_url,
@@ -129,13 +127,15 @@ class ESignAnyWhereClient(object):
                 url=service_url,  # https://demo.esignanywhere.net
                 files=request_data,
                 headers=self._get_request_headers(is_json=False),
-                )
+            )
 
             if response.status_code == 200:
-                logger.info(f"Response from service_url : {service_url}: {response.json()}")
+                logger.info(
+                    f"Response from service_url : {service_url}: {response.json()}"
+                )
                 response_data = response.json()
                 if "SspFileId" not in response_data.keys():
-                    raise ESawUnexpectedResponse(
+                    raise exceptions.ESawUnexpectedResponse(
                         message='Response has no attribute "SspFileId"',
                         status_code=response.status_code,
                         service_url=service_url,
@@ -153,10 +153,11 @@ class ESignAnyWhereClient(object):
                 if file_content:
                     file_content.close()
             except Exception:
-                logger.exception("Unable to close file in upload_file method of Esign client")
+                logger.exception(
+                    "Unable to close file in upload_file method of Esign client"
+                )
 
-
-    def create_and_send_envelope(
+    def create_and_send_envelope(  # type:ignore
         self, envelope_data: models.EnvelopeSendModel, version="v4.0"
     ) -> SendEnvelopeResult:
         """
@@ -176,7 +177,7 @@ class ESignAnyWhereClient(object):
             logger.info(f"Response from service_url : {service_url}: {response.json()}")
             response_data = response.json()
             if "EnvelopeId" not in response_data.keys():
-                raise ESawUnexpectedResponse(
+                raise exceptions.ESawUnexpectedResponse(
                     message='Response has no attribute "EnvelopeId"',
                     status_code=response.status_code,
                     service_url=service_url,
@@ -198,7 +199,7 @@ class ESignAnyWhereClient(object):
         :return: Envelope
         """
         service_url = self.api_uri + version + f"/envelope/{envelope_id}"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -223,7 +224,7 @@ class ESignAnyWhereClient(object):
         service_url = (
             self.api_uri + version + f"/envelope/downloadCompletedDocument/{file_id}"
         )
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url,
             data=request_data,
@@ -247,7 +248,7 @@ class ESignAnyWhereClient(object):
         :return:
         """
         service_url = self.api_uri + version + f"/envelope/{envelope_id}/cancel/"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -270,7 +271,7 @@ class ESignAnyWhereClient(object):
         :return:
         """
         service_url = self.api_uri + version + f"/envelope/{envelope_id}/"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.delete(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -297,7 +298,7 @@ class ESignAnyWhereClient(object):
             + version
             + f"/envelope/downloadCompletedDocument/{document_id}"
         )
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url,
             data=request_data,
@@ -322,7 +323,7 @@ class ESignAnyWhereClient(object):
         :return User
         """
         service_url = self.api_uri + version + f"/user/{email}"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url,
             data=request_data,
@@ -421,7 +422,7 @@ class ESignAnyWhereClient(object):
         :return: list of Envelope:
         """
         service_url = self.api_uri + version + "/envelope/find"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -453,7 +454,7 @@ class ESignAnyWhereClient(object):
             + version
             + f"/envelope/{envelope_id}/downloadPageImage/{doc_ref_number}/{page_number}"
         )
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url,
             data=request_data,
@@ -507,7 +508,7 @@ class ESignAnyWhereClient(object):
             + version
             + f"/envelope/{envelope_id}/restart/{expiration_in_days}"
         )
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -563,7 +564,7 @@ class ESignAnyWhereClient(object):
             }
         """
         service_url = self.api_uri + version + f"/envelope/{envelope_id}/remind"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -589,7 +590,7 @@ class ESignAnyWhereClient(object):
         service_url = (
             self.api_uri + version + f"/envelope/{template_id}/copyFromTemplate"
         )
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -613,7 +614,7 @@ class ESignAnyWhereClient(object):
         :return:
         """
         service_url = self.api_uri + version + f"/envelope/{envelope_id}/unlock"
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -666,7 +667,7 @@ class ESignAnyWhereClient(object):
             + version
             + f"/recipient/{recipient_id}/fromEnvelope/{envelope_id}"
         )
-        request_data = {}
+        request_data = {}  # type:ignore
         response = requests.delete(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )

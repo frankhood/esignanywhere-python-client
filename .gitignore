@@ -49,4 +49,4 @@ docs/_build
 
 .coverage
 .tox
-.python-version
+db.sqlite3

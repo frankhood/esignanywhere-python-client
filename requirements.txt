@@ -1,3 +1,4 @@
 
-pydantic~=1.9.0
-requests~=2.26.0
+django>=3.2
+pydantic>=1.9.0
+requests>=2.26.0
