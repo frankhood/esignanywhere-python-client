@@ -8,11 +8,11 @@ from enum import Enum
 from typing import Any, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 
-class Model(BaseModel):
-    __root__: Any
+class Model(RootModel):
+    root: Any
 
 
 class RedirectPolicy(Enum):
