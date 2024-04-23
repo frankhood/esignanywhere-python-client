@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field, RootModel
 
 
 class Model(RootModel):
-    pass
+    root: Any
 
 
 class RedirectPolicy(Enum):
