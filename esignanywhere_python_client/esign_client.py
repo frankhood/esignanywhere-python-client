@@ -1,10 +1,11 @@
 import logging
+from io import BufferedReader
+from typing import Union
 
 import requests
 
 from . import exceptions
-from . import pydantic_models as models
-from .pydantic_models import SendEnvelopeResult
+from .models import models_v5, models_v6
 
 logger = logging.getLogger(__name__)
 
@@ -106,14 +107,24 @@ class ESignAnyWhereClient:
                 service_url, response=response, request_data={}
             )
 
-    def upload_file(self, resource_to_upload, version="v4.0"):
+    def upload_file(
+        self,
+        resource_to_upload: Union[str, BufferedReader],
+        version="v6",
+    ):
         """
         Upload a file for further processing/using. Content-Type must be multipart/form-data.
 
         :param file: file full_path
-        :return: UploadSspFileResult
+        :return: models_v6.FileUploadResponse
         """
-        service_url = self.api_uri + version + "/sspfile/uploadtemporary"
+        if version == "v6":
+            service_url = self.api_uri + "v6/file/upload"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
         file_content = None
         try:
             if isinstance(resource_to_upload, str):
@@ -134,15 +145,7 @@ class ESignAnyWhereClient:
                     f"Response from service_url : {service_url}: {response.json()}"
                 )
                 response_data = response.json()
-                if "SspFileId" not in response_data.keys():
-                    raise exceptions.ESawUnexpectedResponse(
-                        message='Response has no attribute "SspFileId"',
-                        status_code=response.status_code,
-                        service_url=service_url,
-                        request_data=request_data,
-                        response_data=response_data,
-                    )
-                return models.UploadSspFileResult(**response_data)
+                return models_v6.FileUploadResponse(**response_data)
             else:
                 self._handle_response_errors(
                     service_url, response=response, request_data=request_data
@@ -157,17 +160,25 @@ class ESignAnyWhereClient:
                     "Unable to close file in upload_file method of Esign client"
                 )
 
-    def create_and_send_envelope(  # type:ignore
-        self, envelope_data: models.EnvelopeSendModel, version="v4.0"
-    ) -> SendEnvelopeResult:
+    def create_and_send_envelope(
+        self,
+        envelope_data: models_v6.EnvelopeSendRequest,
+        version="v6",
+    ):
         """
         Create and directly sends a new envelope.
 
-        :param models.EnvelopeSendModel
+        :param models_v6.EnvelopeSendRequest
         :param version: string for api version
-        :return: Envelope
+        :return: models_v6.EnvelopeSendResponse
         """
-        service_url = self.api_uri + version + "/envelope/send"
+        if version == "v6":
+            service_url = self.api_uri + "v6/envelope/send"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
         request_data = envelope_data.json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
@@ -184,21 +195,66 @@ class ESignAnyWhereClient:
                     request_data=request_data,
                     response_data=response_data,
                 )
-            return models.SendEnvelopeResult(**response_data)
+            return models_v6.EnvelopeSendResponse(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
             )
 
-    def get_envelope(self, envelope_id: str, version="v4"):
+    def create_and_send_bulk_envelope(
+        self,
+        envelope_data: models_v6.EnvelopeBulkSendRequest,
+        version="v6",
+    ):
+        """
+        Create and directly sends a new envelope.
+
+        :param models_v6.EnvelopeBulkSendRequest
+        :param version: string for api version
+        :return: models_v6.EnvelopeBulkSendResponse
+        """
+        if version == "v6":
+            service_url = self.api_uri + "v6/envelopebulk/send"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = envelope_data.json()
+        response = requests.post(
+            url=service_url, data=request_data, headers=self._get_request_headers()
+        )
+        logger.debug(f"create_and_send_envelope Request : {request_data}")
+        if response.status_code == 200:
+            logger.info(f"Response from service_url : {service_url}: {response.json()}")
+            response_data = response.json()
+            return models_v6.EnvelopeBulkSendResponse(**response_data)
+        else:
+            self._handle_response_errors(
+                service_url, response=response, request_data=request_data
+            )
+
+    def get_envelope(
+        self,
+        envelope_id: str,
+        version="v6",
+    ):
         """
         Return an envelope for the given id.
 
         :param envelope_id: str
         :param version: string for api version
-        :return: Envelope
+        :return: models_v6.EnvelopeGetResponse for v6 or models_v5.EnvelopeStatus for v5
         """
-        service_url = self.api_uri + version + f"/envelope/{envelope_id}"
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/envelope/{envelope_id}"
+        elif version == "v5":
+            service_url = f"{self.api_uri}v5/envelope/{envelope_id}"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6", "v5"]
+            )
+
         request_data = {}  # type:ignore
         response = requests.get(
             url=service_url, data=request_data, headers=self._get_request_headers()
@@ -206,14 +262,184 @@ class ESignAnyWhereClient:
         if response.status_code == 200:
             logger.info(f"Response from service_url : {service_url}: {response.json()}")
             response_data = response.json()
-            envelope_status = models.EnvelopeStatus(**response_data)
+            if version == "v5":
+                envelope_status = models_v5.EnvelopeStatus(**response_data)
+            else:
+                envelope_status = models_v6.EnvelopeGetResponse(**response_data)
             return envelope_status
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
             )
 
-    def dowload_completed_document(self, file_id: str, version="v4"):
+    def get_envelope_configuration(
+        self,
+        envelope_id: str,
+        version="v6",
+    ):
+        """
+        Return an envelope configuration for the given id.
+
+        :param envelope_id: str
+        :param version: string for api version
+        :return: models_v6.EnvelopeGetConfigurationResponse
+        """
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/envelope/{envelope_id}/configuration"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = {}  # type:ignore
+        response = requests.get(
+            url=service_url, data=request_data, headers=self._get_request_headers()
+        )
+        if response.status_code == 200:
+            logger.info(f"Response from service_url : {service_url}: {response.json()}")
+            response_data = response.json()
+            envelope_status = models_v6.EnvelopeGetConfigurationResponse(
+                **response_data
+            )
+            return envelope_status
+        else:
+            self._handle_response_errors(
+                service_url, response=response, request_data=request_data
+            )
+
+    def get_envelope_files(
+        self,
+        envelope_id: str,
+        version="v6",
+    ):
+        """
+        Return an envelope files for the given id.
+
+        :param envelope_id: str
+        :param version: string for api version
+        :return: models_v6.EnvelopeGetFilesResponse
+        """
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/envelope/{envelope_id}/files"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = {}  # type:ignore
+        response = requests.get(
+            url=service_url, data=request_data, headers=self._get_request_headers()
+        )
+        if response.status_code == 200:
+            logger.info(f"Response from service_url : {service_url}: {response.json()}")
+            response_data = response.json()
+            envelope_status = models_v6.EnvelopeGetFilesResponse(**response_data)
+            return envelope_status
+        else:
+            self._handle_response_errors(
+                service_url, response=response, request_data=request_data
+            )
+
+    def get_envelope_viewer_links(
+        self,
+        envelope_id: str,
+        version="v6",
+    ):
+        """
+        Return an envelope viewer links for the given id.
+
+        :param envelope_id: str
+        :param version: string for api version
+        :return: models_v6.EnvelopeGetViewerLinksResponse
+        """
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/envelope/{envelope_id}/viewerlinks"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = {}  # type:ignore
+        response = requests.get(
+            url=service_url, data=request_data, headers=self._get_request_headers()
+        )
+        if response.status_code == 200:
+            logger.info(f"Response from service_url : {service_url}: {response.json()}")
+            response_data = response.json()
+            envelope_status = models_v6.EnvelopeGetViewerLinksResponse(**response_data)
+            return envelope_status
+        else:
+            self._handle_response_errors(
+                service_url, response=response, request_data=request_data
+            )
+
+    def get_envelope_history(
+        self,
+        envelope_id: str,
+        version="v6",
+    ):
+        """
+        Return an envelope event history for the given id.
+
+        :param envelope_id: str
+        :param version: string for api version
+        :return: models_v6.EnvelopeGetHistoryResponse
+        """
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/envelope/{envelope_id}/history"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = {}  # type:ignore
+        response = requests.get(
+            url=service_url, data=request_data, headers=self._get_request_headers()
+        )
+        if response.status_code == 200:
+            logger.info(f"Response from service_url : {service_url}: {response.json()}")
+            response_data = response.json()
+            envelope_status = models_v6.EnvelopeGetHistoryResponse(**response_data)
+            return envelope_status
+        else:
+            self._handle_response_errors(
+                service_url, response=response, request_data=request_data
+            )
+
+    def get_envelope_elements(
+        self,
+        envelope_id: str,
+        version="v6",
+    ):
+        """
+        Return the elements belonging to an envelope for the given id.
+
+        :param envelope_id: str
+        :param version: string for api version
+        :return: models_v6.EnvelopeGetElementsResponse
+        """
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/envelope/{envelope_id}/elements"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = {}  # type:ignore
+        response = requests.get(
+            url=service_url, data=request_data, headers=self._get_request_headers()
+        )
+        if response.status_code == 200:
+            logger.info(f"Response from service_url : {service_url}: {response.json()}")
+            response_data = response.json()
+            envelope_status = models_v6.EnvelopeGetElementsResponse(**response_data)
+            return envelope_status
+        else:
+            self._handle_response_errors(
+                service_url, response=response, request_data=request_data
+            )
+
+    def dowload_completed_document(self, file_id: str, version="v6"):
         """
         Return an envelope for the given id.
 
@@ -221,9 +447,13 @@ class ESignAnyWhereClient:
         :param version: string for api version
         :return: Envelope
         """
-        service_url = (
-            self.api_uri + version + f"/envelope/downloadCompletedDocument/{file_id}"
-        )
+        if version == "v6":
+            service_url = f"{self.api_uri}v6/file/{file_id}"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
         request_data = {}  # type:ignore
         response = requests.get(
             url=service_url,
@@ -231,9 +461,8 @@ class ESignAnyWhereClient:
             headers=self._get_request_headers(is_json=False),
         )
         if response.status_code == 200:
-            logger.info(f"Response from service_url : {service_url}: {response.json()}")
-            response_data = response.json()
-            return models.EnvelopeStatus(**response_data)
+            logger.info(f"Response from service_url : {service_url}")
+            return response.content
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -262,7 +491,7 @@ class ESignAnyWhereClient:
                 service_url, response=response, request_data=request_data
             )
 
-    def delete_envelope(self, envelope_id: str, version="v5"):
+    def delete_envelope(self, envelope_id: str, version="v6"):
         """
         Delete an envelope with the given id.
 
@@ -270,22 +499,27 @@ class ESignAnyWhereClient:
         :param version: string for api version
         :return:
         """
-        service_url = self.api_uri + version + f"/envelope/{envelope_id}/"
-        request_data = {}  # type:ignore
-        response = requests.delete(
+        if version == "v6":
+            service_url = self.api_uri + "v6/envelope/delete"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
+        request_data = models_v6.EnvelopeDeleteRequest(EnvelopeId=envelope_id).json()
+        response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
-        if response.status_code == 204:
+        if response.status_code == 200:
             logger.debug(
                 f"Response from service_url : {service_url} -> {response.status_code}"
             )
-            return {}
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
             )
 
-    def download_completed_document(self, document_id: str, version="v4"):
+    def download_completed_document(self, document_id: str, version="v6"):
         """
         Return a pdf document for the given id.
 
@@ -293,11 +527,14 @@ class ESignAnyWhereClient:
         :param version: string for api version
         :return: file
         """
-        service_url = (
-            self.api_uri
-            + version
-            + f"/envelope/downloadCompletedDocument/{document_id}"
-        )
+
+        if version == "v6":
+            service_url = self.api_uri + f"v6/file/{document_id}"
+        else:
+            raise exceptions.ESawInvalidVersionError(
+                version=version, supported_versions=["v6"]
+            )
+
         request_data = {}  # type:ignore
         response = requests.get(
             url=service_url,
@@ -335,14 +572,14 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            # return models.UserDescription(**response_data)
-            return models.ExtendedFindUsersResultEntry(**response_data)
+            # return models_v5.UserDescription(**response_data)
+            return models_v5.ExtendedFindUsersResultEntry(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
             )
 
-    def create_user(self, user_data: models.UserCreateModel, version="v5"):
+    def create_user(self, user_data: models_v5.UserCreateModel, version="v5"):
         """Create an user in the organization of the api user."""
         service_url = self.api_uri + version + "/user/create"
         request_data = user_data.json()
@@ -354,14 +591,14 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.CreateUserResult(**response_data)
+            return models_v5.CreateUserResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
             )
 
     def create_envelope(
-        self, draft_create_model: models.DraftCreateModel, version="v4"
+        self, draft_create_model: models_v5.DraftCreateModel, version="v4"
     ):
         """
         Create a draft with the given information.
@@ -379,7 +616,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.CreateDraftResult(**response_data)
+            return models_v5.CreateDraftResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data.dict()
@@ -387,13 +624,13 @@ class ESignAnyWhereClient:
 
     def create_envelope_from_template(
         self,
-        create_from_template_model: models.DraftCreateFromTemplateModel,
+        create_from_template_model: models_v5.DraftCreateFromTemplateModel,
         version="v4",
     ):
         """
         Create a draft from an existing template.
 
-        :param models.DraftCreateFromTemplateModel
+        :param models_v5.DraftCreateFromTemplateModel
         :param: version: string for api version
         :return: Envelope
         """
@@ -407,18 +644,20 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.CreateDraftResult(**response_data)
+            return models_v5.CreateDraftResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data.dict()
             )
 
-    def find_envelope(self, descriptors: models.FindEnvelopesDescriptor, version="v4"):
+    def find_envelope(
+        self, descriptors: models_v5.FindEnvelopesDescriptor, version="v4"
+    ):
         """
         Return the found envelopes for the given descriptor.
 
         :param version: string for api version
-        :param descriptors: models.Descriptor[]
+        :param descriptors: models_v5.Descriptor[]
         :return: list of Envelope:
         """
         service_url = self.api_uri + version + "/envelope/find"
@@ -431,7 +670,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.ExtendedFindEnvelopesResult(**response_data)
+            return models_v5.ExtendedFindEnvelopesResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -468,13 +707,13 @@ class ESignAnyWhereClient:
             )
 
     def prepare_envelope(
-        self, prepare_model: models.EnvelopePrepareModel, version="v4"
+        self, prepare_model: models_v5.EnvelopePrepareModel, version="v4"
     ):
         """
         Parse the provided files for markup fields and sig string and returns the containing elements.
 
         :param version: string for api version
-        :param models.EnvelopePrepareModel
+        :param models_v5.EnvelopePrepareModel
         """
         service_url = self.api_uri + version + "/envelope/prepare"
         request_data = prepare_model
@@ -486,7 +725,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.PrepareSendEnvelopeStepsResult(**response_data)
+            return models_v5.PrepareSendEnvelopeStepsResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data.dict()
@@ -524,13 +763,13 @@ class ESignAnyWhereClient:
 
     def send_envelope_from_template(
         self,
-        send_from_template_model: models.EnvelopeSendFromTemplateModel,
+        send_from_template_model: models_v5.EnvelopeSendFromTemplateModel,
         version="v4",
     ):
         """
         Create an envelope from a existing template and directly sends it.
 
-        :param models.EnvelopeSendFromTemplateModel
+        :param models_v5.EnvelopeSendFromTemplateModel
         :param version: string for api version
         :return Envelope
         """
@@ -544,7 +783,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.SendEnvelopeResult(**response_data)
+            return models_v5.SendEnvelopeResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -573,7 +812,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.SendRemindersResult(**response_data)
+            return models_v5.SendRemindersResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -585,7 +824,7 @@ class ESignAnyWhereClient:
 
         :param template_id: string
         :param version: string for api version
-        :return: models.CopyDocumentFromTemplateResult
+        :return: models_v5.CopyDocumentFromTemplateResult
         """
         service_url = (
             self.api_uri + version + f"/envelope/{template_id}/copyFromTemplate"
@@ -599,7 +838,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.CopyDocumentFromTemplateResult(**response_data)
+            return models_v5.CopyDocumentFromTemplateResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -633,7 +872,7 @@ class ESignAnyWhereClient:
         Return the License state. Only for usermanager.
 
         :param version: string for api version
-        :return: models.LicenseInformation
+        :return: models_v5.LicenseInformation
         """
         service_url = self.api_uri + version + "/license"
         request_data = {}
@@ -645,7 +884,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.LicenseInformation(**response_data)
+            return models_v5.LicenseInformation(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -685,7 +924,7 @@ class ESignAnyWhereClient:
         self,
         recipient_id: str,
         envelope_id: str,
-        recipient: models.ReplaceRecipientData,
+        recipient: models_v5.ReplaceRecipientData,
         version="v4",
     ):
         """
@@ -694,7 +933,7 @@ class ESignAnyWhereClient:
         :param recipient_id: string
         :param envelope_id: string
         :param version: string for api version
-        :param recipient: models.ReplaceRecipientData
+        :param recipient: models_v5.ReplaceRecipientData
         :return
         """
         service_url = (
@@ -751,7 +990,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.Teams(**response_data)
+            return models_v5.Teams(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -868,7 +1107,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.ExtendedFindUsersResult(**response_data)
+            return models_v5.ExtendedFindUsersResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
@@ -908,7 +1147,7 @@ class ESignAnyWhereClient:
                 f"Response from service_url : {service_url}: {response.json()}"
             )
             response_data = response.json()
-            return models.MeResult(**response_data)
+            return models_v5.MeResult(**response_data)
         else:
             self._handle_response_errors(
                 service_url, response=response, request_data=request_data
