@@ -48,6 +48,7 @@ repos:
     hooks:
     - id: isort
       stages: [commit]
+      args: ["--profile", "black"]
       name: "✅ Isort Validation"
   - repo: local
     hooks:

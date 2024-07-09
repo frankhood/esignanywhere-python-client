@@ -37,7 +37,7 @@ class TestCreateAndSendEnvelope(unittest.TestCase):
                                     "PhoneNumber": "00000000000000000000000000",
                                     "LanguageCode": "IT",
                                 },
-                                "SendEmails": True,
+                                "SendEmails": False,
                             },
                         },
                     }
