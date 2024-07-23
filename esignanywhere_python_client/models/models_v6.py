@@ -3404,9 +3404,7 @@ class DraftDeleteRequest(BaseModel):
 
 
 class Void(BaseModel):
-
-    class Config:
-        use_enum_values = True
+    pass
 
 
 class DraftUpdateAgreementTranslation(BaseModel):
