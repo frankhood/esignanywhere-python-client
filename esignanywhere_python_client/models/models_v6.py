@@ -13,10 +13,18 @@ from pydantic import BaseModel, Field
 
 
 class Model(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     __root__: Any
 
 
 class AuthorizationWhoAmISamlAssignment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -26,12 +34,20 @@ class AuthorizationWhoAmISamlAssignment(BaseModel):
 
 
 class ErrorResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ErrorId: Optional[str] = Field(None, description="Id of the error.")
     Message: Optional[str] = Field(None, description="Message from the error.")
     TraceId: Optional[str] = Field(None, description="Trace identifier.")
 
 
 class AutomaticProfileGetAllProfile(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the profile.")
     Description: Optional[str] = Field(
         None, description="The unique description of the profile."
@@ -39,6 +55,10 @@ class AutomaticProfileGetAllProfile(BaseModel):
 
 
 class AutomaticProfileGetAllSignaturePluginDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -279,6 +299,10 @@ class RenderingLanguageCode(Enum):
 
 
 class DraftGetSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: Optional[str] = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
@@ -519,6 +543,10 @@ class LanguageCode(Enum):
 
 
 class DraftGetContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None, description="The email address of the recipient."
     )
@@ -535,12 +563,20 @@ class DraftGetContactInformation(BaseModel):
 
 
 class DraftGetAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
 
 
 class DraftGetFilesPage(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None, description="The number of the page. It starts with 1."
     )
@@ -558,6 +594,10 @@ class DisplayIconType(Enum):
 
 
 class DraftGetElementsReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -574,6 +614,10 @@ class DraftGetElementsReadPagesConfirmation(BaseModel):
 
 
 class DraftGetElementsReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -629,6 +673,10 @@ class Type1(Enum):
 
 
 class DraftGetElementsPhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type1] = Field(None, description="The format of the phone numbers.")
 
 
@@ -639,6 +687,10 @@ class TextAlign(Enum):
 
 
 class DraftGetElementsTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text.\r\nSix digit hexadecimal color starting with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -660,6 +712,10 @@ class DraftGetElementsTextFormat(BaseModel):
 
 
 class DraftGetElementsPosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -673,6 +729,10 @@ class DraftGetElementsPosition(BaseModel):
 
 
 class DraftGetElementsSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: Optional[float] = Field(
         None, description="The width of the element in points."
     )
@@ -682,6 +742,10 @@ class DraftGetElementsSize(BaseModel):
 
 
 class DraftGetElementsChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -691,6 +755,10 @@ class DraftGetElementsChoiceItem(BaseModel):
 
 
 class DraftGetElementsRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -720,6 +788,10 @@ class PreferredHashAlgorithm(Enum):
 
 
 class DraftGetElementsATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -735,6 +807,10 @@ class SignaturePositioning(Enum):
 
 
 class DraftGetElementsBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -758,6 +834,10 @@ class DraftGetElementsBiometricSignatureType(BaseModel):
 
 
 class DraftGetElementsStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -767,6 +847,10 @@ class DraftGetElementsStampImprintDateConfiguration(BaseModel):
 
 
 class DraftGetElementsPredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -779,6 +863,10 @@ class DraftGetElementsPredefinedElementDefinition(BaseModel):
 
 
 class DraftGetElementsLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[DraftGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -788,11 +876,19 @@ class DraftGetElementsLinkDefinition(BaseModel):
 
 
 class DraftGetElementsFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class DraftGetElementsClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -818,6 +914,10 @@ class DraftGetElementsClickToSignStampImprint(BaseModel):
 
 
 class DraftGetElementsDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -843,6 +943,10 @@ class DraftGetElementsDrawToSignStampImprint(BaseModel):
 
 
 class DraftGetElementsTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -868,6 +972,10 @@ class DraftGetElementsTypeToSignStampImprint(BaseModel):
 
 
 class DraftGetElementsLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -890,6 +998,10 @@ class DraftGetElementsLocalCertificateStampImprint(BaseModel):
 
 
 class DraftGetElementsDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -912,6 +1024,10 @@ class DraftGetElementsDisposableCertificateStampImprint(BaseModel):
 
 
 class DraftGetElementsSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -934,6 +1050,10 @@ class DraftGetElementsSwissComOnDemandStampImprint(BaseModel):
 
 
 class DraftGetElementsRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -956,6 +1076,10 @@ class DraftGetElementsRemoteCertificateStampImprint(BaseModel):
 
 
 class DraftGetElementsOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -987,6 +1111,10 @@ class DraftGetElementsOneTimePasswordStampImprint(BaseModel):
 
 
 class DraftGetElementsSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -1009,6 +1137,10 @@ class DraftGetElementsSwedishBankIdStampImprint(BaseModel):
 
 
 class DraftGetElementsPluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -1034,6 +1166,10 @@ class DraftGetElementsPluginStampImprint(BaseModel):
 
 
 class DraftGetConfigurationEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -1046,6 +1182,10 @@ class DraftGetConfigurationEmailConfiguration(BaseModel):
 
 
 class DraftGetConfigurationReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -1062,6 +1202,10 @@ class DraftGetConfigurationReminderConfiguration(BaseModel):
 
 
 class DraftGetConfigurationExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationInSeconds: Optional[int] = Field(
         None,
         description="The relative expiration in seconds after sending the envelope.",
@@ -1079,6 +1223,10 @@ class Policy(Enum):
 
 
 class DraftGetConfigurationAgentRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Policy: Optional[Policy] = Field(
         None,
         description="Defines the redirect target page which should be opened when the agent mode is active.",
@@ -1093,6 +1241,10 @@ class DraftGetConfigurationAgentRedirectConfiguration(BaseModel):
 
 
 class DraftGetConfigurationRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AfterSendRedirectUrl: Optional[str] = Field(
         None,
         description="The URL to redirect to after the envelope was sent successfully.\r\nThis is only applicable when using the eSAW UI.",
@@ -1104,10 +1256,18 @@ class DraftGetConfigurationRedirectConfiguration(BaseModel):
 
 
 class DraftGetConfigurationSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(None, description="Sealing certificate used.")
 
 
 class DraftGetConfigurationVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -1118,6 +1278,10 @@ class DraftGetConfigurationVisibilityOption(BaseModel):
 
 
 class DraftGetConfigurationAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: Optional[LanguageCode] = Field(
         None, description="The language of the translated agreement."
     )
@@ -1131,6 +1295,10 @@ class DraftGetConfigurationAgreementTranslation(BaseModel):
 
 
 class DraftGetConfigurationDefaultSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsDefault: Optional[bool] = Field(
         None,
         description="Indicates if the signature type is the default signature type for draft.",
@@ -1138,6 +1306,10 @@ class DraftGetConfigurationDefaultSignature(BaseModel):
 
 
 class DraftGetConfigurationActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -1263,6 +1435,10 @@ class NotificationChannel(Enum):
 
 
 class DraftGetConfigurationBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -1281,6 +1457,10 @@ class Mode(Enum):
 
 
 class DraftGetConfigurationBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -1291,6 +1471,10 @@ class DraftGetConfigurationBatchConfiguration(BaseModel):
 
 
 class DraftGetConfigurationGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -1315,6 +1499,10 @@ class DraftGetConfigurationGeneralPoliciesForSignAction(BaseModel):
 
 
 class DraftGetConfigurationGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -1330,6 +1518,10 @@ class DraftGetConfigurationGeneralPoliciesForViewAction(BaseModel):
 
 
 class DraftGetConfigurationGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -1357,6 +1549,10 @@ class DraftGetConfigurationGeneralPoliciesForP7MAction(BaseModel):
 
 
 class DraftGetConfigurationEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -1369,10 +1565,18 @@ class DraftGetConfigurationEmailAppLinks(BaseModel):
 
 
 class DraftGetConfigurationWebFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class DraftGetConfigurationAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -1388,6 +1592,10 @@ class DraftGetConfigurationAppFinishAction(BaseModel):
 
 
 class DraftGetConfigurationKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
@@ -1416,6 +1624,10 @@ class DocumentType(Enum):
 
 
 class DraftGetConfigurationDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -1452,11 +1664,19 @@ class DraftGetConfigurationDisposableCertificateSignatureData(BaseModel):
 
 
 class DraftGetConfigurationRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class DraftGetConfigurationSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -1475,6 +1695,10 @@ class DraftGetConfigurationSwissComOnDemandSignatureData(BaseModel):
 
 
 class DraftGetConfigurationSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -1482,12 +1706,20 @@ class DraftGetConfigurationSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class DraftGetConfigurationATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class DraftGetConfigurationSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -1498,12 +1730,20 @@ class DraftGetConfigurationSwedishBankIdSignatureData(BaseModel):
 
 
 class DraftGetConfigurationAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class DraftGetConfigurationSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -1511,6 +1751,10 @@ class DraftGetConfigurationSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class DraftGetConfigurationSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -1521,11 +1765,19 @@ class DraftGetConfigurationSwedishBankIdAuthentication(BaseModel):
 
 
 class DraftGetConfigurationSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class DraftGetConfigurationAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -1535,6 +1787,10 @@ class DraftGetConfigurationAuthenticationValidation(BaseModel):
 
 
 class DraftFindRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StartDate: Optional[datetime] = Field(
         None,
         description="If set, filter for drafts which were created after the start date.\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
@@ -1554,22 +1810,38 @@ class DraftFindRequest(BaseModel):
 
 
 class DraftFindDraft(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the envelope.")
     Name: Optional[str] = Field(None, description="The name of the envelope.")
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
 
 
 class DraftSendRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DraftId: str = Field(..., description="The identifier of the draft.")
 
 
 class EnvelopeSendResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: Optional[str] = Field(
         None, description="The identifier of the envelope."
     )
 
 
 class EnvelopeBulkSendChild(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: Optional[str] = Field(
         None, description="The identifier of the BulkChild envelope."
     )
@@ -1579,6 +1851,10 @@ class EnvelopeBulkSendChild(BaseModel):
 
 
 class DraftCreateDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(None, description="The identifier of the file.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -1587,6 +1863,10 @@ class DraftCreateDocument(BaseModel):
 
 
 class DraftCreateEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -1599,6 +1879,10 @@ class DraftCreateEmailAppLinks(BaseModel):
 
 
 class DraftCreateEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -1611,12 +1895,20 @@ class DraftCreateEmailConfiguration(BaseModel):
 
 
 class DraftCreateSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(
         None, description="Custom Sealing certificate identifier."
     )
 
 
 class DraftCreateVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -1627,6 +1919,10 @@ class DraftCreateVisibilityOption(BaseModel):
 
 
 class DraftCreatePluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -1652,6 +1948,10 @@ class DraftCreatePluginStampImprint(BaseModel):
 
 
 class DraftCreateExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationInSecondsAfterSending: Optional[int] = Field(
         None,
         description="The relative expiration in seconds after sending the envelope.\r\nMust be a positive number between 600 and the maximum envelope validity located in the system configuration [Configuration key: maxEnvelopeValidityInDays, Default: 2419200 seconds (28 days)].\r\nMust not be defined when property <code>ExpirationDate</code> is specified.",
@@ -1663,6 +1963,10 @@ class DraftCreateExpirationConfiguration(BaseModel):
 
 
 class DraftCreateRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AfterSendRedirectUrl: Optional[str] = Field(
         None,
         description="The URL to redirect to after the envelope was sent successfully.\r\nThis is only applicable when using the eSAW UI.",
@@ -1674,10 +1978,18 @@ class DraftCreateRedirectConfiguration(BaseModel):
 
 
 class IFrameAllowListItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     __root__: str
 
 
 class DraftCreateAgentRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Policy: Optional[Policy] = Field(
         None,
         description="Defines the redirect target page which should be opened when the agent mode is active. \r\nMust not be set, when 'Allow' is not set to true.",
@@ -1694,6 +2006,10 @@ class DraftCreateAgentRedirectConfiguration(BaseModel):
 
 
 class DraftCreateAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: LanguageCode = Field(
         ..., description="The language of the translated agreement."
     )
@@ -1716,6 +2032,10 @@ class Type2(Enum):
 
 
 class DraftCreatePosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -1729,11 +2049,19 @@ class DraftCreatePosition(BaseModel):
 
 
 class DraftCreateSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: float = Field(..., description="The width of the element in points.")
     Height: float = Field(..., description="The height of the element in points.")
 
 
 class DraftCreateChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -1743,6 +2071,10 @@ class DraftCreateChoiceItem(BaseModel):
 
 
 class DraftCreateLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftCreatePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -1750,6 +2082,10 @@ class DraftCreateLinkDefinition(BaseModel):
 
 
 class DraftCreateContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None, description="The email address of the recipient."
     )
@@ -1766,6 +2102,10 @@ class DraftCreateContactInformation(BaseModel):
 
 
 class DraftCreateBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -1776,11 +2116,19 @@ class DraftCreateBatchConfiguration(BaseModel):
 
 
 class DraftCreateFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class DraftCreateNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -1806,10 +2154,18 @@ class Type3(Enum):
 
 
 class DraftCreatePhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type3] = Field(None, description="The format of the phone numbers.")
 
 
 class DraftCreateActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -1929,6 +2285,10 @@ class DraftCreateActionCallbackSelection(BaseModel):
 
 
 class DraftCreateTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text. The default color is black.\r\nSix digit hexadecimal color that starts with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -1950,6 +2310,10 @@ class DraftCreateTextFormat(BaseModel):
 
 
 class DraftCreateBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -1974,10 +2338,18 @@ class DraftCreateBiometricSignatureType(BaseModel):
 
 
 class DraftCreateClientFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class DraftCreateAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -1993,19 +2365,35 @@ class DraftCreateAppFinishAction(BaseModel):
 
 
 class DraftCreateKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class DraftCreateRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class OrganizationUnit(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     __root__: str
 
 
 class DraftCreateSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -2024,6 +2412,10 @@ class DraftCreateSwissComOnDemandSignatureData(BaseModel):
 
 
 class DraftCreateSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -2031,12 +2423,20 @@ class DraftCreateSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class DraftCreateATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class DraftCreateSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -2047,12 +2447,20 @@ class DraftCreateSwedishBankIdSignatureData(BaseModel):
 
 
 class DraftCreateAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class DraftCreateSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -2060,6 +2468,10 @@ class DraftCreateSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class DraftCreateSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -2070,6 +2482,10 @@ class DraftCreateSwedishBankIdAuthentication(BaseModel):
 
 
 class DraftCreateDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -2106,11 +2522,19 @@ class DraftCreateDisposableCertificateSignatureData(BaseModel):
 
 
 class DraftCreateSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class DraftCreateAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -2120,6 +2544,10 @@ class DraftCreateAuthenticationValidation(BaseModel):
 
 
 class DraftCreateSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2142,6 +2570,10 @@ class DraftCreateSwedishBankIdStampImprint(BaseModel):
 
 
 class DraftCreateOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2173,6 +2605,10 @@ class DraftCreateOneTimePasswordStampImprint(BaseModel):
 
 
 class DraftCreateRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2195,6 +2631,10 @@ class DraftCreateRemoteCertificateStampImprint(BaseModel):
 
 
 class DraftCreateSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2217,6 +2657,10 @@ class DraftCreateSwissComOnDemandStampImprint(BaseModel):
 
 
 class DraftCreateDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2239,6 +2683,10 @@ class DraftCreateDisposableCertificateStampImprint(BaseModel):
 
 
 class DraftCreateLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2261,6 +2709,10 @@ class DraftCreateLocalCertificateStampImprint(BaseModel):
 
 
 class DraftCreateTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2286,6 +2738,10 @@ class DraftCreateTypeToSignStampImprint(BaseModel):
 
 
 class DraftCreateDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2311,6 +2767,10 @@ class DraftCreateDrawToSignStampImprint(BaseModel):
 
 
 class DraftCreateClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -2336,6 +2796,10 @@ class DraftCreateClickToSignStampImprint(BaseModel):
 
 
 class DraftCreateGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -2363,6 +2827,10 @@ class DraftCreateGeneralPoliciesForP7MAction(BaseModel):
 
 
 class DraftCreateGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -2378,6 +2846,10 @@ class DraftCreateGeneralPoliciesForViewAction(BaseModel):
 
 
 class DraftCreateGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -2402,6 +2874,10 @@ class DraftCreateGeneralPoliciesForSignAction(BaseModel):
 
 
 class DraftCreateBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftCreateContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -2415,6 +2891,10 @@ class DraftCreateBasicRecipientConfiguration(BaseModel):
 
 
 class DraftCreateStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -2424,6 +2904,10 @@ class DraftCreateStampImprintDateConfiguration(BaseModel):
 
 
 class DraftCreateSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None,
@@ -2435,6 +2919,10 @@ class DraftCreateSignaturePluginSignatureType(BaseModel):
 
 
 class DraftCreateSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -2445,6 +2933,10 @@ class DraftCreateSwedishBankIdSignatureType(BaseModel):
 
 
 class DraftCreateOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -2461,6 +2953,10 @@ class DraftCreateOneTimePasswordSignatureType(BaseModel):
 
 
 class DraftCreateRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -2479,6 +2975,10 @@ class DraftCreateRemoteCertificateSignatureType(BaseModel):
 
 
 class DraftCreateATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -2489,6 +2989,10 @@ class DraftCreateATrustCertificateSignatureType(BaseModel):
 
 
 class DraftCreateSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -2504,6 +3008,10 @@ class DraftCreateSwissComOnDemandSignatureType(BaseModel):
 
 
 class DraftCreateDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -2525,6 +3033,10 @@ class DraftCreateDisposableCertificateSignatureType(BaseModel):
 
 
 class DraftCreateTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -2538,6 +3050,10 @@ class DraftCreateTypeToSignSignatureType(BaseModel):
 
 
 class DraftCreateDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -2551,6 +3067,10 @@ class DraftCreateDrawToSignSignatureType(BaseModel):
 
 
 class DraftCreateClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -2564,6 +3084,10 @@ class DraftCreateClickToSignSignatureType(BaseModel):
 
 
 class DraftCreateRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -2580,6 +3104,10 @@ class DraftCreateRadioButtonItemDefinition(BaseModel):
 
 
 class DraftCreateListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftCreateTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -2601,6 +3129,10 @@ class DraftCreateListBoxDefinition(BaseModel):
 
 
 class DraftCreateRadioButtonGroupDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -2613,6 +3145,10 @@ class DraftCreateRadioButtonGroupDefinition(BaseModel):
 
 
 class DraftCreateComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftCreateTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -2634,6 +3170,10 @@ class DraftCreateComboBoxDefinition(BaseModel):
 
 
 class DraftCreateCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -2647,6 +3187,10 @@ class DraftCreateCheckBoxDefinition(BaseModel):
 
 
 class DraftCreateTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -2670,6 +3214,10 @@ class DraftCreateTextBoxDefinition(BaseModel):
 
 
 class DraftCreateDefaultSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsDefault: Optional[bool] = Field(
         None,
         description="If true, this signature type is used for newly added signature fields as default.\r\nOnly one signature type can be set as default.",
@@ -2677,6 +3225,10 @@ class DraftCreateDefaultSignature(BaseModel):
 
 
 class DraftCreateReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -2690,6 +3242,10 @@ class DraftCreateReadDocumentConfirmation(BaseModel):
 
 
 class DraftCreateReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -2707,10 +3263,18 @@ class DraftCreateReadPagesConfirmation(BaseModel):
 
 
 class PreSelectedItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     __root__: str
 
 
 class DraftCreateListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -2732,6 +3296,10 @@ class DraftCreateListBox(BaseModel):
 
 
 class DraftCreateRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -2754,6 +3322,10 @@ class DraftCreateRadioButtonGroup(BaseModel):
 
 
 class DraftCreateComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -2773,6 +3345,10 @@ class DraftCreateComboBox(BaseModel):
 
 
 class DraftCreateCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -2792,6 +3368,10 @@ class DraftCreateCheckBox(BaseModel):
 
 
 class DraftCreateReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -2808,18 +3388,32 @@ class DraftCreateReminderConfiguration(BaseModel):
 
 
 class DraftCreateResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DraftId: Optional[str] = Field(None, description="The identifier of the draft.")
 
 
 class DraftDeleteRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DraftId: str = Field(..., description="The identifier of the draft.")
 
 
 class Void(BaseModel):
-    pass
+
+    class Config:
+        use_enum_values = True
 
 
 class DraftUpdateAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: LanguageCode = Field(
         ..., description="The language of the translated agreement."
     )
@@ -2833,6 +3427,10 @@ class DraftUpdateAgreementTranslation(BaseModel):
 
 
 class DraftUpdateActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -2952,6 +3550,10 @@ class DraftUpdateActionCallbackSelection(BaseModel):
 
 
 class DraftUpdateDefaultSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsDefault: Optional[bool] = Field(
         None,
         description="If true, this signature type is used for newly added signature fields as default.\r\nOnly one signature type can be set as default.",
@@ -2959,6 +3561,10 @@ class DraftUpdateDefaultSignature(BaseModel):
 
 
 class DraftUpdateRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AfterSendRedirectUrl: Optional[str] = Field(
         None,
         description="The URL to redirect to after the envelope was sent successfully.\r\nThis is only applicable when using the eSAW UI.",
@@ -2970,6 +3576,10 @@ class DraftUpdateRedirectConfiguration(BaseModel):
 
 
 class DraftUpdateAgentRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Policy: Optional[Policy] = Field(
         None,
         description="Defines the redirect target page which should be opened when the agent mode is active. \r\nMust not be set, when 'Allow' is not set to true.",
@@ -2986,6 +3596,10 @@ class DraftUpdateAgentRedirectConfiguration(BaseModel):
 
 
 class DraftUpdateExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationInSecondsAfterSending: Optional[int] = Field(
         None,
         description="The relative expiration in seconds after sending the envelope.\r\nMust be a positive number between 600 and the maximum envelope validity located in the system configuration [Configuration key: maxEnvelopeValidityInDays, Default: 2419200 seconds (28 days)].\r\nMust not be defined when property <code>ExpirationDate</code> is specified.",
@@ -2997,6 +3611,10 @@ class DraftUpdateExpirationConfiguration(BaseModel):
 
 
 class DraftUpdateReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -3013,6 +3631,10 @@ class DraftUpdateReminderConfiguration(BaseModel):
 
 
 class DraftUpdateEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -3025,36 +3647,60 @@ class DraftUpdateEmailConfiguration(BaseModel):
 
 
 class DraftUpdateSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(
         None, description="Update the referenced Sealing Certificate identifier."
     )
 
 
 class DraftReorderActivitiesView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ViewingGroup: str = Field(
         ..., description="The group for defining parallel view actions."
     )
 
 
 class DraftReorderActivitiesCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CopyingGroup: str = Field(
         ..., description="The group for defining parallel copy actions."
     )
 
 
 class DraftReorderActivitiesSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SigningGroup: str = Field(
         ..., description="The group for defining parallel sign actions."
     )
 
 
 class DraftReorderActivitiesSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAsP7MGroup: str = Field(
         ..., description="The group for defining parallel P7M actions."
     )
 
 
 class DraftActivityReplaceVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -3065,6 +3711,10 @@ class DraftActivityReplaceVisibilityOption(BaseModel):
 
 
 class DraftActivityReplaceBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -3075,10 +3725,18 @@ class DraftActivityReplaceBatchConfiguration(BaseModel):
 
 
 class DraftActivityReplaceClientFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class DraftActivityReplaceAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -3094,15 +3752,27 @@ class DraftActivityReplaceAppFinishAction(BaseModel):
 
 
 class DraftActivityReplaceKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class DraftActivityReplaceRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class DraftActivityReplaceSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -3121,6 +3791,10 @@ class DraftActivityReplaceSwissComOnDemandSignatureData(BaseModel):
 
 
 class DraftActivityReplaceSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -3128,12 +3802,20 @@ class DraftActivityReplaceSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class DraftActivityReplaceATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class DraftActivityReplaceSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -3144,6 +3826,10 @@ class DraftActivityReplaceSwedishBankIdSignatureData(BaseModel):
 
 
 class DraftActivityReplacePosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -3157,17 +3843,29 @@ class DraftActivityReplacePosition(BaseModel):
 
 
 class DraftActivityReplaceSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: float = Field(..., description="The width of the element in points.")
     Height: float = Field(..., description="The height of the element in points.")
 
 
 class DraftActivityReplaceAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class DraftActivityReplaceSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -3175,6 +3873,10 @@ class DraftActivityReplaceSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class DraftActivityReplaceSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -3194,6 +3896,10 @@ class Type4(Enum):
 
 
 class DraftActivityReplaceAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -3201,6 +3907,10 @@ class DraftActivityReplaceAttachmentDefinition(BaseModel):
 
 
 class DraftActivityReplaceReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -3208,11 +3918,19 @@ class DraftActivityReplaceReadingAreaDefinition(BaseModel):
 
 
 class DraftActivityReplaceSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class DraftActivityReplaceAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -3222,6 +3940,10 @@ class DraftActivityReplaceAuthenticationValidation(BaseModel):
 
 
 class DraftActivityReplaceChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -3231,6 +3953,10 @@ class DraftActivityReplaceChoiceItem(BaseModel):
 
 
 class DraftActivityReplaceLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -3238,11 +3964,19 @@ class DraftActivityReplaceLinkDefinition(BaseModel):
 
 
 class DraftActivityReplaceFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class DraftActivityReplacePluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3268,6 +4002,10 @@ class DraftActivityReplacePluginStampImprint(BaseModel):
 
 
 class DraftActivityReplaceSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3290,6 +4028,10 @@ class DraftActivityReplaceSwedishBankIdStampImprint(BaseModel):
 
 
 class DraftActivityReplaceOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3321,6 +4063,10 @@ class DraftActivityReplaceOneTimePasswordStampImprint(BaseModel):
 
 
 class DraftActivityReplaceRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3343,6 +4089,10 @@ class DraftActivityReplaceRemoteCertificateStampImprint(BaseModel):
 
 
 class DraftActivityReplaceSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3365,6 +4115,10 @@ class DraftActivityReplaceSwissComOnDemandStampImprint(BaseModel):
 
 
 class DraftActivityReplaceDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3387,6 +4141,10 @@ class DraftActivityReplaceDisposableCertificateStampImprint(BaseModel):
 
 
 class DraftActivityReplaceLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3409,6 +4167,10 @@ class DraftActivityReplaceLocalCertificateStampImprint(BaseModel):
 
 
 class DraftActivityReplaceTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3434,6 +4196,10 @@ class DraftActivityReplaceTypeToSignStampImprint(BaseModel):
 
 
 class DraftActivityReplaceDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3459,6 +4225,10 @@ class DraftActivityReplaceDrawToSignStampImprint(BaseModel):
 
 
 class DraftActivityReplaceClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -3484,6 +4254,10 @@ class DraftActivityReplaceClickToSignStampImprint(BaseModel):
 
 
 class DraftActivityReplaceStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -3493,6 +4267,10 @@ class DraftActivityReplaceStampImprintDateConfiguration(BaseModel):
 
 
 class DraftActivityReplaceSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None,
@@ -3504,6 +4282,10 @@ class DraftActivityReplaceSignaturePluginSignatureType(BaseModel):
 
 
 class DraftActivityReplaceSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -3516,6 +4298,10 @@ class DraftActivityReplaceSwedishBankIdSignatureType(BaseModel):
 
 
 class DraftActivityReplaceOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -3534,6 +4320,10 @@ class DraftActivityReplaceOneTimePasswordSignatureType(BaseModel):
 
 
 class DraftActivityReplaceRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -3552,6 +4342,10 @@ class DraftActivityReplaceRemoteCertificateSignatureType(BaseModel):
 
 
 class DraftActivityReplaceBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -3576,6 +4370,10 @@ class DraftActivityReplaceBiometricSignatureType(BaseModel):
 
 
 class DraftActivityReplaceATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -3586,6 +4384,10 @@ class DraftActivityReplaceATrustCertificateSignatureType(BaseModel):
 
 
 class DraftActivityReplaceSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -3601,6 +4403,10 @@ class DraftActivityReplaceSwissComOnDemandSignatureType(BaseModel):
 
 
 class DraftActivityReplaceDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -3622,6 +4428,10 @@ class DraftActivityReplaceDisposableCertificateSignatureType(BaseModel):
 
 
 class DraftActivityReplaceLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -3644,6 +4454,10 @@ class DraftActivityReplaceLocalCertificateSignatureType(BaseModel):
 
 
 class DraftActivityReplaceTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -3659,6 +4473,10 @@ class DraftActivityReplaceTypeToSignSignatureType(BaseModel):
 
 
 class DraftActivityReplaceDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -3674,6 +4492,10 @@ class DraftActivityReplaceDrawToSignSignatureType(BaseModel):
 
 
 class DraftActivityReplaceClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -3689,6 +4511,10 @@ class DraftActivityReplaceClickToSignSignatureType(BaseModel):
 
 
 class DraftActivityReplaceRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -3705,6 +4531,10 @@ class DraftActivityReplaceRadioButtonItemDefinition(BaseModel):
 
 
 class DraftActivityReplaceTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text. The default color is black.\r\nSix digit hexadecimal color that starts with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -3732,10 +4562,18 @@ class Type5(Enum):
 
 
 class DraftActivityReplacePhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type5] = Field(None, description="The format of the phone numbers.")
 
 
 class DraftActivityReplaceNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -3755,6 +4593,10 @@ class DraftActivityReplaceNumberValidationConfiguration(BaseModel):
 
 
 class DraftActivityReplaceListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftActivityReplaceTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -3776,6 +4618,10 @@ class DraftActivityReplaceListBoxDefinition(BaseModel):
 
 
 class DraftActivityReplaceRadioButtonGroupDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -3788,6 +4634,10 @@ class DraftActivityReplaceRadioButtonGroupDefinition(BaseModel):
 
 
 class DraftActivityReplaceComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftActivityReplaceTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -3809,6 +4659,10 @@ class DraftActivityReplaceComboBoxDefinition(BaseModel):
 
 
 class DraftActivityReplaceCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -3822,6 +4676,10 @@ class DraftActivityReplaceCheckBoxDefinition(BaseModel):
 
 
 class DraftActivityReplaceTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -3845,6 +4703,10 @@ class DraftActivityReplaceTextBoxDefinition(BaseModel):
 
 
 class DraftActivityReplaceDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -3881,6 +4743,10 @@ class DraftActivityReplaceDisposableCertificateSignatureData(BaseModel):
 
 
 class DraftActivityReplaceReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -3894,6 +4760,10 @@ class DraftActivityReplaceReadDocumentConfirmation(BaseModel):
 
 
 class DraftActivityReplaceReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -3911,6 +4781,10 @@ class DraftActivityReplaceReadPagesConfirmation(BaseModel):
 
 
 class DraftActivityReplaceReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -3928,6 +4802,10 @@ class DraftActivityReplaceReadAreaConfirmation(BaseModel):
 
 
 class DraftActivityReplaceAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -3949,6 +4827,10 @@ class DraftActivityReplaceAttachment(BaseModel):
 
 
 class DraftActivityReplaceListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -3970,6 +4852,10 @@ class DraftActivityReplaceListBox(BaseModel):
 
 
 class DraftActivityReplaceRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -3992,6 +4878,10 @@ class DraftActivityReplaceRadioButtonGroup(BaseModel):
 
 
 class DraftActivityReplaceComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -4011,6 +4901,10 @@ class DraftActivityReplaceComboBox(BaseModel):
 
 
 class DraftActivityReplaceCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -4030,6 +4924,10 @@ class DraftActivityReplaceCheckBox(BaseModel):
 
 
 class DraftActivityReplaceEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -4042,6 +4940,10 @@ class DraftActivityReplaceEmailAppLinks(BaseModel):
 
 
 class DraftActivityReplaceContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None, description="The email address of the recipient."
     )
@@ -4058,6 +4960,10 @@ class DraftActivityReplaceContactInformation(BaseModel):
 
 
 class DraftActivityReplacePoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -4085,6 +4991,10 @@ class DraftActivityReplacePoliciesForP7MAction(BaseModel):
 
 
 class DraftActivityReplaceGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -4100,6 +5010,10 @@ class DraftActivityReplaceGeneralPoliciesForViewAction(BaseModel):
 
 
 class DraftActivityReplaceGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -4124,6 +5038,10 @@ class DraftActivityReplaceGeneralPoliciesForSignAction(BaseModel):
 
 
 class DraftActivityReplaceBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftActivityReplaceContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -4152,12 +5070,20 @@ class Status(Enum):
 
 
 class EnvelopeGetSenderUserInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(None, description="The email address of the sender.")
     GivenName: Optional[str] = Field(None, description="The given name of the sender.")
     Surname: Optional[str] = Field(None, description="The surname of the sender.")
 
 
 class EnvelopeGetSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: Optional[str] = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
@@ -4167,6 +5093,10 @@ class EnvelopeGetSignAutomatic(BaseModel):
 
 
 class EnvelopeGetContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None, description="The email address of the recipient."
     )
@@ -4183,6 +5113,10 @@ class EnvelopeGetContactInformation(BaseModel):
 
 
 class EnvelopeGetLongLivedDisposableCertificateWarning(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RequestId: Optional[str] = Field(None, description="The identifier of the request.")
     RemoteDeviceId: Optional[str] = Field(
         None, description="The identifier of the remote device."
@@ -4190,6 +5124,10 @@ class EnvelopeGetLongLivedDisposableCertificateWarning(BaseModel):
 
 
 class EnvelopeGetFilesAuditTrail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(
         None, description="The identifier of the audit trail pdf file."
     )
@@ -4199,6 +5137,10 @@ class EnvelopeGetFilesAuditTrail(BaseModel):
 
 
 class EnvelopeGetFilesLegalDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(None, description="The identifier of the file.")
     FileName: Optional[str] = Field(None, description="The name of the file.")
     ActivityId: Optional[str] = Field(
@@ -4210,11 +5152,19 @@ class EnvelopeGetFilesLegalDocument(BaseModel):
 
 
 class EnvelopeGetFilesDocumentAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(None, description="The identifier of the file.")
     FileName: Optional[str] = Field(None, description="The name of the file.")
 
 
 class EnvelopeGetHistoryEventRecipient(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[UUID] = Field(
         None,
         description="The id of the recipient.",
@@ -4230,6 +5180,10 @@ class EnvelopeGetHistoryEventRecipient(BaseModel):
 
 
 class EnvelopeGetElementsReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -4246,6 +5200,10 @@ class EnvelopeGetElementsReadPagesConfirmation(BaseModel):
 
 
 class EnvelopeGetElementsReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -4274,10 +5232,18 @@ class Type7(Enum):
 
 
 class EnvelopeGetElementsPhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type7] = Field(None, description="The format of the phone numbers.")
 
 
 class EnvelopeGetElementsTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text.\r\nSix digit hexadecimal color starting with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -4299,6 +5265,10 @@ class EnvelopeGetElementsTextFormat(BaseModel):
 
 
 class EnvelopeGetElementsPosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -4312,6 +5282,10 @@ class EnvelopeGetElementsPosition(BaseModel):
 
 
 class EnvelopeGetElementsSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: Optional[float] = Field(
         None, description="The width of the element in points."
     )
@@ -4321,6 +5295,10 @@ class EnvelopeGetElementsSize(BaseModel):
 
 
 class EnvelopeGetElementsChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -4330,6 +5308,10 @@ class EnvelopeGetElementsChoiceItem(BaseModel):
 
 
 class EnvelopeGetElementsRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -4348,6 +5330,10 @@ class EnvelopeGetElementsRadioButtonItemDefinition(BaseModel):
 
 
 class EnvelopeGetElementsATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -4357,6 +5343,10 @@ class EnvelopeGetElementsATrustCertificateSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -4380,6 +5370,10 @@ class EnvelopeGetElementsBiometricSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -4389,6 +5383,10 @@ class EnvelopeGetElementsStampImprintDateConfiguration(BaseModel):
 
 
 class EnvelopeGetElementsPredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -4401,6 +5399,10 @@ class EnvelopeGetElementsPredefinedElementDefinition(BaseModel):
 
 
 class EnvelopeGetElementsLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[EnvelopeGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -4410,11 +5412,19 @@ class EnvelopeGetElementsLinkDefinition(BaseModel):
 
 
 class EnvelopeGetElementsFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class EnvelopeGetElementsClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4440,6 +5450,10 @@ class EnvelopeGetElementsClickToSignStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4465,6 +5479,10 @@ class EnvelopeGetElementsDrawToSignStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4490,6 +5508,10 @@ class EnvelopeGetElementsTypeToSignStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4512,6 +5534,10 @@ class EnvelopeGetElementsLocalCertificateStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4534,6 +5560,10 @@ class EnvelopeGetElementsDisposableCertificateStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4556,6 +5586,10 @@ class EnvelopeGetElementsSwissComOnDemandStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4578,6 +5612,10 @@ class EnvelopeGetElementsRemoteCertificateStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4609,6 +5647,10 @@ class EnvelopeGetElementsOneTimePasswordStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4631,6 +5673,10 @@ class EnvelopeGetElementsSwedishBankIdStampImprint(BaseModel):
 
 
 class EnvelopeGetElementsPluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -4656,6 +5702,10 @@ class EnvelopeGetElementsPluginStampImprint(BaseModel):
 
 
 class EnvelopeGetViewerLinksViewerLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ActivityId: Optional[str] = Field(
         None, description="The identifier of the activity."
     )
@@ -4669,6 +5719,10 @@ class EnvelopeGetViewerLinksViewerLink(BaseModel):
 
 
 class EnvelopeGetConfigurationEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -4681,6 +5735,10 @@ class EnvelopeGetConfigurationEmailConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -4697,6 +5755,10 @@ class EnvelopeGetConfigurationReminderConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationDate: Optional[datetime] = Field(
         None,
         description="The absolute expiration date of the sent envelope.\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
@@ -4704,10 +5766,18 @@ class EnvelopeGetConfigurationExpirationConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(None, description="Sealing certificate used.")
 
 
 class EnvelopeGetConfigurationVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -4718,6 +5788,10 @@ class EnvelopeGetConfigurationVisibilityOption(BaseModel):
 
 
 class EnvelopeGetConfigurationAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: Optional[LanguageCode] = Field(
         None, description="The language of the translated agreement."
     )
@@ -4731,6 +5805,10 @@ class EnvelopeGetConfigurationAgreementTranslation(BaseModel):
 
 
 class EnvelopeGetConfigurationActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -4850,6 +5928,10 @@ class EnvelopeGetConfigurationActionCallbackSelection(BaseModel):
 
 
 class EnvelopeGetConfigurationBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -4860,6 +5942,10 @@ class EnvelopeGetConfigurationBasicRecipientConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -4870,6 +5956,10 @@ class EnvelopeGetConfigurationBatchConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -4894,6 +5984,10 @@ class EnvelopeGetConfigurationGeneralPoliciesForSignAction(BaseModel):
 
 
 class EnvelopeGetConfigurationGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -4909,6 +6003,10 @@ class EnvelopeGetConfigurationGeneralPoliciesForViewAction(BaseModel):
 
 
 class EnvelopeGetConfigurationGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -4936,6 +6034,10 @@ class EnvelopeGetConfigurationGeneralPoliciesForP7MAction(BaseModel):
 
 
 class EnvelopeGetConfigurationEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -4948,10 +6050,18 @@ class EnvelopeGetConfigurationEmailAppLinks(BaseModel):
 
 
 class EnvelopeGetConfigurationWebFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeGetConfigurationAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -4967,10 +6077,18 @@ class EnvelopeGetConfigurationAppFinishAction(BaseModel):
 
 
 class EnvelopeGetConfigurationKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeGetConfigurationDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -5007,11 +6125,19 @@ class EnvelopeGetConfigurationDisposableCertificateSignatureData(BaseModel):
 
 
 class EnvelopeGetConfigurationRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class EnvelopeGetConfigurationSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -5030,6 +6156,10 @@ class EnvelopeGetConfigurationSwissComOnDemandSignatureData(BaseModel):
 
 
 class EnvelopeGetConfigurationSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -5037,12 +6167,20 @@ class EnvelopeGetConfigurationSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class EnvelopeGetConfigurationATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class EnvelopeGetConfigurationSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -5053,12 +6191,20 @@ class EnvelopeGetConfigurationSwedishBankIdSignatureData(BaseModel):
 
 
 class EnvelopeGetConfigurationAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class EnvelopeGetConfigurationSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -5066,6 +6212,10 @@ class EnvelopeGetConfigurationSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class EnvelopeGetConfigurationSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -5076,11 +6226,19 @@ class EnvelopeGetConfigurationSwedishBankIdAuthentication(BaseModel):
 
 
 class EnvelopeGetConfigurationSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class EnvelopeGetConfigurationAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -5101,6 +6259,10 @@ class Status1(Enum):
 
 
 class EnvelopeFindRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StartDate: Optional[datetime] = Field(
         None,
         description="If set, filter for envelopes which were sent after the start date.\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
@@ -5151,6 +6313,10 @@ class Status2(Enum):
 
 
 class EnvelopeFindEnvelope(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Status: Optional[Status2] = Field(None, description="The status of the envelope.")
     Id: Optional[str] = Field(None, description="The identifier of the envelope.")
     Name: Optional[str] = Field(None, description="The name of the envelope.")
@@ -5166,6 +6332,10 @@ class EnvelopeFindEnvelope(BaseModel):
 
 
 class EnvelopeSendDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: str = Field(..., description="The identifier of the file.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -5174,6 +6344,10 @@ class EnvelopeSendDocument(BaseModel):
 
 
 class EnvelopeSendEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -5186,12 +6360,20 @@ class EnvelopeSendEmailConfiguration(BaseModel):
 
 
 class EnvelopeSendSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(
         None, description="Custom Sealing certificate identifier."
     )
 
 
 class EnvelopeSendVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -5202,6 +6384,10 @@ class EnvelopeSendVisibilityOption(BaseModel):
 
 
 class EnvelopeSendAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: LanguageCode = Field(
         ..., description="The language of the translated agreement."
     )
@@ -5224,6 +6410,10 @@ class Type8(Enum):
 
 
 class EnvelopeSendPosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -5237,11 +6427,19 @@ class EnvelopeSendPosition(BaseModel):
 
 
 class EnvelopeSendSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: float = Field(..., description="The width of the element in points.")
     Height: float = Field(..., description="The height of the element in points.")
 
 
 class EnvelopeSendChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -5251,6 +6449,10 @@ class EnvelopeSendChoiceItem(BaseModel):
 
 
 class EnvelopeSendBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -5261,11 +6463,19 @@ class EnvelopeSendBatchConfiguration(BaseModel):
 
 
 class EnvelopeSendFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class EnvelopeSendSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -5273,10 +6483,18 @@ class EnvelopeSendSignatureFieldDefinition(BaseModel):
 
 
 class EnvelopeSendClientFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeSendAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -5292,15 +6510,27 @@ class EnvelopeSendAppFinishAction(BaseModel):
 
 
 class EnvelopeSendKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeSendRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class EnvelopeSendSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -5319,6 +6549,10 @@ class EnvelopeSendSwissComOnDemandSignatureData(BaseModel):
 
 
 class EnvelopeSendSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -5326,12 +6560,20 @@ class EnvelopeSendSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class EnvelopeSendATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class EnvelopeSendSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -5342,10 +6584,18 @@ class EnvelopeSendSwedishBankIdSignatureData(BaseModel):
 
 
 class EnvelopeSendAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: str = Field(..., description="The code for authenticating the recipient.")
 
 
 class EnvelopeSendSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -5353,6 +6603,10 @@ class EnvelopeSendSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class EnvelopeSendSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -5363,6 +6617,10 @@ class EnvelopeSendSwedishBankIdAuthentication(BaseModel):
 
 
 class EnvelopeSendAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -5370,6 +6628,10 @@ class EnvelopeSendAttachmentDefinition(BaseModel):
 
 
 class EnvelopeSendReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -5377,11 +6639,19 @@ class EnvelopeSendReadingAreaDefinition(BaseModel):
 
 
 class EnvelopeSendSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class EnvelopeSendAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -5391,6 +6661,10 @@ class EnvelopeSendAuthenticationValidation(BaseModel):
 
 
 class EnvelopeSendLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -5398,6 +6672,10 @@ class EnvelopeSendLinkDefinition(BaseModel):
 
 
 class EnvelopeSendPluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5423,6 +6701,10 @@ class EnvelopeSendPluginStampImprint(BaseModel):
 
 
 class EnvelopeSendSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5445,6 +6727,10 @@ class EnvelopeSendSwedishBankIdStampImprint(BaseModel):
 
 
 class EnvelopeSendOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5476,6 +6762,10 @@ class EnvelopeSendOneTimePasswordStampImprint(BaseModel):
 
 
 class EnvelopeSendRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5498,6 +6788,10 @@ class EnvelopeSendRemoteCertificateStampImprint(BaseModel):
 
 
 class EnvelopeSendSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5520,6 +6814,10 @@ class EnvelopeSendSwissComOnDemandStampImprint(BaseModel):
 
 
 class EnvelopeSendDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5542,6 +6840,10 @@ class EnvelopeSendDisposableCertificateStampImprint(BaseModel):
 
 
 class EnvelopeSendLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5564,6 +6866,10 @@ class EnvelopeSendLocalCertificateStampImprint(BaseModel):
 
 
 class EnvelopeSendTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5589,6 +6895,10 @@ class EnvelopeSendTypeToSignStampImprint(BaseModel):
 
 
 class EnvelopeSendDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5614,6 +6924,10 @@ class EnvelopeSendDrawToSignStampImprint(BaseModel):
 
 
 class EnvelopeSendClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -5639,6 +6953,10 @@ class EnvelopeSendClickToSignStampImprint(BaseModel):
 
 
 class EnvelopeSendStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -5648,6 +6966,10 @@ class EnvelopeSendStampImprintDateConfiguration(BaseModel):
 
 
 class EnvelopeSendSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None,
@@ -5659,6 +6981,10 @@ class EnvelopeSendSignaturePluginSignatureType(BaseModel):
 
 
 class EnvelopeSendSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -5669,6 +6995,10 @@ class EnvelopeSendSwedishBankIdSignatureType(BaseModel):
 
 
 class EnvelopeSendOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -5687,6 +7017,10 @@ class EnvelopeSendOneTimePasswordSignatureType(BaseModel):
 
 
 class EnvelopeSendRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -5705,6 +7039,10 @@ class EnvelopeSendRemoteCertificateSignatureType(BaseModel):
 
 
 class EnvelopeSendBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -5729,6 +7067,10 @@ class EnvelopeSendBiometricSignatureType(BaseModel):
 
 
 class EnvelopeSendATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -5739,6 +7081,10 @@ class EnvelopeSendATrustCertificateSignatureType(BaseModel):
 
 
 class EnvelopeSendSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -5754,6 +7100,10 @@ class EnvelopeSendSwissComOnDemandSignatureType(BaseModel):
 
 
 class EnvelopeSendDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -5775,6 +7125,10 @@ class EnvelopeSendDisposableCertificateSignatureType(BaseModel):
 
 
 class EnvelopeSendLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -5797,6 +7151,10 @@ class EnvelopeSendLocalCertificateSignatureType(BaseModel):
 
 
 class EnvelopeSendTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -5810,6 +7168,10 @@ class EnvelopeSendTypeToSignSignatureType(BaseModel):
 
 
 class EnvelopeSendDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -5823,6 +7185,10 @@ class EnvelopeSendDrawToSignSignatureType(BaseModel):
 
 
 class EnvelopeSendClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -5836,6 +7202,10 @@ class EnvelopeSendClickToSignSignatureType(BaseModel):
 
 
 class EnvelopeSendDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -5872,6 +7242,10 @@ class EnvelopeSendDisposableCertificateSignatureData(BaseModel):
 
 
 class EnvelopeSendReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -5885,6 +7259,10 @@ class EnvelopeSendReadDocumentConfirmation(BaseModel):
 
 
 class EnvelopeSendReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -5902,6 +7280,10 @@ class EnvelopeSendReadPagesConfirmation(BaseModel):
 
 
 class EnvelopeSendReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -5919,6 +7301,10 @@ class EnvelopeSendReadAreaConfirmation(BaseModel):
 
 
 class EnvelopeSendAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -5940,6 +7326,10 @@ class EnvelopeSendAttachment(BaseModel):
 
 
 class EnvelopeSendEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -5952,6 +7342,10 @@ class EnvelopeSendEmailAppLinks(BaseModel):
 
 
 class EnvelopeSendContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: str = Field(..., description="The email address of the recipient.")
     GivenName: str = Field(..., description="The given name of the recipient.")
     Surname: str = Field(..., description="The surname of the recipient.")
@@ -5964,6 +7358,10 @@ class EnvelopeSendContactInformation(BaseModel):
 
 
 class EnvelopeSendGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -5991,6 +7389,10 @@ class EnvelopeSendGeneralPoliciesForP7MAction(BaseModel):
 
 
 class EnvelopeSendGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -6006,6 +7408,10 @@ class EnvelopeSendGeneralPoliciesForViewAction(BaseModel):
 
 
 class EnvelopeSendGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -6030,6 +7436,10 @@ class EnvelopeSendGeneralPoliciesForSignAction(BaseModel):
 
 
 class EnvelopeSendVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: int = Field(
         ...,
         description="The reference number of the containing document. It starts with 1.",
@@ -6045,6 +7455,10 @@ class EnvelopeSendVisibleSignature(BaseModel):
 
 
 class EnvelopeSendBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: EnvelopeSendContactInformation = Field(
         ..., description="The contact information of the recipient."
     )
@@ -6058,6 +7472,10 @@ class EnvelopeSendBasicRecipientConfiguration(BaseModel):
 
 
 class EnvelopeSendRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -6074,6 +7492,10 @@ class EnvelopeSendRadioButtonItemDefinition(BaseModel):
 
 
 class EnvelopeSendTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text. The default color is black.\r\nSix digit hexadecimal color that starts with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -6101,10 +7523,18 @@ class Type9(Enum):
 
 
 class EnvelopeSendPhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type9] = Field(None, description="The format of the phone numbers.")
 
 
 class EnvelopeSendNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -6124,6 +7554,10 @@ class EnvelopeSendNumberValidationConfiguration(BaseModel):
 
 
 class EnvelopeSendActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -6243,6 +7677,10 @@ class EnvelopeSendActionCallbackSelection(BaseModel):
 
 
 class EnvelopeSendSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: str = Field(
         ..., description="The identifier of the profile for the automatic signatures."
     )
@@ -6257,6 +7695,10 @@ class EnvelopeSendSignAutomatic(BaseModel):
 
 
 class EnvelopeSendListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeSendTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -6279,6 +7721,10 @@ class EnvelopeSendListBoxDefinition(BaseModel):
 
 
 class EnvelopeSendRadioButtonGroupDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -6291,6 +7737,10 @@ class EnvelopeSendRadioButtonGroupDefinition(BaseModel):
 
 
 class EnvelopeSendComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeSendTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -6312,6 +7762,10 @@ class EnvelopeSendComboBoxDefinition(BaseModel):
 
 
 class EnvelopeSendCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -6325,6 +7779,10 @@ class EnvelopeSendCheckBoxDefinition(BaseModel):
 
 
 class EnvelopeSendTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -6348,6 +7806,10 @@ class EnvelopeSendTextBoxDefinition(BaseModel):
 
 
 class EnvelopeSendListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -6369,6 +7831,10 @@ class EnvelopeSendListBox(BaseModel):
 
 
 class EnvelopeSendRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -6391,6 +7857,10 @@ class EnvelopeSendRadioButtonGroup(BaseModel):
 
 
 class EnvelopeSendComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -6410,6 +7880,10 @@ class EnvelopeSendComboBox(BaseModel):
 
 
 class EnvelopeSendCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -6429,6 +7903,10 @@ class EnvelopeSendCheckBox(BaseModel):
 
 
 class EnvelopeSendExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationInSecondsAfterSending: Optional[int] = Field(
         None,
         description="The relative expiration in seconds after sending the envelope.\r\nMust be a positive number between 600 and the maximum envelope validity located in the system configuration [Configuration key: maxEnvelopeValidityInDays, Default: 2419200 seconds (28 days)].\r\nMust not be defined when property <code>ExpirationDate</code> is specified.",
@@ -6440,6 +7918,10 @@ class EnvelopeSendExpirationConfiguration(BaseModel):
 
 
 class EnvelopeSendReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -6456,18 +7938,34 @@ class EnvelopeSendReminderConfiguration(BaseModel):
 
 
 class EnvelopeCancelRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: str = Field(..., description="The identifier of the envelope.")
 
 
 class EnvelopeDeleteRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: str = Field(..., description="The identifier of the envelope.")
 
 
 class EnvelopeRemindRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: str = Field(..., description="The identifier of the envelope.")
 
 
 class EnvelopeRemindResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TotalSentReminders: Optional[int] = Field(
         None, description="The amount of reminder notifications which were sent out."
     )
@@ -6486,10 +7984,18 @@ class EnvelopeRemindResponse(BaseModel):
 
 
 class EnvelopeUnlockRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: str = Field(..., description="The identifier of the envelope.")
 
 
 class EnvelopeRestartExpiredRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: str = Field(..., description="The identifier of the envelope.")
     ExpirationInSecondsAfterSending: Optional[int] = Field(
         None,
@@ -6502,10 +8008,18 @@ class EnvelopeRestartExpiredRequest(BaseModel):
 
 
 class EnvelopeActivityDeleteRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ActivityId: str = Field(..., description="The identifier of the activity.")
 
 
 class EnvelopeActivityReplaceVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -6516,6 +8030,10 @@ class EnvelopeActivityReplaceVisibilityOption(BaseModel):
 
 
 class EnvelopeActivityReplaceBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -6526,10 +8044,18 @@ class EnvelopeActivityReplaceBatchConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceClientFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeActivityReplaceAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -6545,15 +8071,27 @@ class EnvelopeActivityReplaceAppFinishAction(BaseModel):
 
 
 class EnvelopeActivityReplaceKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeActivityReplaceRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class EnvelopeActivityReplaceSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -6572,6 +8110,10 @@ class EnvelopeActivityReplaceSwissComOnDemandSignatureData(BaseModel):
 
 
 class EnvelopeActivityReplaceSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -6579,12 +8121,20 @@ class EnvelopeActivityReplaceSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class EnvelopeActivityReplaceATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class EnvelopeActivityReplaceSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -6595,6 +8145,10 @@ class EnvelopeActivityReplaceSwedishBankIdSignatureData(BaseModel):
 
 
 class EnvelopeActivityReplacePosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -6608,17 +8162,29 @@ class EnvelopeActivityReplacePosition(BaseModel):
 
 
 class EnvelopeActivityReplaceSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: float = Field(..., description="The width of the element in points.")
     Height: float = Field(..., description="The height of the element in points.")
 
 
 class EnvelopeActivityReplaceAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class EnvelopeActivityReplaceSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -6626,6 +8192,10 @@ class EnvelopeActivityReplaceSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class EnvelopeActivityReplaceSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -6645,6 +8215,10 @@ class Type10(Enum):
 
 
 class EnvelopeActivityReplaceAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -6654,6 +8228,10 @@ class EnvelopeActivityReplaceAttachmentDefinition(BaseModel):
 
 
 class EnvelopeActivityReplaceReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -6663,11 +8241,19 @@ class EnvelopeActivityReplaceReadingAreaDefinition(BaseModel):
 
 
 class EnvelopeActivityReplaceSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class EnvelopeActivityReplaceAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -6677,6 +8263,10 @@ class EnvelopeActivityReplaceAuthenticationValidation(BaseModel):
 
 
 class EnvelopeActivityReplaceLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -6686,11 +8276,19 @@ class EnvelopeActivityReplaceLinkDefinition(BaseModel):
 
 
 class EnvelopeActivityReplaceFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class EnvelopeActivityReplaceTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text. The default color is black.\r\nSix digit hexadecimal color that starts with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -6712,6 +8310,10 @@ class EnvelopeActivityReplaceTextFormat(BaseModel):
 
 
 class EnvelopeActivityReplacePluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6737,6 +8339,10 @@ class EnvelopeActivityReplacePluginStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6759,6 +8365,10 @@ class EnvelopeActivityReplaceSwedishBankIdStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6790,6 +8400,10 @@ class EnvelopeActivityReplaceOneTimePasswordStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6812,6 +8426,10 @@ class EnvelopeActivityReplaceRemoteCertificateStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6834,6 +8452,10 @@ class EnvelopeActivityReplaceSwissComOnDemandStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6856,6 +8478,10 @@ class EnvelopeActivityReplaceDisposableCertificateStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6878,6 +8504,10 @@ class EnvelopeActivityReplaceLocalCertificateStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6903,6 +8533,10 @@ class EnvelopeActivityReplaceTypeToSignStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6928,6 +8562,10 @@ class EnvelopeActivityReplaceDrawToSignStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -6953,6 +8591,10 @@ class EnvelopeActivityReplaceClickToSignStampImprint(BaseModel):
 
 
 class EnvelopeActivityReplaceStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -6962,6 +8604,10 @@ class EnvelopeActivityReplaceStampImprintDateConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None,
@@ -6975,6 +8621,10 @@ class EnvelopeActivityReplaceSignaturePluginSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -6987,6 +8637,10 @@ class EnvelopeActivityReplaceSwedishBankIdSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -7005,6 +8659,10 @@ class EnvelopeActivityReplaceOneTimePasswordSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -7023,6 +8681,10 @@ class EnvelopeActivityReplaceRemoteCertificateSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -7047,6 +8709,10 @@ class EnvelopeActivityReplaceBiometricSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -7057,6 +8723,10 @@ class EnvelopeActivityReplaceATrustCertificateSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -7072,6 +8742,10 @@ class EnvelopeActivityReplaceSwissComOnDemandSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -7093,6 +8767,10 @@ class EnvelopeActivityReplaceDisposableCertificateSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -7115,6 +8793,10 @@ class EnvelopeActivityReplaceLocalCertificateSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -7130,6 +8812,10 @@ class EnvelopeActivityReplaceTypeToSignSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -7145,6 +8831,10 @@ class EnvelopeActivityReplaceDrawToSignSignatureType(BaseModel):
 
 
 class EnvelopeActivityReplaceClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -7166,10 +8856,18 @@ class Type11(Enum):
 
 
 class EnvelopeActivityReplacePhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type11] = Field(None, description="The format of the phone numbers.")
 
 
 class EnvelopeActivityReplaceNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -7189,6 +8887,10 @@ class EnvelopeActivityReplaceNumberValidationConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -7225,6 +8927,10 @@ class EnvelopeActivityReplaceDisposableCertificateSignatureData(BaseModel):
 
 
 class EnvelopeActivityReplaceReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -7238,6 +8944,10 @@ class EnvelopeActivityReplaceReadDocumentConfirmation(BaseModel):
 
 
 class EnvelopeActivityReplaceReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -7255,6 +8965,10 @@ class EnvelopeActivityReplaceReadPagesConfirmation(BaseModel):
 
 
 class EnvelopeActivityReplaceReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -7272,6 +8986,10 @@ class EnvelopeActivityReplaceReadAreaConfirmation(BaseModel):
 
 
 class EnvelopeActivityReplaceAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -7293,6 +9011,10 @@ class EnvelopeActivityReplaceAttachment(BaseModel):
 
 
 class EnvelopeActivityReplaceListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -7310,6 +9032,10 @@ class EnvelopeActivityReplaceListBox(BaseModel):
 
 
 class EnvelopeActivityReplaceRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -7328,6 +9054,10 @@ class EnvelopeActivityReplaceRadioButtonGroup(BaseModel):
 
 
 class EnvelopeActivityReplaceComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -7343,6 +9073,10 @@ class EnvelopeActivityReplaceComboBox(BaseModel):
 
 
 class EnvelopeActivityReplaceCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -7358,6 +9092,10 @@ class EnvelopeActivityReplaceCheckBox(BaseModel):
 
 
 class EnvelopeActivityReplaceEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -7370,6 +9108,10 @@ class EnvelopeActivityReplaceEmailAppLinks(BaseModel):
 
 
 class EnvelopeActivityReplaceContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: str = Field(..., description="The email address of the recipient.")
     GivenName: str = Field(..., description="The given name of the recipient.")
     Surname: str = Field(..., description="The surname of the recipient.")
@@ -7382,6 +9124,10 @@ class EnvelopeActivityReplaceContactInformation(BaseModel):
 
 
 class EnvelopeActivityReplaceGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -7409,6 +9155,10 @@ class EnvelopeActivityReplaceGeneralPoliciesForP7MAction(BaseModel):
 
 
 class EnvelopeActivityReplaceGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -7424,6 +9174,10 @@ class EnvelopeActivityReplaceGeneralPoliciesForViewAction(BaseModel):
 
 
 class EnvelopeActivityReplaceGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -7448,6 +9202,10 @@ class EnvelopeActivityReplaceGeneralPoliciesForSignAction(BaseModel):
 
 
 class EnvelopeActivityReplaceBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeActivityReplaceContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -7467,6 +9225,10 @@ class BulkStatus(Enum):
 
 
 class EnvelopeBulkGetChildEnvelope(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeId: Optional[str] = Field(
         None, description="The identifier of the child envelope."
     )
@@ -7481,6 +9243,10 @@ class EnvelopeBulkGetChildEnvelope(BaseModel):
 
 
 class EnvelopeBulkFindRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SenderEmail: Optional[str] = Field(
         None,
         description="If set, envelopes sent by the user with the given email address are matched.",
@@ -7516,12 +9282,20 @@ class EnvelopeBulkFindRequest(BaseModel):
 
 
 class EnvelopeBulkFindParentEnvelope(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the envelope.")
     Name: Optional[str] = Field(None, description="The name of the envelope.")
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
 
 
 class EnvelopeBulkSendDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(None, description="The identifier of the file.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -7530,6 +9304,10 @@ class EnvelopeBulkSendDocument(BaseModel):
 
 
 class EnvelopeBulkSendEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -7542,12 +9320,20 @@ class EnvelopeBulkSendEmailConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(
         None, description="Custom Sealing certificate identifier."
     )
 
 
 class EnvelopeBulkSendVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -7558,6 +9344,10 @@ class EnvelopeBulkSendVisibilityOption(BaseModel):
 
 
 class EnvelopeBulkSendAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: LanguageCode = Field(
         ..., description="The language of the translated agreement."
     )
@@ -7580,6 +9370,10 @@ class Type12(Enum):
 
 
 class EnvelopeBulkSendPosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -7593,11 +9387,19 @@ class EnvelopeBulkSendPosition(BaseModel):
 
 
 class EnvelopeBulkSendSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: float = Field(..., description="The width of the element in points.")
     Height: float = Field(..., description="The height of the element in points.")
 
 
 class EnvelopeBulkSendChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -7607,6 +9409,10 @@ class EnvelopeBulkSendChoiceItem(BaseModel):
 
 
 class EnvelopeBulkSendBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -7617,11 +9423,19 @@ class EnvelopeBulkSendBatchConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class EnvelopeBulkSendSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeBulkSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -7629,10 +9443,18 @@ class EnvelopeBulkSendSignatureFieldDefinition(BaseModel):
 
 
 class EnvelopeBulkSendClientFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeBulkSendAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -7648,15 +9470,27 @@ class EnvelopeBulkSendAppFinishAction(BaseModel):
 
 
 class EnvelopeBulkSendKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class EnvelopeBulkSendRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class EnvelopeBulkSendSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -7675,6 +9509,10 @@ class EnvelopeBulkSendSwissComOnDemandSignatureData(BaseModel):
 
 
 class EnvelopeBulkSendSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -7682,12 +9520,20 @@ class EnvelopeBulkSendSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class EnvelopeBulkSendATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class EnvelopeBulkSendSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -7698,12 +9544,20 @@ class EnvelopeBulkSendSwedishBankIdSignatureData(BaseModel):
 
 
 class EnvelopeBulkSendAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class EnvelopeBulkSendSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -7711,6 +9565,10 @@ class EnvelopeBulkSendSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class EnvelopeBulkSendSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -7721,6 +9579,10 @@ class EnvelopeBulkSendSwedishBankIdAuthentication(BaseModel):
 
 
 class EnvelopeBulkSendAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeBulkSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -7728,6 +9590,10 @@ class EnvelopeBulkSendAttachmentDefinition(BaseModel):
 
 
 class EnvelopeBulkSendReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeBulkSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -7735,11 +9601,19 @@ class EnvelopeBulkSendReadingAreaDefinition(BaseModel):
 
 
 class EnvelopeBulkSendSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class EnvelopeBulkSendAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -7749,6 +9623,10 @@ class EnvelopeBulkSendAuthenticationValidation(BaseModel):
 
 
 class EnvelopeBulkSendLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeBulkSendPosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -7756,6 +9634,10 @@ class EnvelopeBulkSendLinkDefinition(BaseModel):
 
 
 class EnvelopeBulkSendPluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7781,6 +9663,10 @@ class EnvelopeBulkSendPluginStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7803,6 +9689,10 @@ class EnvelopeBulkSendSwedishBankIdStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7834,6 +9724,10 @@ class EnvelopeBulkSendOneTimePasswordStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7856,6 +9750,10 @@ class EnvelopeBulkSendRemoteCertificateStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7878,6 +9776,10 @@ class EnvelopeBulkSendSwissComOnDemandStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7900,6 +9802,10 @@ class EnvelopeBulkSendDisposableCertificateStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7922,6 +9828,10 @@ class EnvelopeBulkSendLocalCertificateStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7947,6 +9857,10 @@ class EnvelopeBulkSendTypeToSignStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7972,6 +9886,10 @@ class EnvelopeBulkSendDrawToSignStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -7997,6 +9915,10 @@ class EnvelopeBulkSendClickToSignStampImprint(BaseModel):
 
 
 class EnvelopeBulkSendStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -8006,6 +9928,10 @@ class EnvelopeBulkSendStampImprintDateConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None,
@@ -8017,6 +9943,10 @@ class EnvelopeBulkSendSignaturePluginSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8029,6 +9959,10 @@ class EnvelopeBulkSendSwedishBankIdSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -8047,6 +9981,10 @@ class EnvelopeBulkSendOneTimePasswordSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -8065,6 +10003,10 @@ class EnvelopeBulkSendRemoteCertificateSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -8089,6 +10031,10 @@ class EnvelopeBulkSendBiometricSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -8099,6 +10045,10 @@ class EnvelopeBulkSendATrustCertificateSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -8114,6 +10064,10 @@ class EnvelopeBulkSendSwissComOnDemandSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -8135,6 +10089,10 @@ class EnvelopeBulkSendDisposableCertificateSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -8157,6 +10115,10 @@ class EnvelopeBulkSendLocalCertificateSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -8170,6 +10132,10 @@ class EnvelopeBulkSendTypeToSignSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -8183,6 +10149,10 @@ class EnvelopeBulkSendDrawToSignSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -8198,6 +10168,10 @@ class EnvelopeBulkSendClickToSignSignatureType(BaseModel):
 
 
 class EnvelopeBulkSendDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -8234,6 +10208,10 @@ class EnvelopeBulkSendDisposableCertificateSignatureData(BaseModel):
 
 
 class EnvelopeBulkSendReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -8247,6 +10225,10 @@ class EnvelopeBulkSendReadDocumentConfirmation(BaseModel):
 
 
 class EnvelopeBulkSendReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -8264,6 +10246,10 @@ class EnvelopeBulkSendReadPagesConfirmation(BaseModel):
 
 
 class EnvelopeBulkSendReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -8281,6 +10267,10 @@ class EnvelopeBulkSendReadAreaConfirmation(BaseModel):
 
 
 class EnvelopeBulkSendAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -8302,6 +10292,10 @@ class EnvelopeBulkSendAttachment(BaseModel):
 
 
 class EnvelopeBulkSendEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -8314,6 +10308,10 @@ class EnvelopeBulkSendEmailAppLinks(BaseModel):
 
 
 class EnvelopeBulkSendContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: str = Field(..., description="The email address of the recipient.")
     GivenName: str = Field(..., description="The given name of the recipient.")
     Surname: str = Field(..., description="The surname of the recipient.")
@@ -8326,6 +10324,10 @@ class EnvelopeBulkSendContactInformation(BaseModel):
 
 
 class EnvelopeBulkSendGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -8353,6 +10355,10 @@ class EnvelopeBulkSendGeneralPoliciesForP7MAction(BaseModel):
 
 
 class EnvelopeBulkSendGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -8368,6 +10374,10 @@ class EnvelopeBulkSendGeneralPoliciesForViewAction(BaseModel):
 
 
 class EnvelopeBulkSendGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -8392,6 +10402,10 @@ class EnvelopeBulkSendGeneralPoliciesForSignAction(BaseModel):
 
 
 class EnvelopeBulkSendVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -8407,6 +10421,10 @@ class EnvelopeBulkSendVisibleSignature(BaseModel):
 
 
 class EnvelopeBulkSendBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: EnvelopeBulkSendContactInformation = Field(
         ..., description="The contact information of the recipient."
     )
@@ -8420,6 +10438,10 @@ class EnvelopeBulkSendBasicRecipientConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -8436,6 +10458,10 @@ class EnvelopeBulkSendRadioButtonItemDefinition(BaseModel):
 
 
 class EnvelopeBulkSendTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text. The default color is black.\r\nSix digit hexadecimal color that starts with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -8461,10 +10487,18 @@ class Type13(Enum):
 
 
 class EnvelopeBulkSendPhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type13] = Field(None, description="The format of the phone numbers.")
 
 
 class EnvelopeBulkSendNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -8484,6 +10518,10 @@ class EnvelopeBulkSendNumberValidationConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -8603,6 +10641,10 @@ class EnvelopeBulkSendActionCallbackSelection(BaseModel):
 
 
 class EnvelopeBulkSendSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: str = Field(
         ..., description="The identifier of the profile for the automatic signatures."
     )
@@ -8617,6 +10659,10 @@ class EnvelopeBulkSendSignAutomatic(BaseModel):
 
 
 class EnvelopeBulkSendListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeBulkSendTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -8639,6 +10685,10 @@ class EnvelopeBulkSendListBoxDefinition(BaseModel):
 
 
 class EnvelopeBulkSendRadioButtonGroupDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -8651,6 +10701,10 @@ class EnvelopeBulkSendRadioButtonGroupDefinition(BaseModel):
 
 
 class EnvelopeBulkSendComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeBulkSendTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -8672,6 +10726,10 @@ class EnvelopeBulkSendComboBoxDefinition(BaseModel):
 
 
 class EnvelopeBulkSendCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -8685,6 +10743,10 @@ class EnvelopeBulkSendCheckBoxDefinition(BaseModel):
 
 
 class EnvelopeBulkSendTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -8708,6 +10770,10 @@ class EnvelopeBulkSendTextBoxDefinition(BaseModel):
 
 
 class EnvelopeBulkSendListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -8729,6 +10795,10 @@ class EnvelopeBulkSendListBox(BaseModel):
 
 
 class EnvelopeBulkSendRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -8751,6 +10821,10 @@ class EnvelopeBulkSendRadioButtonGroup(BaseModel):
 
 
 class EnvelopeBulkSendComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -8770,6 +10844,10 @@ class EnvelopeBulkSendComboBox(BaseModel):
 
 
 class EnvelopeBulkSendCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -8789,6 +10867,10 @@ class EnvelopeBulkSendCheckBox(BaseModel):
 
 
 class EnvelopeBulkSendExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationInSecondsAfterSending: Optional[int] = Field(
         None,
         description="The relative expiration in seconds after sending the envelope.\r\nMust be a positive number between 600 and the maximum envelope validity located in the system configuration [Configuration key: maxEnvelopeValidityInDays, Default: 2419200 seconds (28 days)].\r\nMust not be defined when property <code>ExpirationDate</code> is specified.",
@@ -8800,6 +10882,10 @@ class EnvelopeBulkSendExpirationConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -8816,24 +10902,40 @@ class EnvelopeBulkSendReminderConfiguration(BaseModel):
 
 
 class EnvelopeBulkCancelRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeBulkId: str = Field(
         ..., description="The identifier of the BulkParent envelope."
     )
 
 
 class EnvelopeBulkDeleteRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeBulkId: str = Field(
         ..., description="The identifier of the BulkParent envelope."
     )
 
 
 class EnvelopeBulkRemindRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeBulkId: str = Field(
         ..., description="The identifier of the BulkParent envelope."
     )
 
 
 class EnvelopeBulkRemindResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TotalSentReminders: Optional[int] = Field(
         None, description="The amount of reminder notifications which were sent out."
     )
@@ -8852,6 +10954,10 @@ class EnvelopeBulkRemindResponse(BaseModel):
 
 
 class EnvelopeBulkRestartExpiredRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeBulkId: str = Field(
         ..., description="The identifier of the BulkParent envelope."
     )
@@ -8866,18 +10972,34 @@ class EnvelopeBulkRestartExpiredRequest(BaseModel):
 
 
 class FileDeleteRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: str = Field(..., description="The identifier of the file.")
 
 
 class FileUploadResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(None, description="The identifier of the file.")
 
 
 class FileId(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     __root__: str
 
 
 class FilePrepareSigStringConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StartPattern: str = Field(..., description="Define the start pattern.")
     EndPattern: Optional[str] = Field(None, description="Define the end pattern.")
     ClearSigString: Optional[bool] = Field(
@@ -8904,10 +11026,18 @@ class Type15(Enum):
 
 
 class FilePreparePhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type15] = Field(None, description="The format of the phone numbers.")
 
 
 class FilePrepareTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text.\r\nSix digit hexadecimal color starting with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -8929,6 +11059,10 @@ class FilePrepareTextFormat(BaseModel):
 
 
 class FilePreparePosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -8942,6 +11076,10 @@ class FilePreparePosition(BaseModel):
 
 
 class FilePrepareSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: Optional[float] = Field(
         None, description="The width of the element in points."
     )
@@ -8951,6 +11089,10 @@ class FilePrepareSize(BaseModel):
 
 
 class FilePrepareChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -8960,6 +11102,10 @@ class FilePrepareChoiceItem(BaseModel):
 
 
 class FilePrepareRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -8978,6 +11124,10 @@ class FilePrepareRadioButtonItemDefinition(BaseModel):
 
 
 class FilePrepareATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -8987,6 +11137,10 @@ class FilePrepareATrustCertificateSignatureType(BaseModel):
 
 
 class FilePrepareBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -9010,6 +11164,10 @@ class FilePrepareBiometricSignatureType(BaseModel):
 
 
 class FilePrepareStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -9019,6 +11177,10 @@ class FilePrepareStampImprintDateConfiguration(BaseModel):
 
 
 class FilePrepareLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[FilePreparePosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -9028,11 +11190,19 @@ class FilePrepareLinkDefinition(BaseModel):
 
 
 class FilePrepareFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class FilePrepareClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9058,6 +11228,10 @@ class FilePrepareClickToSignStampImprint(BaseModel):
 
 
 class FilePrepareDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9083,6 +11257,10 @@ class FilePrepareDrawToSignStampImprint(BaseModel):
 
 
 class FilePrepareTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9108,6 +11286,10 @@ class FilePrepareTypeToSignStampImprint(BaseModel):
 
 
 class FilePrepareLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9130,6 +11312,10 @@ class FilePrepareLocalCertificateStampImprint(BaseModel):
 
 
 class FilePrepareDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9152,6 +11338,10 @@ class FilePrepareDisposableCertificateStampImprint(BaseModel):
 
 
 class FilePrepareSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9174,6 +11364,10 @@ class FilePrepareSwissComOnDemandStampImprint(BaseModel):
 
 
 class FilePrepareRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9196,6 +11390,10 @@ class FilePrepareRemoteCertificateStampImprint(BaseModel):
 
 
 class FilePrepareOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9227,6 +11425,10 @@ class FilePrepareOneTimePasswordStampImprint(BaseModel):
 
 
 class FilePrepareSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9249,6 +11451,10 @@ class FilePrepareSwedishBankIdStampImprint(BaseModel):
 
 
 class FilePreparePluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9274,6 +11480,10 @@ class FilePreparePluginStampImprint(BaseModel):
 
 
 class LicenseGetAmount(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Limit: Optional[int] = Field(
         None,
         description="The maximum number of licensable objects.\r\nThe value -1 means unlimited.",
@@ -9284,6 +11494,10 @@ class LicenseGetAmount(BaseModel):
 
 
 class SealingCertificateGetAllEntry(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(
         None,
         description="Identifier used to reference the certificate for an envelope.",
@@ -9303,6 +11517,10 @@ class SealingCertificateGetAllEntry(BaseModel):
 
 
 class TeamGetAllTeamMember(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None,
         description="The email address of the team member.\r\nThis references a user email address.",
@@ -9313,6 +11531,10 @@ class TeamGetAllTeamMember(BaseModel):
 
 
 class TeamReplaceTeamMember(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None,
         description="The email address of the team member.\r\nThis references a user email address.",
@@ -9323,6 +11545,10 @@ class TeamReplaceTeamMember(BaseModel):
 
 
 class TemplateGetSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: Optional[str] = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
@@ -9332,6 +11558,10 @@ class TemplateGetSignAutomatic(BaseModel):
 
 
 class TemplateGetSignPlaceholder(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SigningGroup: Optional[int] = Field(
         None, description="The parallel group for sign actions."
     )
@@ -9341,6 +11571,10 @@ class TemplateGetSignPlaceholder(BaseModel):
 
 
 class TemplateGetContactInformation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Email: Optional[str] = Field(
         None, description="The email address of the recipient."
     )
@@ -9357,12 +11591,20 @@ class TemplateGetContactInformation(BaseModel):
 
 
 class TemplateGetAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[TemplateGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
 
 
 class TemplateGetFilesPage(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None, description="The number of the page. It starts with 1."
     )
@@ -9373,6 +11615,10 @@ class TemplateGetFilesPage(BaseModel):
 
 
 class TemplateGetElementsReadPagesConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -9389,6 +11635,10 @@ class TemplateGetElementsReadPagesConfirmation(BaseModel):
 
 
 class TemplateGetElementsReadDocumentConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -9417,10 +11667,18 @@ class Type17(Enum):
 
 
 class TemplateGetElementsPhoneValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type17] = Field(None, description="The format of the phone numbers.")
 
 
 class TemplateGetElementsTextFormat(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextColor: Optional[str] = Field(
         None,
         description="The color of the text.\r\nSix digit hexadecimal color starting with # in #RRGGBB format according to CSS Color Module Level 4, paragraph 5.2.",
@@ -9442,6 +11700,10 @@ class TemplateGetElementsTextFormat(BaseModel):
 
 
 class TemplateGetElementsPosition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PageNumber: Optional[int] = Field(
         None,
         description="The number of the page where the element is located. It starts with 1.",
@@ -9455,6 +11717,10 @@ class TemplateGetElementsPosition(BaseModel):
 
 
 class TemplateGetElementsSize(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Width: Optional[float] = Field(
         None, description="The width of the element in points."
     )
@@ -9464,6 +11730,10 @@ class TemplateGetElementsSize(BaseModel):
 
 
 class TemplateGetElementsChoiceItem(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the choice item is selected."
     )
@@ -9473,6 +11743,10 @@ class TemplateGetElementsChoiceItem(BaseModel):
 
 
 class TemplateGetElementsRadioButtonItemDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the element when the radio button is checked."
     )
@@ -9491,6 +11765,10 @@ class TemplateGetElementsRadioButtonItemDefinition(BaseModel):
 
 
 class TemplateGetElementsATrustCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: Optional[str] = Field(
         None, description="The identifier of the A-Trust template."
     )
@@ -9500,6 +11778,10 @@ class TemplateGetElementsATrustCertificateSignatureType(BaseModel):
 
 
 class TemplateGetElementsBiometricSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BiometricVerification: Optional[bool] = Field(
         None, description="If true, a biometric verification is performed."
     )
@@ -9523,6 +11805,10 @@ class TemplateGetElementsBiometricSignatureType(BaseModel):
 
 
 class TemplateGetElementsStampImprintDateConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseLocalTimezone: Optional[bool] = Field(
         None, description="If true, the local timezone is used."
     )
@@ -9532,6 +11818,10 @@ class TemplateGetElementsStampImprintDateConfiguration(BaseModel):
 
 
 class TemplateGetElementsPredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[TemplateGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -9544,6 +11834,10 @@ class TemplateGetElementsPredefinedElementDefinition(BaseModel):
 
 
 class TemplateGetElementsLinkDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[TemplateGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -9553,11 +11847,19 @@ class TemplateGetElementsLinkDefinition(BaseModel):
 
 
 class TemplateGetElementsFieldValidationRange(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     From: Optional[str] = Field(None, description="The lower boundary of the range.")
     To: Optional[str] = Field(None, description="The upper boundary of the range.")
 
 
 class TemplateGetElementsClickToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9583,6 +11885,10 @@ class TemplateGetElementsClickToSignStampImprint(BaseModel):
 
 
 class TemplateGetElementsDrawToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9608,6 +11914,10 @@ class TemplateGetElementsDrawToSignStampImprint(BaseModel):
 
 
 class TemplateGetElementsTypeToSignStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9633,6 +11943,10 @@ class TemplateGetElementsTypeToSignStampImprint(BaseModel):
 
 
 class TemplateGetElementsLocalCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9655,6 +11969,10 @@ class TemplateGetElementsLocalCertificateStampImprint(BaseModel):
 
 
 class TemplateGetElementsDisposableCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9677,6 +11995,10 @@ class TemplateGetElementsDisposableCertificateStampImprint(BaseModel):
 
 
 class TemplateGetElementsSwissComOnDemandStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9699,6 +12021,10 @@ class TemplateGetElementsSwissComOnDemandStampImprint(BaseModel):
 
 
 class TemplateGetElementsRemoteCertificateStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9721,6 +12047,10 @@ class TemplateGetElementsRemoteCertificateStampImprint(BaseModel):
 
 
 class TemplateGetElementsOneTimePasswordStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9752,6 +12082,10 @@ class TemplateGetElementsOneTimePasswordStampImprint(BaseModel):
 
 
 class TemplateGetElementsSwedishBankIdStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9774,6 +12108,10 @@ class TemplateGetElementsSwedishBankIdStampImprint(BaseModel):
 
 
 class TemplateGetElementsPluginStampImprint(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisplayExtraInformation: Optional[bool] = Field(
         None, description="If true, the extra information is displayed."
     )
@@ -9799,6 +12137,10 @@ class TemplateGetElementsPluginStampImprint(BaseModel):
 
 
 class TemplateGetConfigurationEmailConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Subject: Optional[str] = Field(
         None, description="The subject of the sign notifications."
     )
@@ -9811,6 +12153,10 @@ class TemplateGetConfigurationEmailConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationReminderConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Enabled: Optional[bool] = Field(None, description="If true, reminders are sent.")
     FirstReminderInDays: Optional[int] = Field(
         None,
@@ -9827,6 +12173,10 @@ class TemplateGetConfigurationReminderConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationExpirationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExpirationInSeconds: Optional[int] = Field(
         None,
         description="The relative expiration in seconds after sending the envelope.",
@@ -9838,6 +12188,10 @@ class TemplateGetConfigurationExpirationConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationAgentRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Policy: Optional[Policy] = Field(
         None,
         description="Defines the redirect target page which should be opened when the agent mode is active.",
@@ -9852,6 +12206,10 @@ class TemplateGetConfigurationAgentRedirectConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationRedirectConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AfterSendRedirectUrl: Optional[str] = Field(
         None,
         description="The URL to redirect to after the envelope was sent successfully.\r\nThis is only applicable when using the eSAW UI.",
@@ -9863,10 +12221,18 @@ class TemplateGetConfigurationRedirectConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationSealingConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CertificateId: Optional[str] = Field(None, description="Sealing certificate used.")
 
 
 class TemplateGetConfigurationVisibilityOption(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -9877,6 +12243,10 @@ class TemplateGetConfigurationVisibilityOption(BaseModel):
 
 
 class TemplateGetConfigurationAgreementTranslation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LanguageCode: Optional[LanguageCode] = Field(
         None, description="The language of the translated agreement."
     )
@@ -9890,6 +12260,10 @@ class TemplateGetConfigurationAgreementTranslation(BaseModel):
 
 
 class TemplateGetConfigurationDefaultSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsDefault: Optional[bool] = Field(
         None,
         description="Indicates if the signature type is the default signature type for draft.",
@@ -9897,6 +12271,10 @@ class TemplateGetConfigurationDefaultSignature(BaseModel):
 
 
 class TemplateGetConfigurationActionCallbackSelection(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ConfirmTransactionCode: Optional[bool] = Field(
         None,
         description="If true, the callback is triggered when a transaction code was sent. This is only used for legacy disposable certificates, after user accepted issuance of disposable certificate.",
@@ -10016,6 +12394,10 @@ class TemplateGetConfigurationActionCallbackSelection(BaseModel):
 
 
 class TemplateGetConfigurationBasicRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -10026,6 +12408,10 @@ class TemplateGetConfigurationBasicRecipientConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationBatchConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Mode: Optional[Mode] = Field(
         None, description="The mode, that will be used for batch signing."
     )
@@ -10036,6 +12422,10 @@ class TemplateGetConfigurationBatchConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationGeneralPoliciesForSignAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -10060,6 +12450,10 @@ class TemplateGetConfigurationGeneralPoliciesForSignAction(BaseModel):
 
 
 class TemplateGetConfigurationGeneralPoliciesForViewAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -10075,6 +12469,10 @@ class TemplateGetConfigurationGeneralPoliciesForViewAction(BaseModel):
 
 
 class TemplateGetConfigurationGeneralPoliciesForP7MAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AllowSaveDocument: Optional[bool] = Field(
         None,
         description="If true, the client is allowed to save the workstep document.",
@@ -10102,6 +12500,10 @@ class TemplateGetConfigurationGeneralPoliciesForP7MAction(BaseModel):
 
 
 class TemplateGetConfigurationEmailAppLinks(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Android: Optional[bool] = Field(
         None, description="If true, an Android app link is added to the email message."
     )
@@ -10114,10 +12516,18 @@ class TemplateGetConfigurationEmailAppLinks(BaseModel):
 
 
 class TemplateGetConfigurationWebFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class TemplateGetConfigurationAppFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoveDocumentFromRecentDocumentList: Optional[bool] = Field(
         None,
         description="If true, the document will be removed from the recent document list.",
@@ -10133,10 +12543,18 @@ class TemplateGetConfigurationAppFinishAction(BaseModel):
 
 
 class TemplateGetConfigurationKioskFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RedirectUri: Optional[str] = Field(None, description="The redirect uri.")
 
 
 class TemplateGetConfigurationDisposableCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentIssuingCountry: Optional[str] = Field(
         None,
         description="The issuing country of the document.\r\nWill be used as country of residence, if lean is disabled.",
@@ -10173,11 +12591,19 @@ class TemplateGetConfigurationDisposableCertificateSignatureData(BaseModel):
 
 
 class TemplateGetConfigurationRemoteCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     DeviceId: Optional[str] = Field(None, description="The identifier of the device.")
 
 
 class TemplateGetConfigurationSwissComOnDemandSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(None, description="The phone number.")
     CommonName: Optional[str] = Field(
         None, description="The name of the certificate that is created or checked."
@@ -10196,6 +12622,10 @@ class TemplateGetConfigurationSwissComOnDemandSignatureData(BaseModel):
 
 
 class TemplateGetConfigurationSmsOneTimePasswordSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -10203,12 +12633,20 @@ class TemplateGetConfigurationSmsOneTimePasswordSignatureData(BaseModel):
 
 
 class TemplateGetConfigurationATrustCertificateSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the recipient."
     )
 
 
 class TemplateGetConfigurationSwedishBankIdSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for signing."
     )
@@ -10219,12 +12657,20 @@ class TemplateGetConfigurationSwedishBankIdSignatureData(BaseModel):
 
 
 class TemplateGetConfigurationAccessCodeAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Code: Optional[str] = Field(
         None, description="The code for authenticating the recipient."
     )
 
 
 class TemplateGetConfigurationSmsOneTimePasswordAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PhoneNumber: Optional[str] = Field(
         None,
         description="The phone number to which the one time password will be sent.",
@@ -10232,6 +12678,10 @@ class TemplateGetConfigurationSmsOneTimePasswordAuthentication(BaseModel):
 
 
 class TemplateGetConfigurationSwedishBankIdAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalNumber: Optional[str] = Field(
         None, description="The personal number for the authentication."
     )
@@ -10242,11 +12692,19 @@ class TemplateGetConfigurationSwedishBankIdAuthentication(BaseModel):
 
 
 class TemplateGetConfigurationSignaturePluginParameter(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Key: Optional[str] = Field(None, description="The identifier of the parameter.")
     Value: Optional[str] = Field(None, description="The value of the parameter.")
 
 
 class TemplateGetConfigurationAuthenticationValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FieldReferenceId: Optional[str] = Field(
         None, description="The identifier of the field."
     )
@@ -10256,6 +12714,10 @@ class TemplateGetConfigurationAuthenticationValidation(BaseModel):
 
 
 class TemplateFindRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SearchText: Optional[str] = Field(
         None,
         description="If set, the given text is searched in following fields:\r\nenvelope name and description\r\nnotification subject and message \r\nsender email address, given name and surname  \r\nrecipient email address, given name and surname\r\nNote: Using this search option is very resource intensive! It might take very long.",
@@ -10267,20 +12729,36 @@ class TemplateFindRequest(BaseModel):
 
 
 class TemplateFindTemplate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the envelope.")
     Name: Optional[str] = Field(None, description="The name of the envelope.")
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
 
 
 class TemplateCreateDraftRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TemplateId: str = Field(..., description="The identifier of the template.")
 
 
 class TemplateCreateDraftResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DraftId: Optional[str] = Field(None, description="The identifier of the draft.")
 
 
 class AuthorizationWhoAmIResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UserId: Optional[str] = Field(None, description="The identifier of the user.")
     Email: Optional[str] = Field(None, description="The email address of the user.")
     GivenName: Optional[str] = Field(None, description="The given name of the user.")
@@ -10305,6 +12783,10 @@ class AuthorizationWhoAmIResponse(BaseModel):
 
 
 class AutomaticProfileGetAllResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RemoteCertificateProfiles: Optional[List[AutomaticProfileGetAllProfile]] = Field(
         None,
         description="The remote certificate profiles available for automatic signing.",
@@ -10317,6 +12799,10 @@ class AutomaticProfileGetAllResponse(BaseModel):
 
 
 class DraftGetSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -10326,12 +12812,20 @@ class DraftGetSendCopy(BaseModel):
 
 
 class DraftGetSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfigurations: Optional[List[DraftGetAdvancedRecipientConfiguration]] = (
         Field(None, description="The contact information of the recipients.")
     )
 
 
 class DraftGetSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -10341,6 +12835,10 @@ class DraftGetSign(BaseModel):
 
 
 class DraftGetView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -10350,6 +12848,10 @@ class DraftGetView(BaseModel):
 
 
 class DraftGetSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -10359,6 +12861,10 @@ class DraftGetSignAsP7M(BaseModel):
 
 
 class DraftGetFilesDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileName: Optional[str] = Field(None, description="The name of the file.")
     PageCount: Optional[int] = Field(None, description="The number of pages.")
     Pages: Optional[List[DraftGetFilesPage]] = Field(
@@ -10370,6 +12876,10 @@ class DraftGetFilesDocument(BaseModel):
 
 
 class DraftGetElementsTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -10395,6 +12905,10 @@ class DraftGetElementsTextBoxDefinition(BaseModel):
 
 
 class DraftGetElementsCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -10410,6 +12924,10 @@ class DraftGetElementsCheckBoxDefinition(BaseModel):
 
 
 class DraftGetElementsComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -10431,6 +12949,10 @@ class DraftGetElementsComboBoxDefinition(BaseModel):
 
 
 class DraftGetElementsRadioButtonDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -10441,6 +12963,10 @@ class DraftGetElementsRadioButtonDefinition(BaseModel):
 
 
 class DraftGetElementsListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -10462,6 +12988,10 @@ class DraftGetElementsListBoxDefinition(BaseModel):
 
 
 class DraftGetElementsSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[DraftGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -10471,6 +13001,10 @@ class DraftGetElementsSignatureFieldDefinition(BaseModel):
 
 
 class DraftGetElementsSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         DraftGetElementsStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -10478,6 +13012,10 @@ class DraftGetElementsSignatureTaskConfiguration(BaseModel):
 
 
 class DraftGetElementsAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[DraftGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -10487,6 +13025,10 @@ class DraftGetElementsAttachmentDefinition(BaseModel):
 
 
 class DraftGetElementsPredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -10499,6 +13041,10 @@ class DraftGetElementsPredefinedText(BaseModel):
 
 
 class DraftGetElementsEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -10510,6 +13056,10 @@ class DraftGetElementsEmail(BaseModel):
 
 
 class DraftGetElementsInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -10525,6 +13075,10 @@ class DraftGetElementsInitials(BaseModel):
 
 
 class DraftGetElementsGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -10536,6 +13090,10 @@ class DraftGetElementsGivenName(BaseModel):
 
 
 class DraftGetElementsSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -10547,6 +13105,10 @@ class DraftGetElementsSurname(BaseModel):
 
 
 class DraftGetElementsFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -10558,6 +13120,10 @@ class DraftGetElementsFullName(BaseModel):
 
 
 class DraftGetElementsDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DateFormat: Optional[str] = Field(None, description="The format of the date.")
     DocumentNumber: Optional[int] = Field(
@@ -10570,6 +13136,10 @@ class DraftGetElementsDate(BaseModel):
 
 
 class DraftGetElementsHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the hyperlink.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -10582,6 +13152,10 @@ class DraftGetElementsHyperLink(BaseModel):
 
 
 class DraftGetElementsReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[DraftGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -10591,6 +13165,10 @@ class DraftGetElementsReadingAreaDefinition(BaseModel):
 
 
 class DraftGetElementsDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[DraftGetElementsFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -10598,6 +13176,10 @@ class DraftGetElementsDateValidationConfiguration(BaseModel):
 
 
 class DraftGetElementsNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -10617,6 +13199,10 @@ class DraftGetElementsNumberValidationConfiguration(BaseModel):
 
 
 class DraftGetElementsTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -10626,6 +13212,10 @@ class DraftGetElementsTimeValidationConfiguration(BaseModel):
 
 
 class DraftGetElementsClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -10640,6 +13230,10 @@ class DraftGetElementsClickToSignSignatureType(BaseModel):
 
 
 class DraftGetElementsDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -10652,6 +13246,10 @@ class DraftGetElementsDrawToSignSignatureType(BaseModel):
 
 
 class DraftGetElementsTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -10664,6 +13262,10 @@ class DraftGetElementsTypeToSignSignatureType(BaseModel):
 
 
 class DraftGetElementsLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -10685,6 +13287,10 @@ class DraftGetElementsLocalCertificateSignatureType(BaseModel):
 
 
 class DraftGetElementsDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -10705,6 +13311,10 @@ class DraftGetElementsDisposableCertificateSignatureType(BaseModel):
 
 
 class DraftGetElementsSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The certificate validity in seconds."
     )
@@ -10719,6 +13329,10 @@ class DraftGetElementsSwissComOnDemandSignatureType(BaseModel):
 
 
 class DraftGetElementsRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -10736,6 +13350,10 @@ class DraftGetElementsRemoteCertificateSignatureType(BaseModel):
 
 
 class DraftGetElementsOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -10753,6 +13371,10 @@ class DraftGetElementsOneTimePasswordSignatureType(BaseModel):
 
 
 class DraftGetElementsSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -10764,6 +13386,10 @@ class DraftGetElementsSwedishBankIdSignatureType(BaseModel):
 
 
 class DraftGetElementsSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
@@ -10774,6 +13400,10 @@ class DraftGetElementsSignaturePluginSignatureType(BaseModel):
 
 
 class DraftGetElementsVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -10791,6 +13421,10 @@ class DraftGetElementsVisibleSignature(BaseModel):
 
 
 class DraftGetConfigurationAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[DraftGetConfigurationAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -10798,6 +13432,10 @@ class DraftGetConfigurationAgreementConfiguration(BaseModel):
 
 
 class DraftGetConfigurationDefaultSignatureTypeConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     None_: Optional[DraftGetConfigurationDefaultSignature] = Field(
         None, alias="None", description='"None" SignatureType.'
     )
@@ -10828,6 +13466,10 @@ class DraftGetConfigurationDefaultSignatureTypeConfiguration(BaseModel):
 
 
 class DraftGetConfigurationActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: Optional[str] = Field(
         None, description="The callback URL triggered for the selected events."
     )
@@ -10837,6 +13479,10 @@ class DraftGetConfigurationActivityActionCallbackConfiguration(BaseModel):
 
 
 class DraftGetConfigurationSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftGetConfigurationBasicRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -10846,6 +13492,10 @@ class DraftGetConfigurationSendCopy(BaseModel):
 
 
 class DraftGetConfigurationFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[DraftGetConfigurationWebFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -10873,6 +13523,10 @@ class DraftGetConfigurationFinishAction(BaseModel):
 
 
 class DraftGetConfigurationSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -10883,6 +13537,10 @@ class DraftGetConfigurationSignaturePluginSignatureData(BaseModel):
 
 
 class DraftGetConfigurationOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -10892,6 +13550,10 @@ class DraftGetConfigurationOAuthAuthentication(BaseModel):
 
 
 class DraftGetConfigurationSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -10901,12 +13563,20 @@ class DraftGetConfigurationSamlAuthentication(BaseModel):
 
 
 class DraftFindResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Drafts: Optional[List[DraftFindDraft]] = Field(
         None, description="The drafts which match the search criteria."
     )
 
 
 class EnvelopeBulkSendResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnvelopeBulkChildren: Optional[List[EnvelopeBulkSendChild]] = Field(
         None, description="The information about the created BulkChild envelopes."
     )
@@ -10916,6 +13586,10 @@ class EnvelopeBulkSendResponse(BaseModel):
 
 
 class DraftCreateAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[DraftCreateAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -10924,6 +13598,10 @@ class DraftCreateAgreementConfiguration(BaseModel):
 
 
 class DraftCreateDefaultSignatureTypeConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     None_: Optional[DraftCreateDefaultSignature] = Field(
         None, alias="None", description='"None" SignatureType.'
     )
@@ -10954,6 +13632,10 @@ class DraftCreateDefaultSignatureTypeConfiguration(BaseModel):
 
 
 class DraftCreateActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
@@ -10963,6 +13645,10 @@ class DraftCreateActivityActionCallbackConfiguration(BaseModel):
 
 
 class DraftCreateSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftCreatePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -10970,6 +13656,10 @@ class DraftCreateSignatureFieldDefinition(BaseModel):
 
 
 class DraftCreateSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         DraftCreateStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -10977,6 +13667,10 @@ class DraftCreateSignatureTaskConfiguration(BaseModel):
 
 
 class DraftCreateAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftCreatePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -10984,6 +13678,10 @@ class DraftCreateAttachmentDefinition(BaseModel):
 
 
 class DraftCreateHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -10997,6 +13695,10 @@ class DraftCreateHyperLink(BaseModel):
 
 
 class DraftCreateReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftCreatePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -11004,6 +13706,10 @@ class DraftCreateReadingAreaDefinition(BaseModel):
 
 
 class DraftCreateSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[DraftCreateBasicRecipientConfiguration] = Field(
         None, description="The configuration of the recipient."
     )
@@ -11013,6 +13719,10 @@ class DraftCreateSendCopy(BaseModel):
 
 
 class DraftCreateDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[DraftCreateFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -11020,6 +13730,10 @@ class DraftCreateDateValidationConfiguration(BaseModel):
 
 
 class DraftCreateTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -11029,6 +13743,10 @@ class DraftCreateTimeValidationConfiguration(BaseModel):
 
 
 class DraftCreatePredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftCreateTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -11039,6 +13757,10 @@ class DraftCreatePredefinedElementDefinition(BaseModel):
 
 
 class DraftCreateFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[DraftCreateClientFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -11066,6 +13788,10 @@ class DraftCreateFinishAction(BaseModel):
 
 
 class DraftCreateLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -11088,6 +13814,10 @@ class DraftCreateLocalCertificateSignatureType(BaseModel):
 
 
 class DraftCreateSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -11099,6 +13829,10 @@ class DraftCreateSignaturePluginSignatureData(BaseModel):
 
 
 class DraftCreateOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -11108,6 +13842,10 @@ class DraftCreateOAuthAuthentication(BaseModel):
 
 
 class DraftCreateSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -11117,6 +13855,10 @@ class DraftCreateSamlAuthentication(BaseModel):
 
 
 class DraftCreateP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -11138,6 +13880,10 @@ class DraftCreateP7MSignatureMethods(BaseModel):
 
 
 class DraftCreateVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -11153,6 +13899,10 @@ class DraftCreateVisibleSignature(BaseModel):
 
 
 class DraftCreateSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: Optional[str] = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
@@ -11167,6 +13917,10 @@ class DraftCreateSignAutomatic(BaseModel):
 
 
 class DraftCreateInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11183,6 +13937,10 @@ class DraftCreateInitials(BaseModel):
 
 
 class DraftCreateReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -11200,6 +13958,10 @@ class DraftCreateReadAreaConfirmation(BaseModel):
 
 
 class DraftCreateCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -11219,6 +13981,10 @@ class DraftCreateCallbackConfiguration(BaseModel):
 
 
 class DraftUpdateAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[DraftUpdateAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -11227,6 +13993,10 @@ class DraftUpdateAgreementConfiguration(BaseModel):
 
 
 class DraftUpdateDefaultSignatureTypeConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     None_: Optional[DraftUpdateDefaultSignature] = Field(
         None, alias="None", description='"None" SignatureType.'
     )
@@ -11257,6 +14027,10 @@ class DraftUpdateDefaultSignatureTypeConfiguration(BaseModel):
 
 
 class DraftUpdateActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
@@ -11266,6 +14040,10 @@ class DraftUpdateActivityActionCallbackConfiguration(BaseModel):
 
 
 class DraftUpdateCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -11285,6 +14063,10 @@ class DraftUpdateCallbackConfiguration(BaseModel):
 
 
 class DraftUpdateRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DraftId: str = Field(..., description="The identifier of the draft.")
     Name: Optional[str] = Field(None, description="The name of the envelope.")
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
@@ -11337,6 +14119,10 @@ class DraftUpdateRequest(BaseModel):
 
 
 class DraftReorderActivitiesAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     View: Optional[DraftReorderActivitiesView] = Field(
         None, description="Define groups for parallel view actions."
     )
@@ -11352,12 +14138,20 @@ class DraftReorderActivitiesAction(BaseModel):
 
 
 class DraftActivityReplaceSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftActivityReplaceBasicRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
 
 
 class DraftActivityReplaceFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[DraftActivityReplaceClientFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -11385,6 +14179,10 @@ class DraftActivityReplaceFinishAction(BaseModel):
 
 
 class DraftActivityReplaceSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: DraftActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -11392,6 +14190,10 @@ class DraftActivityReplaceSignatureFieldDefinition(BaseModel):
 
 
 class DraftActivityReplaceSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -11403,6 +14205,10 @@ class DraftActivityReplaceSignaturePluginSignatureData(BaseModel):
 
 
 class DraftActivityReplaceOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -11412,6 +14218,10 @@ class DraftActivityReplaceOAuthAuthentication(BaseModel):
 
 
 class DraftActivityReplaceSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -11421,6 +14231,10 @@ class DraftActivityReplaceSamlAuthentication(BaseModel):
 
 
 class DraftActivityReplaceAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[DraftActivityReplaceClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -11460,6 +14274,10 @@ class DraftActivityReplaceAllowedSignatureTypes(BaseModel):
 
 
 class DraftActivityReplaceSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         DraftActivityReplaceStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -11467,6 +14285,10 @@ class DraftActivityReplaceSignatureTaskConfiguration(BaseModel):
 
 
 class DraftActivityReplaceHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -11480,6 +14302,10 @@ class DraftActivityReplaceHyperLink(BaseModel):
 
 
 class DraftActivityReplaceDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[DraftActivityReplaceFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -11487,6 +14313,10 @@ class DraftActivityReplaceDateValidationConfiguration(BaseModel):
 
 
 class DraftActivityReplaceTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -11496,6 +14326,10 @@ class DraftActivityReplaceTimeValidationConfiguration(BaseModel):
 
 
 class DraftActivityReplacePredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[DraftActivityReplaceTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -11506,6 +14340,10 @@ class DraftActivityReplacePredefinedElementDefinition(BaseModel):
 
 
 class DraftActivityReplaceInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11522,6 +14360,10 @@ class DraftActivityReplaceInitials(BaseModel):
 
 
 class DraftActivityReplaceSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the signature.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -11552,6 +14394,10 @@ class DraftActivityReplaceSignatureField(BaseModel):
 
 
 class DraftActivityReplaceP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -11573,6 +14419,10 @@ class DraftActivityReplaceP7MSignatureMethods(BaseModel):
 
 
 class DraftActivityReplaceVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -11588,6 +14438,10 @@ class DraftActivityReplaceVisibleSignature(BaseModel):
 
 
 class DraftActivityReplaceSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: Optional[str] = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
@@ -11602,6 +14456,10 @@ class DraftActivityReplaceSignAutomatic(BaseModel):
 
 
 class EnvelopeGetSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -11611,6 +14469,10 @@ class EnvelopeGetSendCopy(BaseModel):
 
 
 class EnvelopeGetSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -11625,6 +14487,10 @@ class EnvelopeGetSign(BaseModel):
 
 
 class EnvelopeGetView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -11634,6 +14500,10 @@ class EnvelopeGetView(BaseModel):
 
 
 class EnvelopeGetSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -11643,6 +14513,10 @@ class EnvelopeGetSignAsP7M(BaseModel):
 
 
 class EnvelopeGetFilesDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileId: Optional[str] = Field(None, description="The identifier of the file.")
     FileName: Optional[str] = Field(None, description="The name of the file.")
     AuditTrailFileId: Optional[str] = Field(
@@ -11659,6 +14533,10 @@ class EnvelopeGetFilesDocument(BaseModel):
 
 
 class EnvelopeGetHistoryEvent(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CreationDate: Optional[datetime] = Field(
         None,
         description="Date of the creation of the event, some events may be fired at a later point after the CreationDate\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
@@ -11702,6 +14580,10 @@ class EnvelopeGetHistoryEvent(BaseModel):
 
 
 class EnvelopeGetElementsTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -11727,6 +14609,10 @@ class EnvelopeGetElementsTextBoxDefinition(BaseModel):
 
 
 class EnvelopeGetElementsCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -11742,6 +14628,10 @@ class EnvelopeGetElementsCheckBoxDefinition(BaseModel):
 
 
 class EnvelopeGetElementsComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -11763,6 +14653,10 @@ class EnvelopeGetElementsComboBoxDefinition(BaseModel):
 
 
 class EnvelopeGetElementsRadioButtonDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -11773,6 +14667,10 @@ class EnvelopeGetElementsRadioButtonDefinition(BaseModel):
 
 
 class EnvelopeGetElementsListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -11794,6 +14692,10 @@ class EnvelopeGetElementsListBoxDefinition(BaseModel):
 
 
 class EnvelopeGetElementsSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[EnvelopeGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -11803,6 +14705,10 @@ class EnvelopeGetElementsSignatureFieldDefinition(BaseModel):
 
 
 class EnvelopeGetElementsSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         EnvelopeGetElementsStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -11810,6 +14716,10 @@ class EnvelopeGetElementsSignatureTaskConfiguration(BaseModel):
 
 
 class EnvelopeGetElementsAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[EnvelopeGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -11819,6 +14729,10 @@ class EnvelopeGetElementsAttachmentDefinition(BaseModel):
 
 
 class EnvelopeGetElementsPredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Value: Optional[str] = Field(None, description="The value of the predefined text.")
     DocumentNumber: Optional[int] = Field(
@@ -11831,6 +14745,10 @@ class EnvelopeGetElementsPredefinedText(BaseModel):
 
 
 class EnvelopeGetElementsEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11842,6 +14760,10 @@ class EnvelopeGetElementsEmail(BaseModel):
 
 
 class EnvelopeGetElementsInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11857,6 +14779,10 @@ class EnvelopeGetElementsInitials(BaseModel):
 
 
 class EnvelopeGetElementsGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11868,6 +14794,10 @@ class EnvelopeGetElementsGivenName(BaseModel):
 
 
 class EnvelopeGetElementsSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11879,6 +14809,10 @@ class EnvelopeGetElementsSurname(BaseModel):
 
 
 class EnvelopeGetElementsFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -11890,6 +14824,10 @@ class EnvelopeGetElementsFullName(BaseModel):
 
 
 class EnvelopeGetElementsDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DateFormat: Optional[str] = Field(None, description="The format of the date.")
     DocumentNumber: Optional[int] = Field(
@@ -11902,6 +14840,10 @@ class EnvelopeGetElementsDate(BaseModel):
 
 
 class EnvelopeGetElementsHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the hyperlink.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -11914,6 +14856,10 @@ class EnvelopeGetElementsHyperLink(BaseModel):
 
 
 class EnvelopeGetElementsReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[EnvelopeGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -11923,6 +14869,10 @@ class EnvelopeGetElementsReadingAreaDefinition(BaseModel):
 
 
 class EnvelopeGetElementsDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[EnvelopeGetElementsFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -11930,6 +14880,10 @@ class EnvelopeGetElementsDateValidationConfiguration(BaseModel):
 
 
 class EnvelopeGetElementsNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -11949,6 +14903,10 @@ class EnvelopeGetElementsNumberValidationConfiguration(BaseModel):
 
 
 class EnvelopeGetElementsTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -11958,6 +14916,10 @@ class EnvelopeGetElementsTimeValidationConfiguration(BaseModel):
 
 
 class EnvelopeGetElementsClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -11972,6 +14934,10 @@ class EnvelopeGetElementsClickToSignSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -11986,6 +14952,10 @@ class EnvelopeGetElementsDrawToSignSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -12000,6 +14970,10 @@ class EnvelopeGetElementsTypeToSignSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -12021,6 +14995,10 @@ class EnvelopeGetElementsLocalCertificateSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -12041,6 +15019,10 @@ class EnvelopeGetElementsDisposableCertificateSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The certificate validity in seconds."
     )
@@ -12055,6 +15037,10 @@ class EnvelopeGetElementsSwissComOnDemandSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -12072,6 +15058,10 @@ class EnvelopeGetElementsRemoteCertificateSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -12089,6 +15079,10 @@ class EnvelopeGetElementsOneTimePasswordSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -12100,6 +15094,10 @@ class EnvelopeGetElementsSwedishBankIdSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
@@ -12110,6 +15108,10 @@ class EnvelopeGetElementsSignaturePluginSignatureType(BaseModel):
 
 
 class EnvelopeGetElementsVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -12127,6 +15129,10 @@ class EnvelopeGetElementsVisibleSignature(BaseModel):
 
 
 class EnvelopeGetViewerLinksResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ViewerLinks: Optional[List[EnvelopeGetViewerLinksViewerLink]] = Field(
         None,
         description="The links to access the SignAnyWhere Viewer for the active activities of the envelope.",
@@ -12134,6 +15140,10 @@ class EnvelopeGetViewerLinksResponse(BaseModel):
 
 
 class EnvelopeGetConfigurationAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[EnvelopeGetConfigurationAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -12141,6 +15151,10 @@ class EnvelopeGetConfigurationAgreementConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: Optional[str] = Field(
         None, description="The callback URL triggered for the selected events."
     )
@@ -12150,6 +15164,10 @@ class EnvelopeGetConfigurationActivityActionCallbackConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         EnvelopeGetConfigurationBasicRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -12159,6 +15177,10 @@ class EnvelopeGetConfigurationSendCopy(BaseModel):
 
 
 class EnvelopeGetConfigurationFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[EnvelopeGetConfigurationWebFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -12186,6 +15208,10 @@ class EnvelopeGetConfigurationFinishAction(BaseModel):
 
 
 class EnvelopeGetConfigurationSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -12196,6 +15222,10 @@ class EnvelopeGetConfigurationSignaturePluginSignatureData(BaseModel):
 
 
 class EnvelopeGetConfigurationOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -12205,6 +15235,10 @@ class EnvelopeGetConfigurationOAuthAuthentication(BaseModel):
 
 
 class EnvelopeGetConfigurationSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -12214,12 +15248,20 @@ class EnvelopeGetConfigurationSamlAuthentication(BaseModel):
 
 
 class EnvelopeFindResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Envelopes: Optional[List[EnvelopeFindEnvelope]] = Field(
         None, description="The envelopes which match the search criteria."
     )
 
 
 class EnvelopeSendAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[EnvelopeSendAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -12228,6 +15270,10 @@ class EnvelopeSendAgreementConfiguration(BaseModel):
 
 
 class EnvelopeSendActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
@@ -12237,6 +15283,10 @@ class EnvelopeSendActivityActionCallbackConfiguration(BaseModel):
 
 
 class EnvelopeSendSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeSendBasicRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -12246,6 +15296,10 @@ class EnvelopeSendSendCopy(BaseModel):
 
 
 class EnvelopeSendDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[EnvelopeSendFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -12253,6 +15307,10 @@ class EnvelopeSendDateValidationConfiguration(BaseModel):
 
 
 class EnvelopeSendTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -12262,6 +15320,10 @@ class EnvelopeSendTimeValidationConfiguration(BaseModel):
 
 
 class EnvelopeSendFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[EnvelopeSendClientFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -12289,6 +15351,10 @@ class EnvelopeSendFinishAction(BaseModel):
 
 
 class EnvelopeSendSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -12300,6 +15366,10 @@ class EnvelopeSendSignaturePluginSignatureData(BaseModel):
 
 
 class EnvelopeSendOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: str = Field(..., description="The name of the OAuth provider.")
     Validations: Optional[List[EnvelopeSendAuthenticationValidation]] = Field(
         None, description="The validation rules for the OAuth response.", max_items=100
@@ -12307,6 +15377,10 @@ class EnvelopeSendOAuthAuthentication(BaseModel):
 
 
 class EnvelopeSendSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: str = Field(..., description="The name of the SAML provider.")
     Validations: Optional[List[EnvelopeSendAuthenticationValidation]] = Field(
         None, description="The validation rules for the SAML response.", max_items=100
@@ -12314,6 +15388,10 @@ class EnvelopeSendSamlAuthentication(BaseModel):
 
 
 class EnvelopeSendAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[EnvelopeSendClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -12353,6 +15431,10 @@ class EnvelopeSendAllowedSignatureTypes(BaseModel):
 
 
 class EnvelopeSendSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         EnvelopeSendStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -12360,6 +15442,10 @@ class EnvelopeSendSignatureTaskConfiguration(BaseModel):
 
 
 class EnvelopeSendHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -12373,6 +15459,10 @@ class EnvelopeSendHyperLink(BaseModel):
 
 
 class EnvelopeSendPredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeSendTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -12383,6 +15473,10 @@ class EnvelopeSendPredefinedElementDefinition(BaseModel):
 
 
 class EnvelopeSendInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -12399,6 +15493,10 @@ class EnvelopeSendInitials(BaseModel):
 
 
 class EnvelopeSendSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the signature.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -12429,6 +15527,10 @@ class EnvelopeSendSignatureField(BaseModel):
 
 
 class EnvelopeSendP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -12450,6 +15552,10 @@ class EnvelopeSendP7MSignatureMethods(BaseModel):
 
 
 class EnvelopeSendCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -12466,12 +15572,20 @@ class EnvelopeSendCallbackConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         EnvelopeActivityReplaceBasicRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
 
 
 class EnvelopeActivityReplaceFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[EnvelopeActivityReplaceClientFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -12499,6 +15613,10 @@ class EnvelopeActivityReplaceFinishAction(BaseModel):
 
 
 class EnvelopeActivityReplaceSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: EnvelopeActivityReplacePosition = Field(
         ..., description="The position of the element within the document."
     )
@@ -12508,6 +15626,10 @@ class EnvelopeActivityReplaceSignatureFieldDefinition(BaseModel):
 
 
 class EnvelopeActivityReplaceSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -12519,6 +15641,10 @@ class EnvelopeActivityReplaceSignaturePluginSignatureData(BaseModel):
 
 
 class EnvelopeActivityReplaceOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -12532,6 +15658,10 @@ class EnvelopeActivityReplaceOAuthAuthentication(BaseModel):
 
 
 class EnvelopeActivityReplaceSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -12545,6 +15675,10 @@ class EnvelopeActivityReplaceSamlAuthentication(BaseModel):
 
 
 class EnvelopeActivityReplaceAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[EnvelopeActivityReplaceClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -12584,6 +15718,10 @@ class EnvelopeActivityReplaceAllowedSignatureTypes(BaseModel):
 
 
 class EnvelopeActivityReplaceSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         EnvelopeActivityReplaceStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -12591,6 +15729,10 @@ class EnvelopeActivityReplaceSignatureTaskConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: int = Field(
@@ -12604,6 +15746,10 @@ class EnvelopeActivityReplaceHyperLink(BaseModel):
 
 
 class EnvelopeActivityReplaceDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[EnvelopeActivityReplaceFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -12611,6 +15757,10 @@ class EnvelopeActivityReplaceDateValidationConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -12620,6 +15770,10 @@ class EnvelopeActivityReplaceTimeValidationConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplacePredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeActivityReplaceTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -12632,6 +15786,10 @@ class EnvelopeActivityReplacePredefinedElementDefinition(BaseModel):
 
 
 class EnvelopeActivityReplaceInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -12650,6 +15808,10 @@ class EnvelopeActivityReplaceInitials(BaseModel):
 
 
 class EnvelopeActivityReplaceSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the signature.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -12680,6 +15842,10 @@ class EnvelopeActivityReplaceSignatureField(BaseModel):
 
 
 class EnvelopeActivityReplaceP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -12701,6 +15867,10 @@ class EnvelopeActivityReplaceP7MSignatureMethods(BaseModel):
 
 
 class EnvelopeActivityReplaceVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: int = Field(
         ...,
         description="The reference number of the containing document. It starts with 1.",
@@ -12716,6 +15886,10 @@ class EnvelopeActivityReplaceVisibleSignature(BaseModel):
 
 
 class EnvelopeActivityReplaceSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProfileId: Optional[str] = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
@@ -12730,6 +15904,10 @@ class EnvelopeActivityReplaceSignAutomatic(BaseModel):
 
 
 class EnvelopeBulkGetResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BulkStatus: Optional[BulkStatus] = Field(
         None, description="The status of the BulkParent envelope."
     )
@@ -12739,6 +15917,10 @@ class EnvelopeBulkGetResponse(BaseModel):
 
 
 class EnvelopeBulkFindResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BulkParentEnvelopes: Optional[List[EnvelopeBulkFindParentEnvelope]] = Field(
         None,
         description="The BulkParent envelopes where the child envelopes match the search criteria.",
@@ -12746,6 +15928,10 @@ class EnvelopeBulkFindResponse(BaseModel):
 
 
 class EnvelopeBulkSendAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[EnvelopeBulkSendAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -12754,6 +15940,10 @@ class EnvelopeBulkSendAgreementConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
@@ -12763,6 +15953,10 @@ class EnvelopeBulkSendActivityActionCallbackConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeBulkSendBasicRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -12772,6 +15966,10 @@ class EnvelopeBulkSendSendCopy(BaseModel):
 
 
 class EnvelopeBulkSendDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[EnvelopeBulkSendFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -12779,6 +15977,10 @@ class EnvelopeBulkSendDateValidationConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -12788,6 +15990,10 @@ class EnvelopeBulkSendTimeValidationConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[EnvelopeBulkSendClientFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -12815,6 +16021,10 @@ class EnvelopeBulkSendFinishAction(BaseModel):
 
 
 class EnvelopeBulkSendSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -12826,6 +16036,10 @@ class EnvelopeBulkSendSignaturePluginSignatureData(BaseModel):
 
 
 class EnvelopeBulkSendOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -12835,6 +16049,10 @@ class EnvelopeBulkSendOAuthAuthentication(BaseModel):
 
 
 class EnvelopeBulkSendSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -12844,6 +16062,10 @@ class EnvelopeBulkSendSamlAuthentication(BaseModel):
 
 
 class EnvelopeBulkSendAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[EnvelopeBulkSendClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -12883,6 +16105,10 @@ class EnvelopeBulkSendAllowedSignatureTypes(BaseModel):
 
 
 class EnvelopeBulkSendSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         EnvelopeBulkSendStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -12890,6 +16116,10 @@ class EnvelopeBulkSendSignatureTaskConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -12903,6 +16133,10 @@ class EnvelopeBulkSendHyperLink(BaseModel):
 
 
 class EnvelopeBulkSendPredefinedElementDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[EnvelopeBulkSendTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -12913,6 +16147,10 @@ class EnvelopeBulkSendPredefinedElementDefinition(BaseModel):
 
 
 class EnvelopeBulkSendInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -12929,6 +16167,10 @@ class EnvelopeBulkSendInitials(BaseModel):
 
 
 class EnvelopeBulkSendSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the signature.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -12959,6 +16201,10 @@ class EnvelopeBulkSendSignatureField(BaseModel):
 
 
 class EnvelopeBulkSendP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -12980,6 +16226,10 @@ class EnvelopeBulkSendP7MSignatureMethods(BaseModel):
 
 
 class EnvelopeBulkSendCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -12996,6 +16246,10 @@ class EnvelopeBulkSendCallbackConfiguration(BaseModel):
 
 
 class FilePrepareRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileIds: List[FileId] = Field(
         ...,
         description="The identifiers of the uploaded files.",
@@ -13014,6 +16268,10 @@ class FilePrepareRequest(BaseModel):
 
 
 class FilePrepareTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -13039,6 +16297,10 @@ class FilePrepareTextBoxDefinition(BaseModel):
 
 
 class FilePrepareCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -13054,6 +16316,10 @@ class FilePrepareCheckBoxDefinition(BaseModel):
 
 
 class FilePrepareComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[FilePrepareTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -13075,6 +16341,10 @@ class FilePrepareComboBoxDefinition(BaseModel):
 
 
 class FilePrepareRadioButtonDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -13085,6 +16355,10 @@ class FilePrepareRadioButtonDefinition(BaseModel):
 
 
 class FilePrepareListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[FilePrepareTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -13106,6 +16380,10 @@ class FilePrepareListBoxDefinition(BaseModel):
 
 
 class FilePrepareSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[FilePreparePosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -13115,6 +16393,10 @@ class FilePrepareSignatureFieldDefinition(BaseModel):
 
 
 class FilePrepareSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         FilePrepareStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -13122,6 +16404,10 @@ class FilePrepareSignatureTaskConfiguration(BaseModel):
 
 
 class FilePrepareAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[FilePreparePosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -13131,6 +16417,10 @@ class FilePrepareAttachmentDefinition(BaseModel):
 
 
 class FilePrepareHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the hyperlink.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -13143,6 +16433,10 @@ class FilePrepareHyperLink(BaseModel):
 
 
 class FilePrepareDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[FilePrepareFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -13150,6 +16444,10 @@ class FilePrepareDateValidationConfiguration(BaseModel):
 
 
 class FilePrepareNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -13169,6 +16467,10 @@ class FilePrepareNumberValidationConfiguration(BaseModel):
 
 
 class FilePrepareTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -13178,6 +16480,10 @@ class FilePrepareTimeValidationConfiguration(BaseModel):
 
 
 class FilePrepareClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -13190,6 +16496,10 @@ class FilePrepareClickToSignSignatureType(BaseModel):
 
 
 class FilePrepareDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -13202,6 +16512,10 @@ class FilePrepareDrawToSignSignatureType(BaseModel):
 
 
 class FilePrepareTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -13214,6 +16528,10 @@ class FilePrepareTypeToSignSignatureType(BaseModel):
 
 
 class FilePrepareLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -13235,6 +16553,10 @@ class FilePrepareLocalCertificateSignatureType(BaseModel):
 
 
 class FilePrepareDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -13255,6 +16577,10 @@ class FilePrepareDisposableCertificateSignatureType(BaseModel):
 
 
 class FilePrepareSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The certificate validity in seconds."
     )
@@ -13269,6 +16595,10 @@ class FilePrepareSwissComOnDemandSignatureType(BaseModel):
 
 
 class FilePrepareRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -13286,6 +16616,10 @@ class FilePrepareRemoteCertificateSignatureType(BaseModel):
 
 
 class FilePrepareOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -13301,6 +16635,10 @@ class FilePrepareOneTimePasswordSignatureType(BaseModel):
 
 
 class FilePrepareSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13310,6 +16648,10 @@ class FilePrepareSwedishBankIdSignatureType(BaseModel):
 
 
 class FilePrepareSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
@@ -13320,6 +16662,10 @@ class FilePrepareSignaturePluginSignatureType(BaseModel):
 
 
 class FilePrepareVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -13337,6 +16683,10 @@ class FilePrepareVisibleSignature(BaseModel):
 
 
 class LicenseGetResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[str] = Field(None, description="The type of the license.")
     ExpirationDate: Optional[datetime] = Field(
         None,
@@ -13356,12 +16706,20 @@ class LicenseGetResponse(BaseModel):
 
 
 class SealingCertificateGetAllResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SealingCertificates: Optional[List[SealingCertificateGetAllEntry]] = Field(
         None, description="Sealing certificates."
     )
 
 
 class TeamGetAllTeam(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Name: Optional[str] = Field(None, description="The name of the team.")
     ShareEnvelopes: Optional[bool] = Field(
         None, description="If true, envelopes are shared with team members."
@@ -13375,6 +16733,10 @@ class TeamGetAllTeam(BaseModel):
 
 
 class TeamReplaceTeam(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Name: str = Field(..., description="The name of the team.")
     ShareEnvelopes: Optional[bool] = Field(
         None, description="If true, envelopes are shared with team members."
@@ -13388,6 +16750,10 @@ class TeamReplaceTeam(BaseModel):
 
 
 class TemplateGetSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[TemplateGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -13397,12 +16763,20 @@ class TemplateGetSendCopy(BaseModel):
 
 
 class TemplateGetSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfigurations: Optional[
         List[TemplateGetAdvancedRecipientConfiguration]
     ] = Field(None, description="The contact information of the recipients.")
 
 
 class TemplateGetSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[TemplateGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -13412,6 +16786,10 @@ class TemplateGetSign(BaseModel):
 
 
 class TemplateGetView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[TemplateGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -13421,6 +16799,10 @@ class TemplateGetView(BaseModel):
 
 
 class TemplateGetSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[TemplateGetContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -13430,6 +16812,10 @@ class TemplateGetSignAsP7M(BaseModel):
 
 
 class TemplateGetFilesDocument(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     FileName: Optional[str] = Field(None, description="The name of the file.")
     PageCount: Optional[int] = Field(None, description="The number of pages.")
     Pages: Optional[List[TemplateGetFilesPage]] = Field(
@@ -13441,6 +16827,10 @@ class TemplateGetFilesDocument(BaseModel):
 
 
 class TemplateGetElementsTextBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ReadOnly: Optional[bool] = Field(
         None, description="If true, the element is readonly."
     )
@@ -13466,6 +16856,10 @@ class TemplateGetElementsTextBoxDefinition(BaseModel):
 
 
 class TemplateGetElementsCheckBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ExportValue: Optional[str] = Field(
         None, description="The value of the check box when it is checked."
     )
@@ -13481,6 +16875,10 @@ class TemplateGetElementsCheckBoxDefinition(BaseModel):
 
 
 class TemplateGetElementsComboBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[TemplateGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -13502,6 +16900,10 @@ class TemplateGetElementsComboBoxDefinition(BaseModel):
 
 
 class TemplateGetElementsRadioButtonDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsSelectUnison: Optional[bool] = Field(
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
@@ -13512,6 +16914,10 @@ class TemplateGetElementsRadioButtonDefinition(BaseModel):
 
 
 class TemplateGetElementsListBoxDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFormat: Optional[TemplateGetElementsTextFormat] = Field(
         None, description="The configuration of the text format."
     )
@@ -13533,6 +16939,10 @@ class TemplateGetElementsListBoxDefinition(BaseModel):
 
 
 class TemplateGetElementsSignatureFieldDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[TemplateGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -13542,6 +16952,10 @@ class TemplateGetElementsSignatureFieldDefinition(BaseModel):
 
 
 class TemplateGetElementsSignatureTaskConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     StampImprintDateConfiguration: Optional[
         TemplateGetElementsStampImprintDateConfiguration
     ] = Field(None, description="The configuration of the stamp imprint date.")
@@ -13549,6 +16963,10 @@ class TemplateGetElementsSignatureTaskConfiguration(BaseModel):
 
 
 class TemplateGetElementsAttachmentDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[TemplateGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -13558,6 +16976,10 @@ class TemplateGetElementsAttachmentDefinition(BaseModel):
 
 
 class TemplateGetElementsPredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Value: Optional[str] = Field(None, description="The value of the predefined text.")
     DocumentNumber: Optional[int] = Field(
@@ -13570,6 +16992,10 @@ class TemplateGetElementsPredefinedText(BaseModel):
 
 
 class TemplateGetElementsEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -13581,6 +17007,10 @@ class TemplateGetElementsEmail(BaseModel):
 
 
 class TemplateGetElementsInitials(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     IncludeMiddleNameInitials: Optional[bool] = Field(
         None,
@@ -13596,6 +17026,10 @@ class TemplateGetElementsInitials(BaseModel):
 
 
 class TemplateGetElementsGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -13607,6 +17041,10 @@ class TemplateGetElementsGivenName(BaseModel):
 
 
 class TemplateGetElementsSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -13618,6 +17056,10 @@ class TemplateGetElementsSurname(BaseModel):
 
 
 class TemplateGetElementsFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -13629,6 +17071,10 @@ class TemplateGetElementsFullName(BaseModel):
 
 
 class TemplateGetElementsDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -13641,6 +17087,10 @@ class TemplateGetElementsDate(BaseModel):
 
 
 class TemplateGetElementsHyperLink(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the hyperlink.")
     Uri: Optional[str] = Field(None, description="The URI of the hyperlink.")
     DocumentNumber: Optional[int] = Field(
@@ -13653,6 +17103,10 @@ class TemplateGetElementsHyperLink(BaseModel):
 
 
 class TemplateGetElementsReadingAreaDefinition(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Position: Optional[TemplateGetElementsPosition] = Field(
         None, description="The position of the  within the document."
     )
@@ -13662,6 +17116,10 @@ class TemplateGetElementsReadingAreaDefinition(BaseModel):
 
 
 class TemplateGetElementsDateValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DateFormat: Optional[str] = Field(None, description="The format of the dates.")
     Range: Optional[TemplateGetElementsFieldValidationRange] = Field(
         None, description="The range of the values."
@@ -13669,6 +17127,10 @@ class TemplateGetElementsDateValidationConfiguration(BaseModel):
 
 
 class TemplateGetElementsNumberValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DecimalDigits: Optional[int] = Field(
         None, description="The expected amount of decimal digits."
     )
@@ -13688,6 +17150,10 @@ class TemplateGetElementsNumberValidationConfiguration(BaseModel):
 
 
 class TemplateGetElementsTimeValidationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TimeFormat: Optional[str] = Field(
         None, description="The format of the time values."
     )
@@ -13697,6 +17163,10 @@ class TemplateGetElementsTimeValidationConfiguration(BaseModel):
 
 
 class TemplateGetElementsClickToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -13711,6 +17181,10 @@ class TemplateGetElementsClickToSignSignatureType(BaseModel):
 
 
 class TemplateGetElementsDrawToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -13725,6 +17199,10 @@ class TemplateGetElementsDrawToSignSignatureType(BaseModel):
 
 
 class TemplateGetElementsTypeToSignSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UseExternalSignatureImage: Optional[UseExternalSignatureImage] = Field(
         None, description="The external signature image mode."
     )
@@ -13739,6 +17217,10 @@ class TemplateGetElementsTypeToSignSignatureType(BaseModel):
 
 
 class TemplateGetElementsLocalCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     EnforcePreferredHashAlgorithm: Optional[bool] = Field(
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
@@ -13760,6 +17242,10 @@ class TemplateGetElementsLocalCertificateSignatureType(BaseModel):
 
 
 class TemplateGetElementsDisposableCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     IsLongLived: Optional[bool] = Field(
         None, description="If true, the disposable certificate is long lived."
     )
@@ -13780,6 +17266,10 @@ class TemplateGetElementsDisposableCertificateSignatureType(BaseModel):
 
 
 class TemplateGetElementsSwissComOnDemandSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The certificate validity in seconds."
     )
@@ -13794,6 +17284,10 @@ class TemplateGetElementsSwissComOnDemandSignatureType(BaseModel):
 
 
 class TemplateGetElementsRemoteCertificateSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the certificate in seconds."
     )
@@ -13811,6 +17305,10 @@ class TemplateGetElementsRemoteCertificateSignatureType(BaseModel):
 
 
 class TemplateGetElementsOneTimePasswordSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ValidityInSeconds: Optional[int] = Field(
         None, description="The validity of the password in seconds."
     )
@@ -13828,6 +17326,10 @@ class TemplateGetElementsOneTimePasswordSignatureType(BaseModel):
 
 
 class TemplateGetElementsSwedishBankIdSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13839,6 +17341,10 @@ class TemplateGetElementsSwedishBankIdSignatureType(BaseModel):
 
 
 class TemplateGetElementsSignaturePluginSignatureType(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(None, description="The identifier of the plugin.")
     Preferred: Optional[bool] = Field(
         None, description="If true, the signature type is set as preferred."
@@ -13849,6 +17355,10 @@ class TemplateGetElementsSignaturePluginSignatureType(BaseModel):
 
 
 class TemplateGetElementsVisibleSignature(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DocumentNumber: Optional[int] = Field(
         None,
         description="The reference number of the containing document. It starts with 1.",
@@ -13866,6 +17376,10 @@ class TemplateGetElementsVisibleSignature(BaseModel):
 
 
 class TemplateGetConfigurationAgreementConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Translations: Optional[List[TemplateGetConfigurationAgreementTranslation]] = Field(
         None,
         description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
@@ -13873,6 +17387,10 @@ class TemplateGetConfigurationAgreementConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationDefaultSignatureTypeConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     None_: Optional[TemplateGetConfigurationDefaultSignature] = Field(
         None, alias="None", description='"None" SignatureType.'
     )
@@ -13903,6 +17421,10 @@ class TemplateGetConfigurationDefaultSignatureTypeConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationActivityActionCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Url: Optional[str] = Field(
         None, description="The callback URL triggered for the selected events."
     )
@@ -13912,6 +17434,10 @@ class TemplateGetConfigurationActivityActionCallbackConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationSendCopy(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         TemplateGetConfigurationBasicRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -13921,6 +17447,10 @@ class TemplateGetConfigurationSendCopy(BaseModel):
 
 
 class TemplateGetConfigurationFinishAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAnyWhereViewer: Optional[TemplateGetConfigurationWebFinishAction] = Field(
         None, description="The actions for the SAW Viewer."
     )
@@ -13948,6 +17478,10 @@ class TemplateGetConfigurationFinishAction(BaseModel):
 
 
 class TemplateGetConfigurationSignaturePluginSignatureData(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PluginId: Optional[str] = Field(
         None, description="The identifier of the signature plugin."
     )
@@ -13958,6 +17492,10 @@ class TemplateGetConfigurationSignaturePluginSignatureData(BaseModel):
 
 
 class TemplateGetConfigurationOAuthAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the OAuth provider."
     )
@@ -13967,6 +17505,10 @@ class TemplateGetConfigurationOAuthAuthentication(BaseModel):
 
 
 class TemplateGetConfigurationSamlAuthentication(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ProviderName: Optional[str] = Field(
         None, description="The name of the SAML provider."
     )
@@ -13976,12 +17518,20 @@ class TemplateGetConfigurationSamlAuthentication(BaseModel):
 
 
 class TemplateFindResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Templates: Optional[List[TemplateFindTemplate]] = Field(
         None, description="The templates matching the search criteria."
     )
 
 
 class DraftGetAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[DraftGetSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -14003,12 +17553,20 @@ class DraftGetAction(BaseModel):
 
 
 class DraftGetFilesResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Documents: Optional[List[DraftGetFilesDocument]] = Field(
         None, description="The documents."
     )
 
 
 class DraftGetElementsCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14027,6 +17585,10 @@ class DraftGetElementsCheckBox(BaseModel):
 
 
 class DraftGetElementsComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14045,6 +17607,10 @@ class DraftGetElementsComboBox(BaseModel):
 
 
 class DraftGetElementsRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -14066,6 +17632,10 @@ class DraftGetElementsRadioButtonGroup(BaseModel):
 
 
 class DraftGetElementsListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14085,6 +17655,10 @@ class DraftGetElementsListBox(BaseModel):
 
 
 class DraftGetElementsAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14104,6 +17678,10 @@ class DraftGetElementsAttachment(BaseModel):
 
 
 class DraftGetElementsPredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[DraftGetElementsPredefinedText]] = Field(
         None, description="The predefined text fields."
     )
@@ -14128,12 +17706,20 @@ class DraftGetElementsPredefinedFieldElements(BaseModel):
 
 
 class DraftGetElementsLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[DraftGetElementsHyperLink]] = Field(
         None, description="The list of hyperlink elements."
     )
 
 
 class DraftGetElementsReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -14150,6 +17736,10 @@ class DraftGetElementsReadAreaConfirmation(BaseModel):
 
 
 class DraftGetElementsFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[
         DraftGetElementsDateValidationConfiguration
@@ -14166,6 +17756,10 @@ class DraftGetElementsFieldValidation(BaseModel):
 
 
 class DraftGetElementsAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[DraftGetElementsClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -14205,6 +17799,10 @@ class DraftGetElementsAllowedSignatureTypes(BaseModel):
 
 
 class DraftGetElementsSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     VisibleSignatures: Optional[List[DraftGetElementsVisibleSignature]] = Field(
         None,
         description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
@@ -14212,6 +17810,10 @@ class DraftGetElementsSignAutomatic(BaseModel):
 
 
 class DraftGetConfigurationCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -14231,6 +17833,10 @@ class DraftGetConfigurationCallbackConfiguration(BaseModel):
 
 
 class DraftGetConfigurationSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[
         DraftGetConfigurationDisposableCertificateSignatureData
     ] = Field(
@@ -14263,6 +17869,10 @@ class DraftGetConfigurationSignatureDataConfiguration(BaseModel):
 
 
 class DraftGetConfigurationP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -14280,6 +17890,10 @@ class DraftGetConfigurationP7MSignatureMethods(BaseModel):
 
 
 class DraftGetConfigurationAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[DraftGetConfigurationAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -14301,6 +17915,10 @@ class DraftGetConfigurationAuthenticationConfiguration(BaseModel):
 
 
 class DraftSendResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Envelope: Optional[EnvelopeSendResponse] = Field(
         None,
         description="The information about the sent envelope. Populated, when the draft did not contain a bulk action.",
@@ -14312,12 +17930,20 @@ class DraftSendResponse(BaseModel):
 
 
 class DraftCreateLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[DraftCreateHyperLink]] = Field(
         None, description="The list of hyperlink elements.", max_items=50
     )
 
 
 class DraftCreateFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type2] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[DraftCreateDateValidationConfiguration] = (
         Field(None, description="The validation rules for dates.")
@@ -14334,6 +17960,10 @@ class DraftCreateFieldValidation(BaseModel):
 
 
 class DraftCreateAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[DraftCreateClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -14373,6 +18003,10 @@ class DraftCreateAllowedSignatureTypes(BaseModel):
 
 
 class DraftCreateAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14394,6 +18028,10 @@ class DraftCreateAttachment(BaseModel):
 
 
 class DraftCreatePredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14407,6 +18045,10 @@ class DraftCreatePredefinedText(BaseModel):
 
 
 class DraftCreateEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14419,6 +18061,10 @@ class DraftCreateEmail(BaseModel):
 
 
 class DraftCreateGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14431,6 +18077,10 @@ class DraftCreateGivenName(BaseModel):
 
 
 class DraftCreateSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14443,6 +18093,10 @@ class DraftCreateSurname(BaseModel):
 
 
 class DraftCreateFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14455,6 +18109,10 @@ class DraftCreateFullName(BaseModel):
 
 
 class DraftCreateDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14468,6 +18126,10 @@ class DraftCreateDate(BaseModel):
 
 
 class DraftCreateSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[DraftCreateDisposableCertificateSignatureData] = (
         Field(
             None, description="The disposable certificate configuration for the action."
@@ -14500,6 +18162,10 @@ class DraftCreateSignatureDataConfiguration(BaseModel):
 
 
 class DraftCreateAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[DraftCreateAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -14523,6 +18189,10 @@ class DraftCreateAuthenticationConfiguration(BaseModel):
 
 
 class DraftCreateAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftCreateContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -14561,6 +18231,10 @@ class DraftCreateAdvancedRecipientConfiguration(BaseModel):
 
 
 class DraftCreateSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the signature.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -14591,6 +18265,10 @@ class DraftCreateSignatureField(BaseModel):
 
 
 class DraftCreateTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -14612,6 +18290,10 @@ class DraftCreateTextBox(BaseModel):
 
 
 class DraftReorderActivitiesActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ActivityId: str = Field(..., description="The identifier of the activity.")
     Action: Optional[DraftReorderActivitiesAction] = Field(
         None, description="Define parallel groups if needed."
@@ -14619,6 +18301,10 @@ class DraftReorderActivitiesActivity(BaseModel):
 
 
 class DraftActivityReplaceSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[
         DraftActivityReplaceDisposableCertificateSignatureData
     ] = Field(
@@ -14655,6 +18341,10 @@ class DraftActivityReplaceSignatureDataConfiguration(BaseModel):
 
 
 class DraftActivityReplaceAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[DraftActivityReplaceAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -14682,12 +18372,20 @@ class DraftActivityReplaceAuthenticationConfiguration(BaseModel):
 
 
 class DraftActivityReplaceLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[DraftActivityReplaceHyperLink]] = Field(
         None, description="The list of hyperlink elements.", max_items=50
     )
 
 
 class DraftActivityReplaceFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type4] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[
         DraftActivityReplaceDateValidationConfiguration
@@ -14704,6 +18402,10 @@ class DraftActivityReplaceFieldValidation(BaseModel):
 
 
 class DraftActivityReplacePredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14717,6 +18419,10 @@ class DraftActivityReplacePredefinedText(BaseModel):
 
 
 class DraftActivityReplaceEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14729,6 +18435,10 @@ class DraftActivityReplaceEmail(BaseModel):
 
 
 class DraftActivityReplaceGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14741,6 +18451,10 @@ class DraftActivityReplaceGivenName(BaseModel):
 
 
 class DraftActivityReplaceSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14753,6 +18467,10 @@ class DraftActivityReplaceSurname(BaseModel):
 
 
 class DraftActivityReplaceFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14765,6 +18483,10 @@ class DraftActivityReplaceFullName(BaseModel):
 
 
 class DraftActivityReplaceDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14778,6 +18500,10 @@ class DraftActivityReplaceDate(BaseModel):
 
 
 class DraftActivityReplaceTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -14799,6 +18525,10 @@ class DraftActivityReplaceTextBox(BaseModel):
 
 
 class DraftActivityReplaceRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftActivityReplaceContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -14825,6 +18555,10 @@ class DraftActivityReplaceRecipientConfiguration(BaseModel):
 
 
 class DraftActivityReplaceAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftActivityReplaceContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -14862,6 +18596,10 @@ class DraftActivityReplaceAdvancedRecipientConfiguration(BaseModel):
 
 
 class EnvelopeGetAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[EnvelopeGetSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -14880,6 +18618,10 @@ class EnvelopeGetAction(BaseModel):
 
 
 class EnvelopeGetFilesResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Documents: Optional[List[EnvelopeGetFilesDocument]] = Field(
         None, description="The finished documents of the envelope."
     )
@@ -14892,6 +18634,10 @@ class EnvelopeGetFilesResponse(BaseModel):
 
 
 class EnvelopeGetHistoryResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Events: Optional[List[EnvelopeGetHistoryEvent]] = Field(
         None, description="List of events that have or will occur"
     )
@@ -14906,6 +18652,10 @@ class EnvelopeGetHistoryResponse(BaseModel):
 
 
 class EnvelopeGetElementsCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14924,6 +18674,10 @@ class EnvelopeGetElementsCheckBox(BaseModel):
 
 
 class EnvelopeGetElementsComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14942,6 +18696,10 @@ class EnvelopeGetElementsComboBox(BaseModel):
 
 
 class EnvelopeGetElementsRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -14963,6 +18721,10 @@ class EnvelopeGetElementsRadioButtonGroup(BaseModel):
 
 
 class EnvelopeGetElementsListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -14982,6 +18744,10 @@ class EnvelopeGetElementsListBox(BaseModel):
 
 
 class EnvelopeGetElementsAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15001,6 +18767,10 @@ class EnvelopeGetElementsAttachment(BaseModel):
 
 
 class EnvelopeGetElementsPredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[EnvelopeGetElementsPredefinedText]] = Field(
         None, description="The predefined text fields."
     )
@@ -15025,12 +18795,20 @@ class EnvelopeGetElementsPredefinedFieldElements(BaseModel):
 
 
 class EnvelopeGetElementsLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[EnvelopeGetElementsHyperLink]] = Field(
         None, description="The list of hyperlink elements."
     )
 
 
 class EnvelopeGetElementsReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -15047,6 +18825,10 @@ class EnvelopeGetElementsReadAreaConfirmation(BaseModel):
 
 
 class EnvelopeGetElementsFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type6] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[
         EnvelopeGetElementsDateValidationConfiguration
@@ -15063,6 +18845,10 @@ class EnvelopeGetElementsFieldValidation(BaseModel):
 
 
 class EnvelopeGetElementsAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[EnvelopeGetElementsClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -15102,6 +18888,10 @@ class EnvelopeGetElementsAllowedSignatureTypes(BaseModel):
 
 
 class EnvelopeGetElementsSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     VisibleSignatures: Optional[List[EnvelopeGetElementsVisibleSignature]] = Field(
         None,
         description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
@@ -15109,6 +18899,10 @@ class EnvelopeGetElementsSignAutomatic(BaseModel):
 
 
 class EnvelopeGetConfigurationCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -15125,6 +18919,10 @@ class EnvelopeGetConfigurationCallbackConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[
         EnvelopeGetConfigurationDisposableCertificateSignatureData
     ] = Field(
@@ -15157,6 +18955,10 @@ class EnvelopeGetConfigurationSignatureDataConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -15174,6 +18976,10 @@ class EnvelopeGetConfigurationP7MSignatureMethods(BaseModel):
 
 
 class EnvelopeGetConfigurationAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[EnvelopeGetConfigurationAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -15198,6 +19004,10 @@ class EnvelopeGetConfigurationAuthenticationConfiguration(BaseModel):
 
 
 class EnvelopeSendFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type8] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[EnvelopeSendDateValidationConfiguration] = (
         Field(None, description="The validation rules for dates.")
@@ -15214,6 +19024,10 @@ class EnvelopeSendFieldValidation(BaseModel):
 
 
 class EnvelopeSendSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[EnvelopeSendDisposableCertificateSignatureData] = (
         Field(
             None, description="The disposable certificate configuration for the action."
@@ -15246,6 +19060,10 @@ class EnvelopeSendSignatureDataConfiguration(BaseModel):
 
 
 class EnvelopeSendAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[EnvelopeSendAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -15269,12 +19087,20 @@ class EnvelopeSendAuthenticationConfiguration(BaseModel):
 
 
 class EnvelopeSendLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[EnvelopeSendHyperLink]] = Field(
         None, description="The list of hyperlink elements.", max_items=50
     )
 
 
 class EnvelopeSendPredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15288,6 +19114,10 @@ class EnvelopeSendPredefinedText(BaseModel):
 
 
 class EnvelopeSendEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15300,6 +19130,10 @@ class EnvelopeSendEmail(BaseModel):
 
 
 class EnvelopeSendGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15312,6 +19146,10 @@ class EnvelopeSendGivenName(BaseModel):
 
 
 class EnvelopeSendSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15324,6 +19162,10 @@ class EnvelopeSendSurname(BaseModel):
 
 
 class EnvelopeSendFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15336,6 +19178,10 @@ class EnvelopeSendFullName(BaseModel):
 
 
 class EnvelopeSendDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15349,6 +19195,10 @@ class EnvelopeSendDate(BaseModel):
 
 
 class EnvelopeSendRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeSendContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -15376,6 +19226,10 @@ class EnvelopeSendRecipientConfiguration(BaseModel):
 
 
 class EnvelopeSendAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: EnvelopeSendContactInformation = Field(
         ..., description="The contact information of the recipient."
     )
@@ -15414,6 +19268,10 @@ class EnvelopeSendAdvancedRecipientConfiguration(BaseModel):
 
 
 class EnvelopeSendTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -15435,6 +19293,10 @@ class EnvelopeSendTextBox(BaseModel):
 
 
 class EnvelopeActivityReplaceSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[
         EnvelopeActivityReplaceDisposableCertificateSignatureData
     ] = Field(
@@ -15471,6 +19333,10 @@ class EnvelopeActivityReplaceSignatureDataConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[EnvelopeActivityReplaceAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -15500,12 +19366,20 @@ class EnvelopeActivityReplaceAuthenticationConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[EnvelopeActivityReplaceHyperLink]] = Field(
         None, description="The list of hyperlink elements.", max_items=50
     )
 
 
 class EnvelopeActivityReplaceFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type10] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[
         EnvelopeActivityReplaceDateValidationConfiguration
@@ -15522,6 +19396,10 @@ class EnvelopeActivityReplaceFieldValidation(BaseModel):
 
 
 class EnvelopeActivityReplacePredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -15537,6 +19415,10 @@ class EnvelopeActivityReplacePredefinedText(BaseModel):
 
 
 class EnvelopeActivityReplaceEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -15551,6 +19433,10 @@ class EnvelopeActivityReplaceEmail(BaseModel):
 
 
 class EnvelopeActivityReplaceGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -15565,6 +19451,10 @@ class EnvelopeActivityReplaceGivenName(BaseModel):
 
 
 class EnvelopeActivityReplaceSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -15579,6 +19469,10 @@ class EnvelopeActivityReplaceSurname(BaseModel):
 
 
 class EnvelopeActivityReplaceFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -15593,6 +19487,10 @@ class EnvelopeActivityReplaceFullName(BaseModel):
 
 
 class EnvelopeActivityReplaceDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: int = Field(
         ...,
@@ -15608,6 +19506,10 @@ class EnvelopeActivityReplaceDate(BaseModel):
 
 
 class EnvelopeActivityReplaceTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: str = Field(..., description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -15625,6 +19527,10 @@ class EnvelopeActivityReplaceTextBox(BaseModel):
 
 
 class EnvelopeActivityReplaceRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeActivityReplaceContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -15651,6 +19557,10 @@ class EnvelopeActivityReplaceRecipientConfiguration(BaseModel):
 
 
 class EnvelopeActivityReplaceAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeActivityReplaceContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -15688,6 +19598,10 @@ class EnvelopeActivityReplaceAdvancedRecipientConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type12] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[
         EnvelopeBulkSendDateValidationConfiguration
@@ -15704,6 +19618,10 @@ class EnvelopeBulkSendFieldValidation(BaseModel):
 
 
 class EnvelopeBulkSendSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[
         EnvelopeBulkSendDisposableCertificateSignatureData
     ] = Field(
@@ -15738,6 +19656,10 @@ class EnvelopeBulkSendSignatureDataConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[EnvelopeBulkSendAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -15763,12 +19685,20 @@ class EnvelopeBulkSendAuthenticationConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[EnvelopeBulkSendHyperLink]] = Field(
         None, description="The list of hyperlink elements.", max_items=50
     )
 
 
 class EnvelopeBulkSendPredefinedText(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15782,6 +19712,10 @@ class EnvelopeBulkSendPredefinedText(BaseModel):
 
 
 class EnvelopeBulkSendEmail(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15794,6 +19728,10 @@ class EnvelopeBulkSendEmail(BaseModel):
 
 
 class EnvelopeBulkSendGivenName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15806,6 +19744,10 @@ class EnvelopeBulkSendGivenName(BaseModel):
 
 
 class EnvelopeBulkSendSurname(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15818,6 +19760,10 @@ class EnvelopeBulkSendSurname(BaseModel):
 
 
 class EnvelopeBulkSendFullName(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15830,6 +19776,10 @@ class EnvelopeBulkSendFullName(BaseModel):
 
 
 class EnvelopeBulkSendDate(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15843,6 +19793,10 @@ class EnvelopeBulkSendDate(BaseModel):
 
 
 class EnvelopeBulkSendRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeBulkSendContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -15869,6 +19823,10 @@ class EnvelopeBulkSendRecipientConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[EnvelopeBulkSendContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -15906,6 +19864,10 @@ class EnvelopeBulkSendAdvancedRecipientConfiguration(BaseModel):
 
 
 class EnvelopeBulkSendTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -15927,6 +19889,10 @@ class EnvelopeBulkSendTextBox(BaseModel):
 
 
 class FilePrepareCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15945,6 +19911,10 @@ class FilePrepareCheckBox(BaseModel):
 
 
 class FilePrepareComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -15963,6 +19933,10 @@ class FilePrepareComboBox(BaseModel):
 
 
 class FilePrepareRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -15984,6 +19958,10 @@ class FilePrepareRadioButtonGroup(BaseModel):
 
 
 class FilePrepareListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -16003,6 +19981,10 @@ class FilePrepareListBox(BaseModel):
 
 
 class FilePrepareAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -16022,12 +20004,20 @@ class FilePrepareAttachment(BaseModel):
 
 
 class FilePrepareLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[FilePrepareHyperLink]] = Field(
         None, description="The list of hyperlink elements."
     )
 
 
 class FilePrepareFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type14] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[FilePrepareDateValidationConfiguration] = (
         Field(None, description="The validation rules for dates.")
@@ -16044,6 +20034,10 @@ class FilePrepareFieldValidation(BaseModel):
 
 
 class FilePrepareAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[FilePrepareClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -16083,6 +20077,10 @@ class FilePrepareAllowedSignatureTypes(BaseModel):
 
 
 class FilePrepareSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     VisibleSignatures: Optional[List[FilePrepareVisibleSignature]] = Field(
         None,
         description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
@@ -16090,12 +20088,20 @@ class FilePrepareSignAutomatic(BaseModel):
 
 
 class TeamGetAllResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Teams: Optional[List[TeamGetAllTeam]] = Field(
         None, description="The teams of the organization."
     )
 
 
 class TeamReplaceRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Teams: List[TeamReplaceTeam] = Field(
         ...,
         description="The teams which will replace all the existing teams.",
@@ -16104,6 +20110,10 @@ class TeamReplaceRequest(BaseModel):
 
 
 class TemplateGetAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[TemplateGetSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -16128,12 +20138,20 @@ class TemplateGetAction(BaseModel):
 
 
 class TemplateGetFilesResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Documents: Optional[List[TemplateGetFilesDocument]] = Field(
         None, description="The documents."
     )
 
 
 class TemplateGetElementsCheckBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -16152,6 +20170,10 @@ class TemplateGetElementsCheckBox(BaseModel):
 
 
 class TemplateGetElementsComboBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -16170,6 +20192,10 @@ class TemplateGetElementsComboBox(BaseModel):
 
 
 class TemplateGetElementsRadioButtonGroup(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     GroupName: Optional[str] = Field(
         None, description="The name of the radio button group."
     )
@@ -16191,6 +20217,10 @@ class TemplateGetElementsRadioButtonGroup(BaseModel):
 
 
 class TemplateGetElementsListBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -16210,6 +20240,10 @@ class TemplateGetElementsListBox(BaseModel):
 
 
 class TemplateGetElementsAttachment(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     DocumentNumber: Optional[int] = Field(
         None,
@@ -16229,6 +20263,10 @@ class TemplateGetElementsAttachment(BaseModel):
 
 
 class TemplateGetElementsPredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[TemplateGetElementsPredefinedText]] = Field(
         None, description="The predefined text fields."
     )
@@ -16253,12 +20291,20 @@ class TemplateGetElementsPredefinedFieldElements(BaseModel):
 
 
 class TemplateGetElementsLinkConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     HyperLinks: Optional[List[TemplateGetElementsHyperLink]] = Field(
         None, description="The list of hyperlink elements."
     )
 
 
 class TemplateGetElementsReadAreaConfirmation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -16275,6 +20321,10 @@ class TemplateGetElementsReadAreaConfirmation(BaseModel):
 
 
 class TemplateGetElementsFieldValidation(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Type: Optional[Type16] = Field(None, description="The type of the value.")
     DateValidationConfiguration: Optional[
         TemplateGetElementsDateValidationConfiguration
@@ -16291,6 +20341,10 @@ class TemplateGetElementsFieldValidation(BaseModel):
 
 
 class TemplateGetElementsAllowedSignatureTypes(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ClickToSign: Optional[TemplateGetElementsClickToSignSignatureType] = Field(
         None, description='Allow signing with "click to sign".'
     )
@@ -16330,6 +20384,10 @@ class TemplateGetElementsAllowedSignatureTypes(BaseModel):
 
 
 class TemplateGetElementsSignAutomatic(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     VisibleSignatures: Optional[List[TemplateGetElementsVisibleSignature]] = Field(
         None,
         description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
@@ -16337,6 +20395,10 @@ class TemplateGetElementsSignAutomatic(BaseModel):
 
 
 class TemplateGetConfigurationCallbackConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     CallbackUrl: Optional[str] = Field(
         None,
         description="The callback URL triggered when the envelope has been finished.",
@@ -16356,6 +20418,10 @@ class TemplateGetConfigurationCallbackConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationSignatureDataConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DisposableCertificate: Optional[
         TemplateGetConfigurationDisposableCertificateSignatureData
     ] = Field(
@@ -16388,6 +20454,10 @@ class TemplateGetConfigurationSignatureDataConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationP7MSignatureMethods(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     LocalCertificate: Optional[bool] = Field(
         None, description="If true, a local certificate can be used."
     )
@@ -16405,6 +20475,10 @@ class TemplateGetConfigurationP7MSignatureMethods(BaseModel):
 
 
 class TemplateGetConfigurationAuthenticationConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     AccessCode: Optional[TemplateGetConfigurationAccessCodeAuthentication] = Field(
         None, description="The configuration of the authentication with an access code."
     )
@@ -16429,6 +20503,10 @@ class TemplateGetConfigurationAuthenticationConfiguration(BaseModel):
 
 
 class DraftGetActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     PlaceholderLabel: Optional[str] = Field(
         None, description="The label of a sign placeholder."
@@ -16439,6 +20517,10 @@ class DraftGetActivity(BaseModel):
 
 
 class DraftGetElementsTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -16459,6 +20541,10 @@ class DraftGetElementsTextBox(BaseModel):
 
 
 class DraftGetElementsSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(
         None, description="The identifier of the signature."
     )
@@ -16490,6 +20576,10 @@ class DraftGetElementsSignatureField(BaseModel):
 
 
 class DraftGetConfigurationAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -16523,6 +20613,10 @@ class DraftGetConfigurationAdvancedRecipientConfiguration(BaseModel):
 
 
 class DraftGetConfigurationRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -16546,6 +20640,10 @@ class DraftGetConfigurationRecipientConfiguration(BaseModel):
 
 
 class DraftGetConfigurationBulkRecipient(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -16557,6 +20655,10 @@ class DraftGetConfigurationBulkRecipient(BaseModel):
 
 
 class DraftCreatePredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[DraftCreatePredefinedText]] = Field(
         None, description="The predefined text fields.", max_items=1000
     )
@@ -16581,6 +20683,10 @@ class DraftCreatePredefinedFieldElements(BaseModel):
 
 
 class DraftCreateSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[DraftCreateAdvancedRecipientConfiguration] = Field(
         None, description="The configuration of the recipient."
     )
@@ -16596,6 +20702,10 @@ class DraftCreateSignAsP7M(BaseModel):
 
 
 class DraftCreateBulkRecipient(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: DraftCreateAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16605,6 +20715,10 @@ class DraftCreateBulkRecipient(BaseModel):
 
 
 class DraftCreateRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ContactInformation: Optional[DraftCreateContactInformation] = Field(
         None, description="The contact information of the recipient."
     )
@@ -16632,6 +20746,10 @@ class DraftCreateRecipientConfiguration(BaseModel):
 
 
 class DraftReorderActivitiesRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     DraftId: str = Field(..., description="The identifier of the draft.")
     Activities: List[DraftReorderActivitiesActivity] = Field(
         ...,
@@ -16642,6 +20760,10 @@ class DraftReorderActivitiesRequest(BaseModel):
 
 
 class DraftActivityReplaceView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[DraftActivityReplaceRecipientConfiguration] = (
         Field(None, description="The configuration of the recipient.")
     )
@@ -16651,6 +20773,10 @@ class DraftActivityReplaceView(BaseModel):
 
 
 class DraftActivityReplaceSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftActivityReplaceAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -16663,6 +20789,10 @@ class DraftActivityReplaceSignAsP7M(BaseModel):
 
 
 class DraftActivityReplaceBulkRecipient(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: DraftActivityReplaceAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16674,6 +20804,10 @@ class DraftActivityReplaceBulkRecipient(BaseModel):
 
 
 class DraftActivityReplacePredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[DraftActivityReplacePredefinedText]] = Field(
         None, description="The predefined text fields.", max_items=1000
     )
@@ -16698,6 +20832,10 @@ class DraftActivityReplacePredefinedFieldElements(BaseModel):
 
 
 class EnvelopeGetActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Status: Optional[Status] = Field(
         None, description="The status of an action within the envelope."
@@ -16720,6 +20858,10 @@ class EnvelopeGetActivity(BaseModel):
 
 
 class EnvelopeGetElementsTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -16740,6 +20882,10 @@ class EnvelopeGetElementsTextBox(BaseModel):
 
 
 class EnvelopeGetElementsSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(
         None, description="The identifier of the signature."
     )
@@ -16774,6 +20920,10 @@ class EnvelopeGetElementsSignatureField(BaseModel):
 
 
 class EnvelopeGetConfigurationAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -16807,6 +20957,10 @@ class EnvelopeGetConfigurationAdvancedRecipientConfiguration(BaseModel):
 
 
 class EnvelopeGetConfigurationRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -16830,6 +20984,10 @@ class EnvelopeGetConfigurationRecipientConfiguration(BaseModel):
 
 
 class EnvelopeSendUnassignedElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[EnvelopeSendTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -16848,6 +21006,10 @@ class EnvelopeSendUnassignedElements(BaseModel):
 
 
 class EnvelopeSendView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeSendRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16860,6 +21022,10 @@ class EnvelopeSendView(BaseModel):
 
 
 class EnvelopeSendSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeSendAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16875,6 +21041,10 @@ class EnvelopeSendSignAsP7M(BaseModel):
 
 
 class EnvelopeSendPredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[EnvelopeSendPredefinedText]] = Field(
         None, description="The predefined text fields.", max_items=1000
     )
@@ -16899,6 +21069,10 @@ class EnvelopeSendPredefinedFieldElements(BaseModel):
 
 
 class EnvelopeActivityReplaceView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[EnvelopeActivityReplaceRecipientConfiguration] = (
         Field(None, description="The configuration of the recipient.")
     )
@@ -16908,6 +21082,10 @@ class EnvelopeActivityReplaceView(BaseModel):
 
 
 class EnvelopeActivityReplaceSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         EnvelopeActivityReplaceAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -16920,6 +21098,10 @@ class EnvelopeActivityReplaceSignAsP7M(BaseModel):
 
 
 class EnvelopeActivityReplacePredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[EnvelopeActivityReplacePredefinedText]] = Field(
         None, description="The predefined text fields.", max_items=1000
     )
@@ -16944,6 +21126,10 @@ class EnvelopeActivityReplacePredefinedFieldElements(BaseModel):
 
 
 class EnvelopeBulkSendUnassignedElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[EnvelopeBulkSendTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -16962,6 +21148,10 @@ class EnvelopeBulkSendUnassignedElements(BaseModel):
 
 
 class EnvelopeBulkSendView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeBulkSendRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16971,6 +21161,10 @@ class EnvelopeBulkSendView(BaseModel):
 
 
 class EnvelopeBulkSendSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeBulkSendAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16983,6 +21177,10 @@ class EnvelopeBulkSendSignAsP7M(BaseModel):
 
 
 class EnvelopeBulkSendRecipient(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeBulkSendAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -16995,6 +21193,10 @@ class EnvelopeBulkSendRecipient(BaseModel):
 
 
 class EnvelopeBulkSendPredefinedFieldElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextFields: Optional[List[EnvelopeBulkSendPredefinedText]] = Field(
         None, description="The predefined text fields.", max_items=1000
     )
@@ -17019,6 +21221,10 @@ class EnvelopeBulkSendPredefinedFieldElements(BaseModel):
 
 
 class FilePrepareTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -17039,6 +21245,10 @@ class FilePrepareTextBox(BaseModel):
 
 
 class FilePrepareSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(
         None, description="The identifier of the signature."
     )
@@ -17070,6 +21280,10 @@ class FilePrepareSignatureField(BaseModel):
 
 
 class TemplateGetActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[TemplateGetAction] = Field(
         None, description="The action assigned to the activity."
@@ -17077,6 +21291,10 @@ class TemplateGetActivity(BaseModel):
 
 
 class TemplateGetElementsTextBox(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(None, description="The identifier of the element.")
     Required: Optional[bool] = Field(
         None, description="If true, the element is required."
@@ -17097,6 +21315,10 @@ class TemplateGetElementsTextBox(BaseModel):
 
 
 class TemplateGetElementsSignatureField(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ElementId: Optional[str] = Field(
         None, description="The identifier of the signature."
     )
@@ -17128,6 +21350,10 @@ class TemplateGetElementsSignatureField(BaseModel):
 
 
 class TemplateGetConfigurationAdvancedRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -17161,6 +21387,10 @@ class TemplateGetConfigurationAdvancedRecipientConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationRecipientConfiguration(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     PersonalMessage: Optional[str] = Field(
         None, description="The personal message for the recipient."
     )
@@ -17184,6 +21414,10 @@ class TemplateGetConfigurationRecipientConfiguration(BaseModel):
 
 
 class TemplateGetConfigurationBulkRecipient(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         TemplateGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17195,6 +21429,10 @@ class TemplateGetConfigurationBulkRecipient(BaseModel):
 
 
 class DraftGetResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the draft.")
     Name: Optional[str] = Field(None, description="The name of the draft.")
     CreationDate: Optional[datetime] = Field(None, description="Date of creation.")
@@ -17204,6 +21442,10 @@ class DraftGetResponse(BaseModel):
 
 
 class DraftGetElementsElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[DraftGetElementsTextBox]] = Field(
         None, description="The text boxes."
     )
@@ -17243,6 +21485,10 @@ class DraftGetElementsElements(BaseModel):
 
 
 class DraftGetElementsSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SequenceMode: Optional[SequenceMode] = Field(None, description="The sequence mode.")
     Elements: Optional[DraftGetElementsElements] = Field(
         None, description="The definition of the assigned elements."
@@ -17250,6 +21496,10 @@ class DraftGetElementsSign(BaseModel):
 
 
 class DraftGetElementsSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SequenceMode: Optional[SequenceMode] = Field(None, description="The sequence mode.")
     Elements: Optional[DraftGetElementsElements] = Field(
         None, description="The definition of the assigned elements."
@@ -17257,6 +21507,10 @@ class DraftGetElementsSignBulk(BaseModel):
 
 
 class DraftGetConfigurationSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17281,6 +21535,10 @@ class DraftGetConfigurationSign(BaseModel):
 
 
 class DraftGetConfigurationView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[DraftGetConfigurationRecipientConfiguration] = (
         Field(None, description="The configuration of the recipient.")
     )
@@ -17293,6 +21551,10 @@ class DraftGetConfigurationView(BaseModel):
 
 
 class DraftGetConfigurationSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17308,6 +21570,10 @@ class DraftGetConfigurationSignAsP7M(BaseModel):
 
 
 class DraftGetConfigurationSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfigurations: Optional[List[DraftGetConfigurationBulkRecipient]] = Field(
         None,
         description="The configurations of the recipients that are part of the bulk.",
@@ -17325,6 +21591,10 @@ class DraftGetConfigurationSignBulk(BaseModel):
 
 
 class DraftCreateElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[DraftCreateTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -17364,6 +21634,10 @@ class DraftCreateElements(BaseModel):
 
 
 class DraftCreateView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[DraftCreateRecipientConfiguration] = Field(
         None, description="The configuration of the recipient."
     )
@@ -17376,6 +21650,10 @@ class DraftCreateView(BaseModel):
 
 
 class DraftCreateSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BulkRecipients: Optional[List[DraftCreateBulkRecipient]] = Field(
         None, description="The recipients that are part of the bulk.", max_items=1000
     )
@@ -17397,6 +21675,10 @@ class DraftCreateSignBulk(BaseModel):
 
 
 class DraftCreateSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[DraftCreateAdvancedRecipientConfiguration] = Field(
         None, description="The configuration of the recipient."
     )
@@ -17424,6 +21706,10 @@ class DraftCreateSign(BaseModel):
 
 
 class DraftActivityReplaceElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[DraftActivityReplaceTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -17463,6 +21749,10 @@ class DraftActivityReplaceElements(BaseModel):
 
 
 class DraftActivityReplaceSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BulkRecipients: Optional[List[DraftActivityReplaceBulkRecipient]] = Field(
         None, description="The recipients that are part of the bulk.", max_items=1000
     )
@@ -17484,6 +21774,10 @@ class DraftActivityReplaceSignBulk(BaseModel):
 
 
 class DraftActivityReplaceSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         DraftActivityReplaceAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17510,6 +21804,10 @@ class DraftActivityReplaceSign(BaseModel):
 
 
 class EnvelopeGetResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the envelope.")
     EnvelopeStatus: Optional[EnvelopeStatus] = Field(
         None, description="The status of the envelope."
@@ -17530,6 +21828,10 @@ class EnvelopeGetResponse(BaseModel):
 
 
 class EnvelopeGetElementsElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[EnvelopeGetElementsTextBox]] = Field(
         None, description="The text boxes."
     )
@@ -17569,6 +21871,10 @@ class EnvelopeGetElementsElements(BaseModel):
 
 
 class EnvelopeGetElementsSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SequenceMode: Optional[SequenceMode] = Field(None, description="The sequence mode.")
     Elements: Optional[EnvelopeGetElementsElements] = Field(
         None, description="The definition of the assigned elements."
@@ -17576,6 +21882,10 @@ class EnvelopeGetElementsSign(BaseModel):
 
 
 class EnvelopeGetConfigurationSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         EnvelopeGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17600,6 +21910,10 @@ class EnvelopeGetConfigurationSign(BaseModel):
 
 
 class EnvelopeGetConfigurationView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[EnvelopeGetConfigurationRecipientConfiguration] = (
         Field(None, description="The configuration of the recipient.")
     )
@@ -17612,6 +21926,10 @@ class EnvelopeGetConfigurationView(BaseModel):
 
 
 class EnvelopeGetConfigurationSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         EnvelopeGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17627,6 +21945,10 @@ class EnvelopeGetConfigurationSignAsP7M(BaseModel):
 
 
 class EnvelopeSendElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[EnvelopeSendTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -17666,6 +21988,10 @@ class EnvelopeSendElements(BaseModel):
 
 
 class EnvelopeSendSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeSendAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -17696,6 +22022,10 @@ class EnvelopeSendSign(BaseModel):
 
 
 class EnvelopeActivityReplaceElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[EnvelopeActivityReplaceTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -17735,6 +22065,10 @@ class EnvelopeActivityReplaceElements(BaseModel):
 
 
 class EnvelopeActivityReplaceSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         EnvelopeActivityReplaceAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17761,6 +22095,10 @@ class EnvelopeActivityReplaceSign(BaseModel):
 
 
 class EnvelopeBulkSendElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[EnvelopeBulkSendTextBox]] = Field(
         None, description="The text boxes.", max_items=1000
     )
@@ -17800,6 +22138,10 @@ class EnvelopeBulkSendElements(BaseModel):
 
 
 class EnvelopeBulkSendSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     BulkRecipients: List[EnvelopeBulkSendRecipient] = Field(
         ...,
         description="The recipients that are part of the bulk.",
@@ -17824,6 +22166,10 @@ class EnvelopeBulkSendSignBulk(BaseModel):
 
 
 class EnvelopeBulkSendSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: EnvelopeBulkSendAdvancedRecipientConfiguration = Field(
         ..., description="The configuration of the recipient."
     )
@@ -17851,6 +22197,10 @@ class EnvelopeBulkSendSign(BaseModel):
 
 
 class FilePrepareElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[FilePrepareTextBox]] = Field(
         None, description="The text boxes."
     )
@@ -17878,12 +22228,20 @@ class FilePrepareElements(BaseModel):
 
 
 class FilePrepareSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Elements: Optional[FilePrepareElements] = Field(
         None, description="The definition of the assigned elements."
     )
 
 
 class TemplateGetResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the template.")
     Name: Optional[str] = Field(None, description="The name of the template.")
     CreationDate: Optional[datetime] = Field(None, description="Date of creation")
@@ -17893,6 +22251,10 @@ class TemplateGetResponse(BaseModel):
 
 
 class TemplateGetElementsElements(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     TextBoxes: Optional[List[TemplateGetElementsTextBox]] = Field(
         None, description="The text boxes."
     )
@@ -17932,6 +22294,10 @@ class TemplateGetElementsElements(BaseModel):
 
 
 class TemplateGetElementsSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SequenceMode: Optional[SequenceMode] = Field(None, description="The sequence mode.")
     Elements: Optional[TemplateGetElementsElements] = Field(
         None, description="The definition of the assigned elements."
@@ -17939,6 +22305,10 @@ class TemplateGetElementsSign(BaseModel):
 
 
 class TemplateGetElementsSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SequenceMode: Optional[SequenceMode] = Field(None, description="The sequence mode.")
     Elements: Optional[TemplateGetElementsElements] = Field(
         None, description="The definition of the assigned elements."
@@ -17946,6 +22316,10 @@ class TemplateGetElementsSignBulk(BaseModel):
 
 
 class TemplateGetConfigurationSign(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         TemplateGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17970,6 +22344,10 @@ class TemplateGetConfigurationSign(BaseModel):
 
 
 class TemplateGetConfigurationView(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[TemplateGetConfigurationRecipientConfiguration] = (
         Field(None, description="The configuration of the recipient.")
     )
@@ -17982,6 +22360,10 @@ class TemplateGetConfigurationView(BaseModel):
 
 
 class TemplateGetConfigurationSignAsP7M(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfiguration: Optional[
         TemplateGetConfigurationAdvancedRecipientConfiguration
     ] = Field(None, description="The configuration of the recipient.")
@@ -17997,6 +22379,10 @@ class TemplateGetConfigurationSignAsP7M(BaseModel):
 
 
 class TemplateGetConfigurationSignBulk(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     RecipientConfigurations: Optional[List[TemplateGetConfigurationBulkRecipient]] = (
         Field(
             None,
@@ -18016,6 +22402,10 @@ class TemplateGetConfigurationSignBulk(BaseModel):
 
 
 class DraftGetElementsAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAutomatic: Optional[DraftGetElementsSignAutomatic] = Field(
         None, description="The definition of the automatic sign action."
     )
@@ -18028,6 +22418,10 @@ class DraftGetElementsAction(BaseModel):
 
 
 class DraftGetConfigurationAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[DraftGetConfigurationSendCopy] = Field(
         None, description="The configuration of the copy action."
     )
@@ -18046,6 +22440,10 @@ class DraftGetConfigurationAction(BaseModel):
 
 
 class DraftCreateAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[DraftCreateSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -18067,6 +22465,10 @@ class DraftCreateAction(BaseModel):
 
 
 class DraftActivityReplaceAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[DraftActivityReplaceSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -18088,6 +22490,10 @@ class DraftActivityReplaceAction(BaseModel):
 
 
 class EnvelopeGetElementsAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAutomatic: Optional[EnvelopeGetElementsSignAutomatic] = Field(
         None, description="The definition of the automatic sign action."
     )
@@ -18097,6 +22503,10 @@ class EnvelopeGetElementsAction(BaseModel):
 
 
 class EnvelopeGetConfigurationAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[EnvelopeGetConfigurationSendCopy] = Field(
         None, description="The configuration of the copy action."
     )
@@ -18112,6 +22522,10 @@ class EnvelopeGetConfigurationAction(BaseModel):
 
 
 class EnvelopeSendAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[EnvelopeSendSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -18130,6 +22544,10 @@ class EnvelopeSendAction(BaseModel):
 
 
 class EnvelopeActivityReplaceAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[EnvelopeActivityReplaceSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -18148,6 +22566,10 @@ class EnvelopeActivityReplaceAction(BaseModel):
 
 
 class EnvelopeBulkSendAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[EnvelopeBulkSendSendCopy] = Field(
         None, description="The definition of the copy action."
     )
@@ -18169,6 +22591,10 @@ class EnvelopeBulkSendAction(BaseModel):
 
 
 class FilePrepareAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAutomatic: Optional[FilePrepareSignAutomatic] = Field(
         None, description="The definition of the automatic sign action."
     )
@@ -18178,6 +22604,10 @@ class FilePrepareAction(BaseModel):
 
 
 class TemplateGetElementsAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SignAutomatic: Optional[TemplateGetElementsSignAutomatic] = Field(
         None, description="The definition of the automatic sign action."
     )
@@ -18190,6 +22620,10 @@ class TemplateGetElementsAction(BaseModel):
 
 
 class TemplateGetConfigurationAction(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     SendCopy: Optional[TemplateGetConfigurationSendCopy] = Field(
         None, description="The configuration of the copy action."
     )
@@ -18208,6 +22642,10 @@ class TemplateGetConfigurationAction(BaseModel):
 
 
 class DraftGetElementsActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[DraftGetElementsAction] = Field(
         None, description="The action assigned to the activity."
@@ -18215,6 +22653,10 @@ class DraftGetElementsActivity(BaseModel):
 
 
 class DraftGetConfigurationActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[DraftGetConfigurationAction] = Field(
         None, description="The action assigned to the activity."
@@ -18225,6 +22667,10 @@ class DraftGetConfigurationActivity(BaseModel):
 
 
 class DraftCreateActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Action: Optional[DraftCreateAction] = Field(
         None, description="The action assigned to the activity."
     )
@@ -18236,6 +22682,10 @@ class DraftCreateActivity(BaseModel):
 
 
 class DraftCreateRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Documents: List[DraftCreateDocument] = Field(
         ..., description="The documents for the envelope.", max_items=50
     )
@@ -18296,6 +22746,10 @@ class DraftCreateRequest(BaseModel):
 
 
 class DraftActivityReplaceRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ActivityId: str = Field(..., description="The identifier of the activity.")
     Action: Optional[DraftActivityReplaceAction] = Field(
         None, description="The action assigned to the activity."
@@ -18308,6 +22762,10 @@ class DraftActivityReplaceRequest(BaseModel):
 
 
 class EnvelopeGetElementsActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[EnvelopeGetElementsAction] = Field(
         None, description="The action assigned to the activity."
@@ -18315,6 +22773,10 @@ class EnvelopeGetElementsActivity(BaseModel):
 
 
 class EnvelopeGetConfigurationActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[EnvelopeGetConfigurationAction] = Field(
         None, description="The action assigned to the activity."
@@ -18325,6 +22787,10 @@ class EnvelopeGetConfigurationActivity(BaseModel):
 
 
 class EnvelopeSendActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Action: Optional[EnvelopeSendAction] = Field(
         None, description="The action assigned to the activity."
     )
@@ -18336,6 +22802,10 @@ class EnvelopeSendActivity(BaseModel):
 
 
 class EnvelopeSendRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Documents: List[EnvelopeSendDocument] = Field(
         ..., description="The documents for the envelope.", max_items=50, min_items=1
     )
@@ -18380,6 +22850,10 @@ class EnvelopeSendRequest(BaseModel):
 
 
 class EnvelopeActivityReplaceRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     ActivityId: str = Field(..., description="The identifier of the activity.")
     Action: Optional[EnvelopeActivityReplaceAction] = Field(
         None, description="The action assigned to the activity."
@@ -18392,6 +22866,10 @@ class EnvelopeActivityReplaceRequest(BaseModel):
 
 
 class EnvelopeBulkSendActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Action: Optional[EnvelopeBulkSendAction] = Field(
         None, description="The action assigned to the activity."
     )
@@ -18403,6 +22881,10 @@ class EnvelopeBulkSendActivity(BaseModel):
 
 
 class EnvelopeBulkSendRequest(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Documents: List[EnvelopeBulkSendDocument] = Field(
         ..., description="The documents for the envelope.", max_items=50, min_items=1
     )
@@ -18447,12 +22929,20 @@ class EnvelopeBulkSendRequest(BaseModel):
 
 
 class FilePrepareActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Action: Optional[FilePrepareAction] = Field(
         None, description="The action assigned to the activity."
     )
 
 
 class TemplateGetElementsActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[TemplateGetElementsAction] = Field(
         None, description="The action assigned to the activity."
@@ -18460,6 +22950,10 @@ class TemplateGetElementsActivity(BaseModel):
 
 
 class TemplateGetConfigurationActivity(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     Id: Optional[str] = Field(None, description="The identifier of the activity.")
     Action: Optional[TemplateGetConfigurationAction] = Field(
         None, description="The action assigned to the activity."
@@ -18470,6 +22964,10 @@ class TemplateGetConfigurationActivity(BaseModel):
 
 
 class DraftGetElementsResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UnassignedElements: Optional[DraftGetElementsElements] = Field(
         None, description="The elements which are not assigned to any action."
     )
@@ -18479,6 +22977,10 @@ class DraftGetElementsResponse(BaseModel):
 
 
 class DraftGetConfigurationResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
     AddDocumentTimestamp: Optional[bool] = Field(
         None,
@@ -18529,6 +23031,10 @@ class DraftGetConfigurationResponse(BaseModel):
 
 
 class EnvelopeGetElementsResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UnassignedElements: Optional[EnvelopeGetElementsElements] = Field(
         None, description="The elements which are not assigned to any action."
     )
@@ -18538,6 +23044,10 @@ class EnvelopeGetElementsResponse(BaseModel):
 
 
 class EnvelopeGetConfigurationResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
     AddDocumentTimestamp: Optional[bool] = Field(
         None,
@@ -18576,6 +23086,10 @@ class EnvelopeGetConfigurationResponse(BaseModel):
 
 
 class FilePrepareResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UnassignedElements: Optional[FilePrepareElements] = Field(
         None, description="The elements which are not assigned to any action."
     )
@@ -18586,6 +23100,10 @@ class FilePrepareResponse(BaseModel):
 
 
 class TemplateGetElementsResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     UnassignedElements: Optional[TemplateGetElementsElements] = Field(
         None, description="The elements which are not assigned to any action."
     )
@@ -18595,6 +23113,10 @@ class TemplateGetElementsResponse(BaseModel):
 
 
 class TemplateGetConfigurationResponse(BaseModel):
+
+    class Config:
+        use_enum_values = True
+
     MetaData: Optional[str] = Field(None, description="The metadata of the envelope.")
     AddDocumentTimestamp: Optional[bool] = Field(
         None,
