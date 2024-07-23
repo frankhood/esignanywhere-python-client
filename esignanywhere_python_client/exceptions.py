@@ -15,7 +15,25 @@ class BaseAPIESawErrorResponse(Exception):
         self.status_code = status_code
         self.service_url = service_url
         self.request_data = request_data
-        self.response_data = response_data
+        try:
+            self.response_data = self.response.json()
+        except Exception:
+            try:
+                self.response_data = self.response.data
+            except Exception:
+                try:
+                    self.response_data = self.response.content
+                except Exception:
+                    try:
+                        self.response_data = self.response.text
+                    except Exception:
+                        self.response_data = "Unable to get response data"
+
+    def __str__(self):
+        return f"Status Code: {self.status_code} - Message: {self.message}"
+
+    def __repr__(self):
+        return f"Status Code: {self.status_code} - Message: {self.message}"
 
 
 class ESawInvalidVersionError(Exception):
@@ -43,8 +61,8 @@ class ESawUnexpectedResponse(BaseAPIESawErrorResponse):
         return (
             f"Unexpected Response from url {self.service_url}: {self.message}\n"
             f"status_code : {self.status_code}\n"
-            f"response_data : {self.response_data}\n"
-            f"request_data : {self.request_data}"
+            f"response_data : {str(self.response_data)}\n"
+            f"request_data : {str(self.request_data)}"
         )
 
 
@@ -53,6 +71,6 @@ class ESawErrorResponse(BaseAPIESawErrorResponse):
         return (
             f"Error Response from url {self.service_url}: {self.message}\n"
             f"status_code : {self.status_code}\n"
-            f"response_data : {self.response_data}\n"
-            f"request_data : {self.request_data}"
+            f"response_data : {str(self.response_data)}\n"
+            f"request_data : {str(self.request_data)}"
         )
