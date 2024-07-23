@@ -1,5 +1,4 @@
 * EsignAnyWhere Python Client version:
-* Django version:
 * Python version:
 * Operating System:
 

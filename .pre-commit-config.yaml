@@ -9,19 +9,8 @@ repos:
       stages: [commit]
       name: "✅ Python Upgrade"
       args:
-        - "--py36-plus"
-        - "--py37-plus"
         - "--py38-plus"
-        - "--py39-plus"
-        - "--py310-plus"
-        - "--py311-plus"
-  - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.16.0  # replace with latest tag on GitHub
-    hooks:
-    -   id: django-upgrade
-        stages: [commit]
-        name: "✅ Django Upgrade"
-        args: [--target-version, "4.2"]
+        - "--keep-runtime-typing"
   - repo: https://github.com/psf/black
     rev: 24.2.0
     hooks:
@@ -59,6 +48,7 @@ repos:
     hooks:
     - id: isort
       stages: [commit]
+      args: ["--profile", "black"]
       name: "✅ Isort Validation"
   - repo: local
     hooks:
@@ -77,12 +67,3 @@ repos:
     hooks:
     - id: check-merge-conflict
       name: "✅ Checking Merge Conflict"
-  - repo: local
-    hooks:
-    - id: django-test
-      name: "🪲 Django Testing"
-      entry: python runtests.py
-      always_run: true
-      verbose: true
-      pass_filenames: false
-      language: system
