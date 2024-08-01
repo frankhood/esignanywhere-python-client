@@ -48,9 +48,6 @@ class ESignAnyWhereClient:
     ):
         if response.status_code == 401:
             raise exceptions.ESawUnauthorizedRequest(
-                message=response.text
-                and response.json().get("Message")
-                or f"Error with code {response.status_code}",
                 status_code=response.status_code,
                 method_name=method_name,
                 service_url=service_url,
@@ -58,16 +55,7 @@ class ESignAnyWhereClient:
                 response=response,
             )
         else:
-            error_message = f"Error with code {response.status_code}"
-            if response.text:
-                error_id = response.json().get("ErrorId", "")
-                support_id = response.json().get("SupportId", "")
-                if error_id:
-                    error_message = (
-                        f"{response.text} [ErrorId: {error_id} SupportID: {support_id}]"
-                    )
             raise exceptions.ESawErrorResponse(
-                message=error_message,
                 status_code=response.status_code,
                 method_name=method_name,
                 service_url=service_url,
@@ -211,7 +199,6 @@ class ESignAnyWhereClient:
             logger.info(f"Response from service_url : {service_url}: {response.json()}")
             if "EnvelopeId" not in response.json().keys():
                 raise exceptions.ESawUnexpectedResponse(
-                    message='Response has no attribute "EnvelopeId"',
                     method_name=(
                         inspect.currentframe().f_code.co_name  # type: ignore
                         if inspect.currentframe()
