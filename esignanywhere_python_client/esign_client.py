@@ -1,7 +1,7 @@
 import inspect
 import logging
 from io import BufferedReader
-from typing import Any, Union
+from typing import Any, Dict, Union
 
 import requests
 
@@ -43,7 +43,7 @@ class ESignAnyWhereClient:
         self,
         service_url: str,
         method_name: str,
-        request_data: dict[str, Any],
+        request_data: Dict[str, Any],
         response: requests.Response,
     ):
         if response.status_code == 401:
