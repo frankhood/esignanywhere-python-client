@@ -1,6 +1,7 @@
+import inspect
 import logging
 from io import BufferedReader
-from typing import Union
+from typing import Any, Union
 
 import requests
 
@@ -38,16 +39,23 @@ class ESignAnyWhereClient:
             _request_headers.update({"Content-Type": "application/json"})
         return _request_headers
 
-    def _handle_response_errors(self, service_url, response, request_data: dict):
+    def _handle_response_errors(
+        self,
+        service_url: str,
+        method_name: str,
+        request_data: dict[str, Any],
+        response: requests.Response,
+    ):
         if response.status_code == 401:
             raise exceptions.ESawUnauthorizedRequest(
                 message=response.text
                 and response.json().get("Message")
                 or f"Error with code {response.status_code}",
                 status_code=response.status_code,
+                method_name=method_name,
                 service_url=service_url,
                 request_data=request_data,
-                response_data=response.text and response.json() or {},
+                response=response,
             )
         else:
             error_message = f"Error with code {response.status_code}"
@@ -61,9 +69,10 @@ class ESignAnyWhereClient:
             raise exceptions.ESawErrorResponse(
                 message=error_message,
                 status_code=response.status_code,
+                method_name=method_name,
                 service_url=service_url,
                 request_data=request_data,
-                response_data=response.text and response.json() or {},
+                response=response,
             )
 
     def get_version(self, version="v4"):
@@ -104,7 +113,14 @@ class ESignAnyWhereClient:
             return response.text
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data={}
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data={},
+                response=response,
             )
 
     def upload_file(
@@ -148,7 +164,14 @@ class ESignAnyWhereClient:
                 return models_v6.FileUploadResponse(**response_data)
             else:
                 self._handle_response_errors(
-                    service_url, response=response, request_data=request_data
+                    service_url=service_url,
+                    method_name=(
+                        inspect.currentframe().f_code.co_name  # type: ignore
+                        if inspect.currentframe() is not None
+                        else ""
+                    ),
+                    response=response,
+                    request_data=request_data,
                 )
 
         finally:
@@ -186,19 +209,30 @@ class ESignAnyWhereClient:
         logger.debug(f"create_and_send_envelope Request : {request_data}")
         if response.status_code == 200:
             logger.info(f"Response from service_url : {service_url}: {response.json()}")
-            response_data = response.json()
-            if "EnvelopeId" not in response_data.keys():
+            if "EnvelopeId" not in response.json().keys():
                 raise exceptions.ESawUnexpectedResponse(
                     message='Response has no attribute "EnvelopeId"',
+                    method_name=(
+                        inspect.currentframe().f_code.co_name  # type: ignore
+                        if inspect.currentframe()
+                        else ""
+                    ),
                     status_code=response.status_code,
                     service_url=service_url,
                     request_data=request_data,
-                    response_data=response_data,
+                    response=response,
                 )
-            return models_v6.EnvelopeSendResponse(**response_data)
+            return models_v6.EnvelopeSendResponse(**response.json())
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                response=response,
+                request_data=request_data,
             )
 
     def create_and_send_bulk_envelope(
@@ -231,7 +265,14 @@ class ESignAnyWhereClient:
             return models_v6.EnvelopeBulkSendResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                response=response,
+                request_data=request_data,
             )
 
     def get_envelope(
@@ -269,7 +310,14 @@ class ESignAnyWhereClient:
             return envelope_status
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                response=response,
+                request_data=request_data,
             )
 
     def get_envelope_configuration(
@@ -304,7 +352,14 @@ class ESignAnyWhereClient:
             return envelope_status
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                response=response,
+                request_data=request_data,
             )
 
     def get_envelope_files(
@@ -337,7 +392,14 @@ class ESignAnyWhereClient:
             return envelope_status
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def get_envelope_viewer_links(
@@ -370,7 +432,14 @@ class ESignAnyWhereClient:
             return envelope_status
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def get_envelope_history(
@@ -403,7 +472,14 @@ class ESignAnyWhereClient:
             return envelope_status
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def get_envelope_elements(
@@ -436,7 +512,14 @@ class ESignAnyWhereClient:
             return envelope_status
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def cancel_envelope(
@@ -469,7 +552,14 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def delete_envelope(self, envelope_id: str, version="v6"):
@@ -497,7 +587,14 @@ class ESignAnyWhereClient:
             )
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def download_completed_document(self, document_id: str, version="v6"):
@@ -527,7 +624,14 @@ class ESignAnyWhereClient:
             return response.content
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     # ======================================
@@ -564,7 +668,14 @@ class ESignAnyWhereClient:
             return models_v6.DraftCreateResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def create_draft_from_template(
@@ -598,7 +709,14 @@ class ESignAnyWhereClient:
             return models_v6.TemplateCreateDraftResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def find_envelope(self, descriptor: models_v6.EnvelopeFindRequest, version="v6"):
@@ -628,7 +746,14 @@ class ESignAnyWhereClient:
             return models_v6.EnvelopeFindResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def prepare_file(self, prepare_model: models_v6.FilePrepareRequest, version="v6"):
@@ -658,7 +783,14 @@ class ESignAnyWhereClient:
             return models_v6.FilePrepareResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def restart_envelope_expiration_days(
@@ -691,7 +823,14 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def send_draft(
@@ -725,7 +864,14 @@ class ESignAnyWhereClient:
             return models_v6.DraftSendResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def remind_envelope(
@@ -759,7 +905,14 @@ class ESignAnyWhereClient:
             return models_v6.EnvelopeRemindResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def unlock_envelope(
@@ -790,7 +943,14 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def get_license(self, version="v6"):
@@ -819,7 +979,14 @@ class ESignAnyWhereClient:
             return models_v6.LicenseGetResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def remove_activity_from_envelope(
@@ -852,7 +1019,14 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def replace_activity_from_envelope(
@@ -885,7 +1059,14 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def dispose_uploaded_file(
@@ -918,7 +1099,14 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def get_teams(self, version="v6"):
@@ -947,7 +1135,14 @@ class ESignAnyWhereClient:
             return models_v6.TeamGetAllResponse(**response_data)
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
 
     def replace_teams(self, teams: models_v6.TeamReplaceRequest, version="v6"):
@@ -973,5 +1168,12 @@ class ESignAnyWhereClient:
             return {}
         else:
             self._handle_response_errors(
-                service_url, response=response, request_data=request_data
+                service_url=service_url,
+                method_name=(
+                    inspect.currentframe().f_code.co_name  # type: ignore
+                    if inspect.currentframe() is not None
+                    else ""
+                ),
+                request_data=request_data,
+                response=response,
             )
