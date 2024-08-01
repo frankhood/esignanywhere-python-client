@@ -6,7 +6,6 @@ import requests
 class BaseAPIESawErrorResponse(Exception):
     def __init__(
         self,
-        message: str,
         status_code: int,
         service_url: str,
         method_name: str,
@@ -16,7 +15,6 @@ class BaseAPIESawErrorResponse(Exception):
         **kwargs,
     ) -> None:
         """BaseAPIESawErrorResponse."""
-        self.message = message
         self.status_code = status_code
         self.service_url = service_url
         self.method_name = method_name
@@ -34,10 +32,10 @@ class BaseAPIESawErrorResponse(Exception):
                     self.response_data = "Unable to get response data"
 
     def __str__(self):
-        return f"Status Code: {self.status_code} - Message: {self.message}"
+        return f"Status Code: {self.status_code}"
 
     def __repr__(self):
-        return f"Status Code: {self.status_code} - Message: {self.message}"
+        return f"Status Code: {self.status_code}"
 
 
 class ESawInvalidVersionError(Exception):
@@ -63,7 +61,7 @@ class ESawUnauthorizedRequest(BaseAPIESawErrorResponse):
 class ESawUnexpectedResponse(BaseAPIESawErrorResponse):
     def __str__(self):
         return (
-            f"Unexpected Response from url {self.service_url}: {self.message}\n"
+            f"Unexpected Response from url {self.service_url}\n"
             f"status_code : {self.status_code}\n"
             f"method_name : {self.method_name}\n"
             f"request_data : {str(self.request_data)}\n"
@@ -74,7 +72,7 @@ class ESawUnexpectedResponse(BaseAPIESawErrorResponse):
 class ESawErrorResponse(BaseAPIESawErrorResponse):
     def __str__(self):
         return (
-            f"Error Response from url {self.service_url}: {self.message}\n"
+            f"Error Response from url {self.service_url}\n"
             f"status_code : {self.status_code}\n"
             f"method_name: {self.method_name}\n"
             f"request_data : {str(self.request_data)}\n"
