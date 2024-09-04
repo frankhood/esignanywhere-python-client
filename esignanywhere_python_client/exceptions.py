@@ -19,15 +19,14 @@ class BaseAPIESawErrorResponse(Exception):
         self.service_url = service_url
         self.method_name = method_name
         self.request_data = request_data
-        self.response = response
         try:
-            self.response_data = self.response.json()
+            self.response_data = response.json()
         except Exception:
             try:
-                self.response_data = self.response.content
+                self.response_data = response.content
             except Exception:
                 try:
-                    self.response_data = self.response.text
+                    self.response_data = response.text
                 except Exception:
                     self.response_data = "Unable to get response data"
 
