@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict, List
 
 import requests
@@ -18,7 +19,7 @@ class BaseAPIESawErrorResponse(Exception):
         self.status_code = status_code
         self.service_url = service_url
         self.method_name = method_name
-        self.request_data = request_data
+        self.request_data = json.dumps(request_data)
         try:
             self.response_data = response.json()
         except Exception:
