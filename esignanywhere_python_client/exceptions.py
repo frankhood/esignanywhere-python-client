@@ -20,11 +20,16 @@ class BaseAPIESawErrorResponse(Exception):
         self.service_url = service_url
         self.method_name = method_name
         self.request_data = json.dumps(request_data)
+        self.response_headers = dict(response.headers)
         try:
             self.response_data = response.json()
         except Exception:
             try:
-                self.response_data = response.content
+                self.response_data = (
+                    response.content.decode()
+                    if isinstance(response.content, bytes)
+                    else response.content
+                )
             except Exception:
                 try:
                     self.response_data = response.text
@@ -66,6 +71,7 @@ class ESawUnexpectedResponse(BaseAPIESawErrorResponse):
             f"method_name : {self.method_name}\n"
             f"request_data : {str(self.request_data)}\n"
             f"response_data : {str(self.response_data)}\n"
+            f"response_headers : {str(self.response_headers)}\n"
         )
 
 
@@ -77,4 +83,5 @@ class ESawErrorResponse(BaseAPIESawErrorResponse):
             f"method_name: {self.method_name}\n"
             f"request_data : {str(self.request_data)}\n"
             f"response_data : {str(self.response_data)}\n"
+            f"response_headers : {str(self.response_headers)}\n"
         )
