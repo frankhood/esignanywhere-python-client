@@ -17,6 +17,11 @@ class BaseAPIESawErrorResponse(Exception):
     ) -> None:
         """BaseAPIESawErrorResponse."""
         super().__init__(*args, **kwargs)
+        self.status_code = None
+        self.service_url = None
+        self.method_name = None
+        self.request_data = None
+        self.response_data = None
         if all([status_code, service_url, method_name, request_data, response]):
             self.status_code = status_code  # type: ignore
             self.service_url = service_url  # type: ignore
@@ -37,6 +42,10 @@ class BaseAPIESawErrorResponse(Exception):
                         self.response_data = response.text  # type: ignore
                     except Exception:
                         self.response_data = "Unable to get response data"  # type: ignore
+
+    def __reduce__(self):
+        """Metodo speciale per il pickling che specifica come ricostruire l'oggetto."""
+        return (self.__class__, (), self.__getstate__())
 
     def __getstate__(self):
         """Metodo chiamato durante la serializzazione."""
