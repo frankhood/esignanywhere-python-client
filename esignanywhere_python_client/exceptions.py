@@ -36,6 +36,26 @@ class BaseAPIESawErrorResponse(Exception):
                 except Exception:
                     self.response_data = "Unable to get response data"
 
+    def __getstate__(self):
+        """Metodo chiamato durante la serializzazione."""
+        return {
+            "status_code": self.status_code,
+            "service_url": self.service_url,
+            "method_name": self.method_name,
+            "request_data": self.request_data,
+            "response_data": self.response_data,
+            "args": self.args,
+        }
+
+    def __setstate__(self, state):
+        """Metodo chiamato durante la deserializzazione."""
+        self.status_code = state["status_code"]
+        self.service_url = state["service_url"]
+        self.method_name = state["method_name"]
+        self.request_data = state["request_data"]
+        self.response_data = state["response_data"]
+        self.args = state["args"]
+
     def __str__(self):
         return f"Status Code: {self.status_code}"
 
