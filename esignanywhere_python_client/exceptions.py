@@ -17,25 +17,25 @@ class BaseAPIESawErrorResponse(Exception):
     ) -> None:
         """BaseAPIESawErrorResponse."""
         super().__init__(*args, **kwargs)
-        self.status_code = status_code  # type: ignore
-        self.service_url = service_url  # type: ignore
-        self.method_name = method_name  # type: ignore
-        self.request_data = json.dumps(request_data)  # type: ignore
-        self.response_headers = dict(response.headers)  # type: ignore
+        self.status_code = status_code
+        self.service_url = service_url
+        self.method_name = method_name
+        self.request_data = json.dumps(request_data)
+        self.response_headers = dict(response.headers)
         try:
-            self.response_data = response.json()  # type: ignore
+            self.response_data = response.json()
         except Exception:
             try:
-                self.response_data = (  # type: ignore
-                    response.content.decode()  # type: ignore
-                    if isinstance(response.content, bytes)  # type: ignore
-                    else response.content  # type: ignore
+                self.response_data = (
+                    response.content.decode()
+                    if isinstance(response.content, bytes)
+                    else response.content
                 )
             except Exception:
                 try:
-                    self.response_data = response.text  # type: ignore
+                    self.response_data = response.text
                 except Exception:
-                    self.response_data = "Unable to get response data"  # type: ignore
+                    self.response_data = "Unable to get response data"
 
     def __str__(self):
         return f"Status Code: {self.status_code}"
