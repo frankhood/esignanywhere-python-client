@@ -7,32 +7,36 @@ import requests
 class BaseAPIESawErrorResponse(Exception):
     def __init__(
         self,
-        status_code: int,
-        service_url: str,
-        method_name: str,
-        request_data: Dict[str, Any],
-        response: requests.Response,
+        status_code: int | None = None,
+        service_url: str | None = None,
+        method_name: str | None = None,
+        request_data: Dict[str, Any] | None = None,
+        response: requests.Response | None = None,
+        *args,
+        **kwargs,
     ) -> None:
         """BaseAPIESawErrorResponse."""
-        self.status_code = status_code
-        self.service_url = service_url
-        self.method_name = method_name
-        self.request_data = json.dumps(request_data)
-        self.response_headers = dict(response.headers)
-        try:
-            self.response_data = response.json()
-        except Exception:
+        super().__init__(*args, **kwargs)
+        if all([status_code, service_url, method_name, request_data, response]):
+            self.status_code = status_code  # type: ignore
+            self.service_url = service_url  # type: ignore
+            self.method_name = method_name  # type: ignore
+            self.request_data = json.dumps(request_data)  # type: ignore
+            self.response_headers = dict(response.headers)  # type: ignore
             try:
-                self.response_data = (
-                    response.content.decode()
-                    if isinstance(response.content, bytes)
-                    else response.content
-                )
+                self.response_data = response.json()  # type: ignore
             except Exception:
                 try:
-                    self.response_data = response.text
+                    self.response_data = (  # type: ignore
+                        response.content.decode()  # type: ignore
+                        if isinstance(response.content, bytes)  # type: ignore
+                        else response.content  # type: ignore
+                    )
                 except Exception:
-                    self.response_data = "Unable to get response data"
+                    try:
+                        self.response_data = response.text  # type: ignore
+                    except Exception:
+                        self.response_data = "Unable to get response data"  # type: ignore
 
     def __getstate__(self):
         """Metodo chiamato durante la serializzazione."""
@@ -47,12 +51,10 @@ class BaseAPIESawErrorResponse(Exception):
 
     def __setstate__(self, state):
         """Metodo chiamato durante la deserializzazione."""
-        self.status_code = state["status_code"]
-        self.service_url = state["service_url"]
-        self.method_name = state["method_name"]
-        self.request_data = state["request_data"]
-        self.response_data = state["response_data"]
-        self.args = state["args"]
+        # Non chiamare __init__, assegna direttamente gli attributi
+        self.__dict__.update(state)
+        # Inizializza anche la classe base Exception
+        super().__init__()
 
     def __str__(self):
         return f"Status Code: {self.status_code}"
