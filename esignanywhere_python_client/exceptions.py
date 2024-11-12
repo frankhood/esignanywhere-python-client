@@ -12,10 +12,8 @@ class BaseAPIESawErrorResponse(Exception):
         method_name: str,
         request_data: Dict[str, Any],
         response: requests.Response,
-        *args,
     ) -> None:
         """BaseAPIESawErrorResponse."""
-        super().__init__(*args)
         self.status_code = status_code
         self.service_url = service_url
         self.method_name = method_name
