@@ -1647,11 +1647,11 @@ class DraftGetConfigurationDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -2505,11 +2505,11 @@ class DraftCreateDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -4724,11 +4724,11 @@ class DraftActivityReplaceDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -6106,11 +6106,11 @@ class EnvelopeGetConfigurationDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -7223,11 +7223,11 @@ class EnvelopeSendDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -8908,11 +8908,11 @@ class EnvelopeActivityReplaceDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -10189,11 +10189,11 @@ class EnvelopeBulkSendDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
@@ -12572,11 +12572,11 @@ class TemplateGetConfigurationDisposableCertificateSignatureData(BaseModel):
     DocumentIssuedBy: Optional[str] = Field(
         None, description="The authority that issued the document."
     )
-    DocumentIssuedOn: Optional[datetime] = Field(
+    DocumentIssuedOn: Optional[str] = Field(
         None,
         description="The date when the document has been issued.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
-    DocumentExpiryDate: Optional[datetime] = Field(
+    DocumentExpiryDate: Optional[str] = Field(
         None,
         description="The expiration date of the document.\r\nA date in the format RFC 3339, section 5.6, 'full-date' (e.g. 2017-07-21).",
     )
