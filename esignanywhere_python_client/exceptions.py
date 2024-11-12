@@ -20,6 +20,7 @@ class BaseAPIESawErrorResponse(Exception):
         self.status_code = status_code
         self.service_url = service_url
         self.method_name = method_name
+        self.response = response
         self.request_data = json.dumps(request_data)
         self.response_headers = dict(response.headers)
         try:
@@ -42,6 +43,18 @@ class BaseAPIESawErrorResponse(Exception):
 
     def __repr__(self):
         return f"Status Code: {self.status_code}"
+
+    def __reduce__(self):
+        return (
+            self.__class__,
+            (
+                self.status_code,
+                self.service_url,
+                self.method_name,
+                self.request_data,
+                self.response,
+            ),
+        )
 
 
 class ESawInvalidVersionError(Exception):
