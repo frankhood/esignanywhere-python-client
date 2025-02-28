@@ -82,8 +82,8 @@ class ESawUnexpectedResponse(BaseAPIESawErrorResponse):
             f"Unexpected Response from url {self.service_url}\n"
             f"status_code : {self.status_code}\n"
             f"method_name : {self.method_name}\n"
-            f"request_data : {str(self.request_data)}\n"
             f"response_data : {str(self.response_data)}\n"
+            f"request_data : {str(self.request_data)}\n"
             f"response_headers : {str(self.response_headers)}\n"
         )
 
@@ -94,7 +94,7 @@ class ESawErrorResponse(BaseAPIESawErrorResponse):
             f"Error Response from url {self.service_url}\n"
             f"status_code : {self.status_code}\n"
             f"method_name: {self.method_name}\n"
-            f"request_data : {str(self.request_data)}\n"
             f"response_data : {str(self.response_data)}\n"
+            f"request_data : {str(self.request_data)}\n"
             f"response_headers : {str(self.response_headers)}\n"
         )
