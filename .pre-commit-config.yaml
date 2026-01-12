@@ -3,13 +3,13 @@ default_language_version:
 fail_fast: true
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.1
+    rev: v3.21.2
     hooks:
     - id: pyupgrade
       stages: [commit]
       name: "✅ Python Upgrade"
       args:
-        - "--py38-plus"
+        - "--py311-plus"
         - "--keep-runtime-typing"
   - repo: https://github.com/psf/black
     rev: 24.2.0
@@ -58,7 +58,7 @@ repos:
       entry: mypy
       language: python
       types: [python]
-      args: ["--install-types", "--non-interactive", "--python-version=3.11"]
+      args: ["--install-types", "--non-interactive", "--python-version=3.14"]
       additional_dependencies: [
         "mypy~=0.931"
       ]

@@ -50,3 +50,6 @@ docs/_build
 .coverage
 .tox
 db.sqlite3
+
+venv
+.env

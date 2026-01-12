@@ -71,7 +71,7 @@ class TestCancelEnvelope(unittest.TestCase):
         self.client.cancel_envelope(EnvelopeCancelRequest(EnvelopeId=envelope_id))
 
         r = self.client.get_envelope(envelope_id)
-        self.assertEqual(r.EnvelopeStatus, EnvelopeStatus.Canceled)
+        self.assertEqual(r.EnvelopeStatus, EnvelopeStatus.Canceled.value)
 
     def test_wrong_id(self):
         with self.assertRaises(ESawErrorResponse) as cm:

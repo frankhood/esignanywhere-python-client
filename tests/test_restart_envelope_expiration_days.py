@@ -70,7 +70,7 @@ class TestRestartEnvelopeExpirationDays(unittest.TestCase):
         self.envelope_id = r.EnvelopeId
 
     def test_expiration_in_past(self):
-        new_expiration_date = datetime.datetime.now(datetime.timezone.utc).replace(
+        new_expiration_date = datetime.datetime.now(datetime.UTC).replace(
             microsecond=0
         ) - datetime.timedelta(days=1)
 
@@ -86,7 +86,7 @@ class TestRestartEnvelopeExpirationDays(unittest.TestCase):
         self.assertEqual(cm.exception.response_data["ErrorId"], "ERR0163")
 
     def test_invalid_status(self):
-        new_expiration_date = datetime.datetime.now(datetime.timezone.utc).replace(
+        new_expiration_date = datetime.datetime.now(datetime.UTC).replace(
             microsecond=0
         ) + datetime.timedelta(days=1)
 

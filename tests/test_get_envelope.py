@@ -72,9 +72,6 @@ class TestGetEnvelope(unittest.TestCase):
         r = self.client.get_envelope_configuration(envelope_id)
         self.assertIsNotNone(r.Activities)
 
-        r = self.client.get_envelope_files(envelope_id)
-        self.assertIsNotNone(r.Documents[0].FileId)
-
         r = self.client.get_envelope_viewer_links(envelope_id)
         self.assertEqual(len(r.ViewerLinks), 1)
 

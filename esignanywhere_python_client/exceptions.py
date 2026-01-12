@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any
 
 import requests
 
@@ -9,7 +9,7 @@ class BaseAPIESawErrorResponse(Exception):
         status_code: int,
         service_url: str,
         method_name: str,
-        request_data: Dict[str, Any],
+        request_data: dict[str, Any],
         response: requests.Response,
         *args,
         **kwargs,
@@ -60,7 +60,7 @@ class ESawInvalidVersionError(Exception):
     def __init__(
         self,
         version: str,
-        supported_versions: List[str],
+        supported_versions: list[str],
     ):
         self.version = version
         self.supported_versions = supported_versions
