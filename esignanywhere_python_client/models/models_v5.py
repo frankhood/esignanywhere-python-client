@@ -5,7 +5,7 @@
 
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Annotated, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -19,6 +19,8 @@ class RedirectPolicy(Enum):
 
 
 class CreateDraftOptions(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     AfterSendRedirectUrl: Optional[str] = Field(
         None, description="The redirection URL after sending the envelope."
     )
@@ -26,10 +28,13 @@ class CreateDraftOptions(BaseModel):
         None,
         description="The URL where a callbackl is sent to after sending the envelope.",
     )
-    RedirectPolicy: Optional["RedirectPolicy"] = Field(
-        None,
-        description="Specifies where to redirect if <code>AllowAgentRedirect</code> is <code>true</code>.",
-    )
+    RedirectPolicy: Annotated[
+        Optional["RedirectPolicy"],
+        Field(
+            None,
+            description="Specifies where to redirect if <code>AllowAgentRedirect</code> is <code>true</code>.",
+        ),
+    ]
     AllowAgentRedirect: Optional[bool] = Field(
         None, description="Specifies if the agentmode is active."
     )
@@ -37,6 +42,9 @@ class CreateDraftOptions(BaseModel):
         None,
         description='A string indicating a white list of urls where the designer is allowed to be used in agent mode.\r\nExample: "http://172.16.17.181;http://foo.org"',
     )
+
+
+CreateDraftOptions.model_rebuild()
 
 
 class WorkstepEventCallback(BaseModel):
@@ -129,27 +137,27 @@ class DocumentType(Enum):
 
 
 class DisposableCertificateData(BaseModel):
-    CountryResidence: Optional[str] = None
-    DocumentIssuingCountry: Optional[str] = None
-    IdentificationCountry: Optional[str] = None
-    IdentificationType: Optional["IdentificationType"] = None
-    PhoneMobile: Optional[str] = None
-    DocumentType: Optional["DocumentType"] = None
-    DocumentIssuedBy: Optional[str] = None
-    DocumentIssuedOn: Optional[datetime] = None
-    DocumentExpiryDate: Optional[datetime] = None
-    SerialNumber: Optional[str] = None
-    DocumentNumber: Optional[str] = None
-    OverrideHolderInCaseOfMismatch: Optional[bool] = None
+    CountryResidence: Optional[str]
+    DocumentIssuingCountry: Optional[str]
+    IdentificationCountry: Optional[str]
+    IdentificationType: Optional["IdentificationType"]
+    PhoneMobile: Optional[str]
+    DocumentType: Optional["DocumentType"]
+    DocumentIssuedBy: Optional[str]
+    DocumentIssuedOn: Optional[datetime]
+    DocumentExpiryDate: Optional[datetime]
+    SerialNumber: Optional[str]
+    DocumentNumber: Optional[str]
+    OverrideHolderInCaseOfMismatch: Optional[bool]
 
 
 class RemoteCertificateData(BaseModel):
-    UserId: Optional[str] = None
-    DeviceId: Optional[str] = None
+    UserId: Optional[str]
+    DeviceId: Optional[str]
 
 
 class OtpData(BaseModel):
-    PhoneMobile: Optional[str] = None
+    PhoneMobile: Optional[str]
 
 
 class AllowedPkcs7SignatureType(Enum):
@@ -159,7 +167,7 @@ class AllowedPkcs7SignatureType(Enum):
 
 
 class Pkcs7SignerData(BaseModel):
-    AllowedPkcs7SignatureTypes: Optional[List[AllowedPkcs7SignatureType]] = None
+    AllowedPkcs7SignatureTypes: Optional[List[AllowedPkcs7SignatureType]]
 
 
 class HashAlgorithmIdentifier(Enum):
@@ -226,15 +234,21 @@ class CompareOperation(Enum):
 
 
 class SendEnvelopeAuthenticationFilter(BaseModel):
-    CompareOperation: Optional["CompareOperation"] = Field(
-        None, description="The compare method of the filter."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    CompareOperation: Annotated[
+        Optional["CompareOperation"],
+        Field(None, description="The compare method of the filter."),
+    ]
     FilterId: Optional[str] = Field(
         None, description="The filter id of the authentication."
     )
     FilterValue: Optional[str] = Field(
         None, description="The filter value of the authentication."
     )
+
+
+SendEnvelopeAuthenticationFilter.model_rebuild()
 
 
 class KeyValuePair(BaseModel):
@@ -270,9 +284,9 @@ class Text(BaseModel):
 
 
 class UserInformation(BaseModel):
-    FirstName: Optional[str] = None
-    LastName: Optional[str] = None
-    EMail: Optional[str] = None
+    FirstName: Optional[str]
+    LastName: Optional[str]
+    EMail: Optional[str]
 
 
 class DisposableCertificateDisclaimerTexts(BaseModel):
@@ -285,7 +299,7 @@ class ATrustCertificateData(BaseModel):
 
 class BankIdPluginData(BaseModel):
     TrBiPersonalNumber: Optional[str] = Field(None, description="PhoneNumber")
-    TrBiAllowAnyPersonalNumber: Optional[bool] = None
+    TrBiAllowAnyPersonalNumber: Optional[bool]
 
 
 class SigningCertificateRevocationInformationIncludeMode(Enum):
@@ -446,7 +460,7 @@ class ReferenceCorner1(Enum):
 
 
 class SenderDataFields(BaseModel):
-    Fields: Optional[List[KeyValuePair]] = None
+    Fields: Optional[List[KeyValuePair]]
 
 
 class SignatureHashAlgorithm1(Enum):
@@ -466,13 +480,19 @@ class Csp(Enum):
 
 
 class SigningCertificateDescriptor(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Identifier: Optional[str] = Field(None, description="Identifier for this")
-    Type: Optional["Type"] = Field(
-        None, description="Defines which type should be used."
-    )
-    Csp: Optional["Csp"] = Field(
-        None, description="Defines which Csp type should be used."
-    )
+    Type: Annotated[
+        Optional["Type"], Field(None, description="Defines which type should be used.")
+    ]
+    Csp: Annotated[
+        Optional["Csp"],
+        Field(None, description="Defines which Csp type should be used."),
+    ]
+
+
+SigningCertificateDescriptor.model_rebuild()
 
 
 class NotificationEvent(Enum):
@@ -569,14 +589,14 @@ class AuthenticationCertificateDescriptor(BaseModel):
 
 
 class CreateDraftResult(BaseModel):
-    DraftId: Optional[str] = None
+    DraftId: Optional[str]
 
 
 class Error(BaseModel):
     ErrorId: Optional[str] = Field(None, description="Id of the error.")
     Message: Optional[str] = Field(None, description="Message from the error.")
     SupportId: Optional[str] = Field(None, description="Support identifier.")
-    ThrownException: Optional[Dict[str, Any]] = None
+    ThrownException: Optional[Dict[str, Any]]
 
 
 class Status(Enum):
@@ -608,6 +628,8 @@ class Status1(Enum):
 
 
 class EnvelopeBasicOptions(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Name: Optional[str] = Field(None, description="Name of the envelope.")
     EmailSubject: Optional[str] = Field(
         None, description="Email subject of the envelope."
@@ -639,10 +661,14 @@ class EnvelopeBasicOptions(BaseModel):
     StatusUpdateCallbackUrl: Optional[str] = Field(
         None, description="The callback url of status changes for the envelope."
     )
-    WorkstepEventCallback: Optional["WorkstepEventCallback"] = Field(
-        None, description="Workstep event callback options."
-    )
-    MetaDataXml: Optional[str] = None
+    WorkstepEventCallback: Annotated[
+        Optional["WorkstepEventCallback"],
+        Field(None, description="Workstep event callback options."),
+    ]
+    MetaDataXml: Optional[str] = Field(None)
+
+
+EnvelopeBasicOptions.model_rebuild()
 
 
 class Status2(Enum):
@@ -661,17 +687,17 @@ class RecipientType1(Enum):
 
 
 class DocumentFormField(BaseModel):
-    Name: Optional[str] = None
-    Values: Optional[List[KeyValuePair]] = None
+    Name: Optional[str]
+    Values: Optional[List[KeyValuePair]]
 
 
 class DocumentAttachment(BaseModel):
-    Name: Optional[str] = None
-    DocumentId: Optional[str] = None
+    Name: Optional[str]
+    DocumentId: Optional[str]
 
 
 class DocumentSignatureField(BaseModel):
-    Name: Optional[str] = None
+    Name: Optional[str]
 
 
 class Type1(Enum):
@@ -680,7 +706,7 @@ class Type1(Enum):
 
 
 class EnvelopeStatusWarning(BaseModel):
-    Type: Optional["Type1"] = Field(None, description="The warning type.")
+    Type: Annotated[Optional["Type1"], Field(None, description="The warning type.")]
     ContentXmlList: Optional[List[str]] = Field(
         None, description="The warning contents."
     )
@@ -691,12 +717,17 @@ class DisclaimerType(Enum):
 
 
 class DisclaimerDocument(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     DocumentId: Optional[str] = Field(
         None, description="The Id of the document for downloading."
     )
-    DisclaimerType: Optional["DisclaimerType"] = Field(
-        None, description="The type of the document."
-    )
+    DisclaimerType: Annotated[
+        Optional["DisclaimerType"], Field(None, description="The type of the document.")
+    ]
+
+
+DisclaimerDocument.model_rebuild()
 
 
 class Status3(Enum):
@@ -725,9 +756,10 @@ class FindEnvelopesDescriptor(BaseModel):
         None,
         description="If set, filters for the given text in email subject/body, envelope name/description, sender first/lastname email and recipient first/lastname email.\r\nExpensive!",
     )
-    Status: Optional["Status3"] = Field(
-        None, description="If set, filters for envelopes by status."
-    )
+    Status: Annotated[
+        Optional["Status3"],
+        Field(None, description="If set, filters for envelopes by status."),
+    ]
     InStatusSinceDays: Optional[int] = Field(
         None,
         description="If set, filters for envelopes which have the given status for the given days.\r\nMust be combined with Status.",
@@ -765,10 +797,12 @@ class Status4(Enum):
 
 
 class ExtendedFindEnvelopesResultEntry(BaseModel):
-    Status: Optional["Status4"] = Field(None, description="The status of the envelope.")
+    Status: Annotated[
+        Optional["Status4"], Field(None, description="The status of the envelope.")
+    ]
     Id: Optional[str] = Field(None, description="The envelope id.")
     Name: Optional[str] = Field(None, description="The name of the envelope.")
-    MetaDataXml: Optional[str] = None
+    MetaDataXml: Optional[str] = Field(None)
     Bulk: Optional[str] = Field(
         None, description="The bulk id. \r\nOnly set if the envelope is part of a bulk."
     )
@@ -788,12 +822,15 @@ class FormsGrouping(Enum):
 
 
 class ParseFormFields(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     MapRequiredFieldsToRequiredTask: Optional[bool] = Field(
         None, description="Maps required fields to required task."
     )
-    FormsGrouping: Optional["FormsGrouping"] = Field(
-        None, description="Defines how the forms are grouped."
-    )
+    FormsGrouping: Annotated[
+        Optional["FormsGrouping"],
+        Field(None, description="Defines how the forms are grouped."),
+    ]
     ReturnSimplifiedConfig: Optional[bool] = Field(
         None, description="Defines if the simplified configuration should be returned."
     )
@@ -803,6 +840,9 @@ class ParseFormFields(BaseModel):
     ParseFormField: Optional[bool] = Field(
         None, description="Defines if form fields should be parsed."
     )
+
+
+ParseFormFields.model_rebuild()
 
 
 class AdhocPolicies(BaseModel):
@@ -869,8 +909,8 @@ class StampImprintConfiguration(BaseModel):
 
 
 class SendEnvelopeBulkResultEntry(BaseModel):
-    EnvelopeId: Optional[str] = None
-    Email: Optional[str] = None
+    EnvelopeId: Optional[str]
+    Email: Optional[str]
 
 
 class SendRemindersResult(BaseModel):
@@ -923,7 +963,7 @@ class UserAuthentication(BaseModel):
 
 
 class CreateUserResult(BaseModel):
-    CreatedUserIds: Optional[List[UUID]] = None
+    CreatedUserIds: Optional[List[UUID]]
 
 
 class AutomatedDelegationSettings(BaseModel):
@@ -980,7 +1020,7 @@ class ExtendedFindUsersResultEntry(BaseModel):
         None,
         description="Defines if the user is enabled and allowed to use the system.",
     )
-    Authentications: Optional[List[UserAuthentication]] = None
+    Authentications: Optional[List[UserAuthentication]]
     Roles: Optional[List[str]] = Field(
         None, description="The roles of the user, which defines its permissions."
     )
@@ -994,8 +1034,8 @@ class MeResult(BaseModel):
 
 
 class FlowApiResult(BaseModel):
-    Success: Optional[bool] = None
-    Version: Optional[str] = None
+    Success: Optional[bool]
+    Version: Optional[str]
 
 
 class Agreements(BaseModel):
@@ -1015,15 +1055,19 @@ class FormGroup(BaseModel):
 
 
 class Form(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="Identifier for the form.")
     PositionPage: Optional[int] = Field(None, description="Page number for the form.")
     DocRefNumber: Optional[int] = Field(
         None, description="Document number for the form."
     )
-    Position: Optional["Position"] = Field(
-        None, description="Exact position of the form."
-    )
-    Size: Optional["Size"] = Field(None, description="Width and Height of the object.")
+    Position: Annotated[
+        Optional["Position"], Field(None, description="Exact position of the form.")
+    ]
+    Size: Annotated[
+        Optional["Size"], Field(None, description="Width and Height of the object.")
+    ]
     IsHidden: Optional[bool] = Field(None, description="Define if it is hidden.")
     ExportValue: Optional[str] = Field(
         None, description="The export value of the form field."
@@ -1042,6 +1086,9 @@ class Form(BaseModel):
         ...,
         description="Property for parsing abstract base classes (polymorphism) in auto generated Swagger code.",
     )
+
+
+Form.model_rebuild()
 
 
 class PictureAnnotationConfiguration(BaseModel):
@@ -1095,11 +1142,15 @@ class TextAlign(Enum):
 
 
 class FontSettingsAdvanced(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     FontFamily: Optional[str] = Field(None, description="Defines the font-family.")
-    TextAlign: Optional["TextAlign"] = Field(None, description="Alignment of the text.")
-    TextColor: Optional["TextColor"] = Field(
-        None, description="Choose the color for the text."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"], Field(None, description="Alignment of the text.")
+    ]
+    TextColor: Annotated[
+        Optional["TextColor"], Field(None, description="Choose the color for the text.")
+    ]
     Name: Optional[str] = Field(None, description="Naming of the font.")
     Size: Optional[float] = Field(None, description="Define the size.")
     IsBold: Optional[bool] = Field(
@@ -1108,6 +1159,9 @@ class FontSettingsAdvanced(BaseModel):
     IsItalic: Optional[bool] = Field(
         None, description="Define if the font-style should be italic."
     )
+
+
+FontSettingsAdvanced.model_rebuild()
 
 
 class ListBox(BaseModel):
@@ -1204,9 +1258,9 @@ class CompareOperation1(Enum):
 
 class AuthenticationMethodCheck(BaseModel):
     FieldId: Optional[str] = Field(None, description="Field id")
-    CompareOperation: Optional["CompareOperation1"] = Field(
-        None, description="Compare operator."
-    )
+    CompareOperation: Annotated[
+        Optional["CompareOperation1"], Field(None, description="Compare operator.")
+    ]
     Value: Optional[str] = Field(None, description="Value of the check.")
 
 
@@ -1377,7 +1431,11 @@ class OverrideFormFieldOptions(BaseModel):
 
 
 class SendEnvelopeAuthentication(BaseModel):
-    Method: Optional["Method"] = Field(None, description="The authentication method.")
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    Method: Annotated[
+        Optional["Method"], Field(None, description="The authentication method.")
+    ]
     Parameter: Optional[str] = Field(
         None, description="The needed parameters for the authentication."
     )
@@ -1386,10 +1444,13 @@ class SendEnvelopeAuthentication(BaseModel):
     )
 
 
+SendEnvelopeAuthentication.model_rebuild()
+
+
 class SwissComCertificateData(BaseModel):
-    PhoneNumber: Optional[str] = None
-    MobileId: Optional[str] = None
-    Parameters: Optional[List[KeyValuePair]] = None
+    PhoneNumber: Optional[str]
+    MobileId: Optional[str]
+    Parameters: Optional[List[KeyValuePair]]
 
 
 class FinishAction(BaseModel):
@@ -1408,20 +1469,34 @@ class IntroTexts(BaseModel):
 
 
 class SenderInformation(BaseModel):
-    UserInformation: Optional["UserInformation"] = Field(
-        None, description="Information about the user."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    UserInformation: Annotated[
+        Optional["UserInformation"],
+        Field(None, description="Information about the user."),
+    ]
+
+
+SenderInformation.model_rebuild()
 
 
 class TransactionCodeConfiguration(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="Id of the transaction code.")
-    HashAlgorithmIdentifier: Optional["HashAlgorithmIdentifier"] = Field(
-        None, description="HashAlgorithm identifier to be used."
-    )
+    HashAlgorithmIdentifier: Annotated[
+        Optional["HashAlgorithmIdentifier"],
+        Field(None, description="HashAlgorithm identifier to be used."),
+    ]
     Texts: Optional[List[Text]] = Field(None, description="Collection of all texts.")
 
 
+TransactionCodeConfiguration.model_rebuild()
+
+
 class ViewerPreferences(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     ShowPageNavigationBar: Optional[bool] = Field(
         None, description="Obsolete. Replaced by ShowPageNavigationButtons."
     )
@@ -1464,12 +1539,19 @@ class ViewerPreferences(BaseModel):
         None,
         description="If enabled, custom buttons can be added via xyzmo.Customization plugin.",
     )
-    GuidingBehavior: Optional["GuidingBehavior"] = Field(
-        None, description="Defines how the viewer should guide through the tasks."
-    )
-    FormFieldsGuidingBehavior: Optional["FormFieldsGuidingBehavior"] = Field(
-        None, description="Defining how the viewer should guide through form fields."
-    )
+    GuidingBehavior: Annotated[
+        Optional["GuidingBehavior"],
+        Field(
+            None, description="Defines how the viewer should guide through the tasks."
+        ),
+    ]
+    FormFieldsGuidingBehavior: Annotated[
+        Optional["FormFieldsGuidingBehavior"],
+        Field(
+            None,
+            description="Defining how the viewer should guide through form fields.",
+        ),
+    ]
     ShowVersionNumber: Optional[bool] = Field(
         None,
         description="Obsolete. Defining if the viewer should show the version number.",
@@ -1478,9 +1560,10 @@ class ViewerPreferences(BaseModel):
         None,
         description="Defining if the viewer should display a warning popup when the user leaves the page.",
     )
-    WarningPopupDisplayAfter: Optional["WarningPopupDisplayAfter"] = Field(
-        None, description="Defining when the warning popup should be displayed."
-    )
+    WarningPopupDisplayAfter: Annotated[
+        Optional["WarningPopupDisplayAfter"],
+        Field(None, description="Defining when the warning popup should be displayed."),
+    ]
     FinishWorkstepOnOpen: Optional[bool] = Field(
         None,
         description="If set to 1 the workstep is automatically finished when opened in the viewer, if finishing is possible.",
@@ -1489,10 +1572,13 @@ class ViewerPreferences(BaseModel):
         None,
         description="If enabled, finish action will be automatically triggered after last required task is done.",
     )
-    GuidingBehaviorOnFinishedTask: Optional["GuidingBehaviorOnFinishedTask"] = Field(
-        None,
-        description="Defines the guiding behavior after a task has been completed (e.g. signature field has been signed). This flag is not taken into account if the guiding is disabled.",
-    )
+    GuidingBehaviorOnFinishedTask: Annotated[
+        Optional["GuidingBehaviorOnFinishedTask"],
+        Field(
+            None,
+            description="Defines the guiding behavior after a task has been completed (e.g. signature field has been signed). This flag is not taken into account if the guiding is disabled.",
+        ),
+    ]
     SkipThankYouDialog: Optional[bool] = Field(
         None, description="Obsolete. Replaced by ShowFinishPossibleHint."
     )
@@ -1500,14 +1586,20 @@ class ViewerPreferences(BaseModel):
         None,
         description="Defines the url scheme for the native SAW Viewer applications (needed for customized SAW Viewer apps).",
     )
-    DocumentViewingMode: Optional["DocumentViewingMode"] = Field(
-        None,
-        description="Defines whether the envelope is displayed in its entirety or if only a specific document is shown at a time.",
-    )
-    ThumbnailMode: Optional["ThumbnailMode"] = Field(
-        None,
-        description="Defines the appearance of the thumbnail view: all pages of the entire document are shown, or only the first page of each document within an envelope.",
-    )
+    DocumentViewingMode: Annotated[
+        Optional["DocumentViewingMode"],
+        Field(
+            None,
+            description="Defines whether the envelope is displayed in its entirety or if only a specific document is shown at a time.",
+        ),
+    ]
+    ThumbnailMode: Annotated[
+        Optional["ThumbnailMode"],
+        Field(
+            None,
+            description="Defines the appearance of the thumbnail view: all pages of the entire document are shown, or only the first page of each document within an envelope.",
+        ),
+    ]
     ShowTopBar: Optional[bool] = Field(
         None,
         description="Defines if the top bar should be visible or not. If disabled, also the 'GuidingBehavior' and the 'DisplayRejectButtonInTopBar' will be deactivated.",
@@ -1516,12 +1608,14 @@ class ViewerPreferences(BaseModel):
         None,
         description="If enabled, the 'reject' button will be displayed in the left bar below the 'finish' button as well",
     )
-    MultipleSignatureTypesAndBatchSigningSettings: Optional[
-        "MultipleSignatureTypesAndBatchSigningSettings"
-    ] = Field(None, description="MultipleSignatureTypesAndBatchSigning settings.")
-    VisibleAreaOptions: Optional["VisibleAreaOptions"] = Field(
-        None, description="Options for Post Messaging in Iframes."
-    )
+    MultipleSignatureTypesAndBatchSigningSettings: Annotated[
+        Optional["MultipleSignatureTypesAndBatchSigningSettings"],
+        Field(None, description="MultipleSignatureTypesAndBatchSigning settings."),
+    ]
+    VisibleAreaOptions: Annotated[
+        Optional["VisibleAreaOptions"],
+        Field(None, description="Options for Post Messaging in Iframes."),
+    ]
     ShowStartGuidingHint: Optional[bool] = Field(
         None,
         description="If enabled, a hint to the next button is shown, where the guide can be started.",
@@ -1558,14 +1652,20 @@ class ViewerPreferences(BaseModel):
         None,
         description="If enabled, the confirm dialog to accept the reject action will not be shown.",
     )
-    BatchSigningType: Optional["BatchSigningType"] = Field(
-        None,
-        description='Either Basic/OptIn/OptOut; if not set it should behave like "Basic"',
-    )
+    BatchSigningType: Annotated[
+        Optional["BatchSigningType"],
+        Field(
+            None,
+            description='Either Basic/OptIn/OptOut; if not set it should behave like "Basic"',
+        ),
+    ]
     BatchSigningDisableNextButtonUntilDialogScrolledToBottom: Optional[bool] = Field(
         None,
         description="Either true or false; if not set it should behave like false. Works only in combination with BatchSigningType OptIn/OptOut",
     )
+
+
+ViewerPreferences.model_rebuild()
 
 
 class AuthenticationMethods(BaseModel):
@@ -1576,29 +1676,47 @@ class AuthenticationMethods(BaseModel):
 
 
 class GenericSigningPluginData(BaseModel):
-    PluginId: Optional[str] = None
-    SenderDataFields: Optional["SenderDataFields"] = None
+    PluginId: Optional[str]
+    SenderDataFields: Optional["SenderDataFields"]
 
 
 class PdfSignatureCryptographicData(BaseModel):
-    SignatureHashAlgorithm: Optional["SignatureHashAlgorithm"] = Field(
-        None, description="Define the HashAlgorithm for the signature."
-    )
-    SigningCertificateDescriptor: Optional["SigningCertificateDescriptor"] = Field(
-        None, description="Configure a SigningCertificateDescriptor for this object."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    SignatureHashAlgorithm: Annotated[
+        Optional["SignatureHashAlgorithm"],
+        Field(None, description="Define the HashAlgorithm for the signature."),
+    ]
+    SigningCertificateDescriptor: Annotated[
+        Optional["SigningCertificateDescriptor"],
+        Field(
+            None,
+            description="Configure a SigningCertificateDescriptor for this object.",
+        ),
+    ]
+
+
+PdfSignatureCryptographicData.model_rebuild()
 
 
 class NotificationConfiguration(BaseModel):
-    NotificationEventsToSend: Optional["NotificationEventsToSend"] = Field(
-        None, description="Defines the events that should be send."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    NotificationEventsToSend: Annotated[
+        Optional["NotificationEventsToSend"],
+        Field(None, description="Defines the events that should be send."),
+    ]
     NotificationUrl: Optional[str] = Field(
         None, description="The url of the notifcation."
     )
 
 
+NotificationConfiguration.model_rebuild()
+
+
 class WorkstepTasks(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     PictureAnnotationMinResolution: Optional[int] = Field(
         None,
         description="Minimum resolution for PictureAnnotation of the picture based on the target size.",
@@ -1607,26 +1725,32 @@ class WorkstepTasks(BaseModel):
         None,
         description="Minimum resolution of PictureAnnotation the picture based on the target size.",
     )
-    PictureAnnotationColorDepth: Optional["PictureAnnotationColorDepth"] = Field(
-        None, description="Defines the color depth for PictureAnnotation."
-    )
+    PictureAnnotationColorDepth: Annotated[
+        Optional["PictureAnnotationColorDepth"],
+        Field(None, description="Defines the color depth for PictureAnnotation."),
+    ]
     SetFormFieldsToReadOnlyAfterTask: Optional[str] = Field(
         None,
         description="set all form fields in the document to readonly right before this task is executed.",
     )
-    SequenceMode: Optional["SequenceMode"] = Field(
-        None, description="Mode for sequence of"
-    )
-    PositionUnits: Optional["PositionUnits"] = Field(
-        None, description="Define the default position units."
-    )
-    ReferenceCorner: Optional["ReferenceCorner1"] = Field(
-        None, description="Define the default reference corner."
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"], Field(None, description="Mode for sequence of")
+    ]
+    PositionUnits: Annotated[
+        Optional["PositionUnits"],
+        Field(None, description="Define the default position units."),
+    ]
+    ReferenceCorner: Annotated[
+        Optional["ReferenceCorner1"],
+        Field(None, description="Define the default reference corner."),
+    ]
     Tasks: Optional[List[WorkstepTask]] = Field(
         None,
         description="Abstract class, use the derived classes:\r\n- Agreements\r\n- AppendPages\r\n- Attachment\r\n- FormGroup\r\n- PictureAnnotationConfiguration\r\n- ReadingTask\r\n- Signature\r\n- SignPkcs7\r\n- TypewriterAnnotation\r\n            \r\nFor usage see sample code.",
     )
+
+
+WorkstepTasks.model_rebuild()
 
 
 class FinalizeActions(BaseModel):
@@ -1637,75 +1761,111 @@ class FinalizeActions(BaseModel):
 
 
 class HyperLink(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="HyperLink Id.")
     DocRefNumber: Optional[int] = Field(None, description="Document number.")
     PositionPage: Optional[int] = Field(None, description="Page position.")
     Uri: Optional[str] = Field(None, description="HyperLink Uri text.")
-    Position: Optional["Position"] = Field(
-        None, description="HyperLink position configuration."
-    )
-    Size: Optional["Size"] = Field(None, description="HyperLink size configuration.")
+    Position: Annotated[
+        Optional["Position"],
+        Field(None, description="HyperLink position configuration."),
+    ]
+    Size: Annotated[
+        Optional["Size"], Field(None, description="HyperLink size configuration.")
+    ]
+
+
+HyperLink.model_rebuild()
 
 
 class Link(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="Link Id.")
     DocRefNumber: Optional[int] = Field(None, description="Document number.")
     PositionPage: Optional[int] = Field(None, description="Page position.")
     TargetId: Optional[str] = Field(None, description="Link target id.")
-    Position: Optional["Position"] = Field(
-        None, description="HyperLink position configuration."
-    )
-    Size: Optional["Size"] = Field(None, description="HyperLink size configuration.")
+    Position: Annotated[
+        Optional["Position"],
+        Field(None, description="HyperLink position configuration."),
+    ]
+    Size: Annotated[
+        Optional["Size"], Field(None, description="HyperLink size configuration.")
+    ]
+
+
+Link.model_rebuild()
 
 
 class LinkTarget(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="Link Id.")
     DocRefNumber: Optional[int] = Field(None, description="Document number.")
     PositionPage: Optional[int] = Field(None, description="Page position.")
-    Position: Optional["Position"] = Field(
-        None, description="HyperLink position configuration."
-    )
-    Size: Optional["Size"] = Field(None, description="HyperLink size configuration.")
+    Position: Annotated[
+        Optional["Position"],
+        Field(None, description="HyperLink position configuration."),
+    ]
+    Size: Annotated[
+        Optional["Size"], Field(None, description="HyperLink size configuration.")
+    ]
+
+
+LinkTarget.model_rebuild()
 
 
 class SignatureTimestampData(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Uri: Optional[str] = Field(None, description="Uri for the SignatureTimestampData.")
     Username: Optional[str] = Field(None, description="Define the username.")
     Password: Optional[str] = Field(None, description="Define the password.")
-    SignatureHashAlgorithm: Optional["SignatureHashAlgorithm1"] = Field(
-        None, description="Define the HashAlgorithm for the signature."
-    )
-    AuthenticationCertifiateDescriptor: Optional[
-        "AuthenticationCertificateDescriptor"
-    ] = Field(
-        None,
-        description="Configure the AuthenticationCertifiateDescriptor for this object.",
-    )
+    SignatureHashAlgorithm: Annotated[
+        Optional["SignatureHashAlgorithm1"],
+        Field(None, description="Define the HashAlgorithm for the signature."),
+    ]
+    AuthenticationCertifiateDescriptor: Annotated[
+        Optional["AuthenticationCertificateDescriptor"],
+        Field(
+            description="Configure the AuthenticationCertifiateDescriptor for this object."
+        ),
+    ]
+
+
+SignatureTimestampData.model_rebuild()
 
 
 class WorkstepIdStampConfigurationLocation(BaseModel):
-    Size: Optional["Size"] = Field(
-        None, description="Defines width and height of the object."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    Size: Annotated[
+        Optional["Size"],
+        Field(None, description="Defines width and height of the object."),
+    ]
     MarginLeft: Optional[float] = Field(None, description="Maring from left.")
     MarginTop: Optional[float] = Field(None, description="Margin from top.")
 
 
+SignatureTimestampData.model_rebuild()
+
+
 class SentDocument(BaseModel):
-    PageSizesInPoints: Optional[List[Size]] = None
-    DocRefNumber: Optional[int] = None
-    FileName: Optional[str] = None
-    FormFields: Optional[List[DocumentFormField]] = None
+    PageSizesInPoints: Optional[List[Size]]
+    DocRefNumber: Optional[int]
+    FileName: Optional[str]
+    FormFields: Optional[List[DocumentFormField]]
 
 
 class FinishedDocument(BaseModel):
-    FlowDocumentId: Optional[str] = None
-    LogDocumentId: Optional[str] = None
-    Attachments: Optional[List[DocumentAttachment]] = None
-    SignedSignatureFields: Optional[List[DocumentSignatureField]] = None
-    DocRefNumber: Optional[int] = None
-    FileName: Optional[str] = None
-    FormFields: Optional[List[DocumentFormField]] = None
+    FlowDocumentId: Optional[str]
+    LogDocumentId: Optional[str]
+    Attachments: Optional[List[DocumentAttachment]]
+    SignedSignatureFields: Optional[List[DocumentSignatureField]]
+    DocRefNumber: Optional[int]
+    FileName: Optional[str]
+    FormFields: Optional[List[DocumentFormField]]
 
 
 class ExtendedFindEnvelopesResult(BaseModel):
@@ -1721,6 +1881,8 @@ class SigStringParsingConfiguration(BaseModel):
 
 
 class SigType(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="Define a identifier.")
     DiscriminatorType: str = Field(
         ...,
@@ -1729,12 +1891,16 @@ class SigType(BaseModel):
     Preferred: Optional[bool] = Field(
         None, description="Define if this SigType is the preferred one."
     )
-    StampImprintConfiguration: Optional["StampImprintConfiguration"] = Field(
-        None, description="Confiugre StampImprintConfiguration."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["StampImprintConfiguration"],
+        Field(None, description="Confiugre StampImprintConfiguration."),
+    ]
     SignaturePluginConfigurationId: Optional[str] = Field(
         None, description="SignaturePluginConfigurationId"
     )
+
+
+SigType.model_rebuild()
 
 
 class SigTypeLocalCertificate(SigType):
@@ -1776,13 +1942,14 @@ class SigTypeTransactionCode(SigType):
         None, description="Define if this SigType is the preferred one."
     )
 
-    StampImprintConfiguration: Optional["StampImprintConfiguration"] = Field(
-        None, description="Confiugre StampImprintConfiguration."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["StampImprintConfiguration"],
+        Field(None, description="Confiugre StampImprintConfiguration."),
+    ]
 
-    SignaturePluginConfigurationId: Optional["str"] = Field(
-        None, description="SignaturePluginConfigurationId"
-    )
+    SignaturePluginConfigurationId: Annotated[
+        Optional["str"], Field(None, description="SignaturePluginConfigurationId")
+    ]
 
 
 class SigTypeAutomaticSignature(SigType):
@@ -1807,18 +1974,19 @@ class SigTypeAutomaticSignature(SigType):
         None, description="Define if this SigType is the preferred one."
     )
 
-    StampImprintConfiguration: Optional["StampImprintConfiguration"] = Field(
-        None, description="Confiugre StampImprintConfiguration."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["StampImprintConfiguration"],
+        Field(None, description="Confiugre StampImprintConfiguration."),
+    ]
 
-    SignaturePluginConfigurationId: Optional["str"] = Field(
-        None, description="SignaturePluginConfigurationId"
-    )
+    SignaturePluginConfigurationId: Annotated[
+        Optional["str"], Field(None, description="SignaturePluginConfigurationId")
+    ]
 
 
 class SendEnvelopeResult(BaseModel):
-    BulkChildrenIds: Optional[List[SendEnvelopeBulkResultEntry]] = None
-    EnvelopeId: Optional[str] = None
+    BulkChildrenIds: Optional[List[SendEnvelopeBulkResultEntry]]
+    EnvelopeId: Optional[str]
 
 
 class LicenseInformation(BaseModel):
@@ -1826,15 +1994,18 @@ class LicenseInformation(BaseModel):
     ExpirationDateUtc: Optional[str] = Field(
         None, description="ExpirationDate in UTC (-1 = unlimited)"
     )
-    Documents: Optional["LicenseInformationAmount"] = Field(
-        None, description="Number of Documents total (limit) and used"
-    )
-    Users: Optional["LicenseInformationAmount"] = Field(
-        None, description="Number of Users total (limit) and used"
-    )
-    RegisteredSigners: Optional["LicenseInformationAmount"] = Field(
-        None, description="Number of RegisteredSigners total (limit) and used"
-    )
+    Documents: Annotated[
+        Optional["LicenseInformationAmount"],
+        Field(None, description="Number of Documents total (limit) and used"),
+    ]
+    Users: Annotated[
+        Optional["LicenseInformationAmount"],
+        Field(None, description="Number of Users total (limit) and used"),
+    ]
+    RegisteredSigners: Annotated[
+        Optional["LicenseInformationAmount"],
+        Field(None, description="Number of RegisteredSigners total (limit) and used"),
+    ]
 
 
 class Team(BaseModel):
@@ -1847,7 +2018,9 @@ class Team(BaseModel):
         None,
         description="Indicates if templates are shared among members of this team.",
     )
-    Head: Optional["TeamMember"] = Field(None, description="The team leader.")
+    Head: Annotated[
+        Optional["TeamMember"], Field(None, description="The team leader.")
+    ] = None
 
 
 class UserDescription(BaseModel):
@@ -1866,8 +2039,8 @@ class UserDescription(BaseModel):
     PhoneNumber: Optional[str] = Field(
         None, description="The phone number of the user."
     )
-    DefaultSubject: Optional[str] = None
-    DefaultMessage: Optional[str] = None
+    DefaultSubject: Optional[str]
+    DefaultMessage: Optional[str]
     NotifyRecipientOnActionNeeded: Optional[bool] = Field(
         None,
         description="Defines if the user gets an email notification every time if his actions are needed for an envelope.",
@@ -1901,6 +2074,8 @@ class UserDescription(BaseModel):
 
 
 class UserUpdateDescription(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Email: Optional[str] = Field(None, description="The email address of the User.")
     FirstName: Optional[str] = Field(None, description="The first name of the user.")
     LastName: Optional[str] = Field(None, description="The last name of the user.")
@@ -1945,29 +2120,35 @@ class UserUpdateDescription(BaseModel):
         None,
         description="Sends an email when a recipient viewed an envelope of the user.",
     )
-    AutomatedDelegationSettings: Optional["AutomatedDelegationSettings"] = Field(
-        None, description="Automated delegation settings."
-    )
+    AutomatedDelegationSettings: Annotated[
+        Optional["AutomatedDelegationSettings"],
+        Field(None, description="Automated delegation settings."),
+    ]
     Roles: Optional[List[str]] = Field(
         None,
         description='Will completely override the existing Roles with the specified ones.\r\nDefault Roles:\r\n* "Automatic Sealing Sender"\r\n* "Developer"\r\n* "Power User"\r\n* "Registered Signer"\r\n* "Administrator"',
     )
-    SignatureImage: Optional[str] = None
+    SignatureImage: Optional[str]
     Authentications: Optional[List[UserAuthentication]] = Field(
         None,
         description="Abstract class, use the derived classes:\r\n- UserAuthenticationSaml\r\n            \r\nFor usage see sample code.",
     )
 
 
+UserUpdateDescription.model_rebuild()
+
+
 class ExtendedFindUsersResult(BaseModel):
-    Entries: Optional[List[ExtendedFindUsersResultEntry]] = None
+    Entries: Optional[List[ExtendedFindUsersResultEntry]]
 
 
 class FontSettings(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="Identification for the font.")
-    TextColor: Optional["TextColor"] = Field(
-        None, description="Choose the color for the text."
-    )
+    TextColor: Annotated[
+        Optional["TextColor"], Field(None, description="Choose the color for the text.")
+    ]
     Name: Optional[str] = Field(None, description="Naming of the font.")
     Size: Optional[float] = Field(None, description="Define the size.")
     IsBold: Optional[bool] = Field(
@@ -1978,7 +2159,12 @@ class FontSettings(BaseModel):
     )
 
 
+FontSettings.model_rebuild()
+
+
 class SendEnvelopeRecipient(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Email: Optional[str] = Field(
         None, description="The email address of the recipient."
     )
@@ -2018,68 +2204,98 @@ class SendEnvelopeRecipient(BaseModel):
         None,
         description="A list of authentications which are available for the recipient.",
     )
-    DisposableCertificateData: Optional["DisposableCertificateData"] = Field(
-        None, description="The disposable certificate data for the recipient."
-    )
-    SwissComCertificateData: Optional["SwissComCertificateData"] = Field(
-        None, description="The swisscom disposable certificate data for the recipient."
-    )
-    RemoteCertificateData: Optional["RemoteCertificateData"] = Field(
-        None, description="The remote certificate data for the recipient."
-    )
-    OtpData: Optional["OtpData"] = Field(
-        None, description="The one time pad data for the recipient."
-    )
-    Pkcs7SignerData: Optional["Pkcs7SignerData"] = Field(
-        None, description="The PKCS7 data for the recipient."
-    )
+    DisposableCertificateData: Annotated[
+        Optional["DisposableCertificateData"],
+        Field(None, description="The disposable certificate data for the recipient."),
+    ]
+    SwissComCertificateData: Annotated[
+        Optional["SwissComCertificateData"],
+        Field(
+            description="The swisscom disposable certificate data for the recipient."
+        ),
+    ]
+    RemoteCertificateData: Annotated[
+        Optional["RemoteCertificateData"],
+        Field(None, description="The remote certificate data for the recipient."),
+    ]
+    OtpData: Annotated[
+        Optional["OtpData"],
+        Field(None, description="The one time pad data for the recipient."),
+    ]
+    Pkcs7SignerData: Annotated[
+        Optional["Pkcs7SignerData"],
+        Field(None, description="The PKCS7 data for the recipient."),
+    ]
+
+
+SendEnvelopeRecipient.model_rebuild()
 
 
 class ReceiverInformation(BaseModel):
-    UserInformation: Optional["UserInformation"] = Field(
-        None, description="Information about the user."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    UserInformation: Annotated[
+        Optional["UserInformation"],
+        Field(None, description="Information about the user."),
+    ]
     HolderInformation: Optional[str] = Field(
         None, description="Information about the holder."
     )
-    DisposableCertificateDisclaimerTexts: Optional[
-        "DisposableCertificateDisclaimerTexts"
-    ] = Field(None, description="Disposable certificate disclaimer texts.")
+    DisposableCertificateDisclaimerTexts: Annotated[
+        Optional["DisposableCertificateDisclaimerTexts"],
+        Field(None, description="Disposable certificate disclaimer texts."),
+    ]
     TransactionCodePushPluginData: Optional[List[KeyValuePair]] = Field(
         None,
         description="TransactionCodePushPlugin data as KeyValuePair: string, string",
     )
-    ATrustCertificateData: Optional["ATrustCertificateData"] = Field(
-        None, description="ATrust certificate configuration."
-    )
-    BankIdPluginData: Optional["BankIdPluginData"] = Field(
-        None, description="ATrust certificate configuration."
-    )
+    ATrustCertificateData: Annotated[
+        Optional["ATrustCertificateData"],
+        Field(None, description="ATrust certificate configuration."),
+    ]
+    BankIdPluginData: Annotated[
+        Optional["BankIdPluginData"],
+        Field(None, description="ATrust certificate configuration."),
+    ]
     GenericSigningPluginDataList: Optional[List[GenericSigningPluginData]] = Field(
         None, description="GenericSigningPlugin data list."
     )
 
 
+ReceiverInformation.model_rebuild()
+
+
 class Policy(BaseModel):
-    GeneralPolicies: Optional["GeneralPolicies"] = Field(
-        None, description="Defines general policies for this workstep."
-    )
-    WorkstepTasks: Optional["WorkstepTasks"] = Field(
-        None, description="Configuration of tasks."
-    )
-    FinalizeActions: Optional["FinalizeActions"] = Field(
-        None,
-        description="Allows to define actions which will be executed when the workstep will be finished. Those actions are performed before the ServerAction will be called and, depending on the type of the action, it might change the documents according to the workstep!",
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    GeneralPolicies: Annotated[
+        Optional["GeneralPolicies"],
+        Field(None, description="Defines general policies for this workstep."),
+    ]
+    WorkstepTasks: Annotated[
+        Optional["WorkstepTasks"], Field(None, description="Configuration of tasks.")
+    ]
+    FinalizeActions: Annotated[
+        Optional["FinalizeActions"],
+        Field(
+            None,
+            description="Allows to define actions which will be executed when the workstep will be finished. Those actions are performed before the ServerAction will be called and, depending on the type of the action, it might change the documents according to the workstep!",
+        ),
+    ]
+
+
+Policy.model_rebuild()
 
 
 class Navigation(BaseModel):
-    HyperLinks: Optional[List[HyperLink]] = None
-    Links: Optional[List[Link]] = None
-    LinkTargets: Optional[List[LinkTarget]] = None
+    HyperLinks: Optional[List[HyperLink]]
+    Links: Optional[List[Link]]
+    LinkTargets: Optional[List[LinkTarget]]
 
 
 class PdfSignatureProperties(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     PdfAConformant: Optional[bool] = Field(
         None, description="Define usage of PdfAConformant."
     )
@@ -2089,15 +2305,16 @@ class PdfSignatureProperties(BaseModel):
     IncludeSigningCertificateChain: Optional[bool] = Field(
         None, description="Define if SigningCertificateChain should be included."
     )
-    SigningCertificateRevocationInformationIncludeMode: Optional[
-        "SigningCertificateRevocationInformationIncludeMode"
-    ] = Field(
-        None,
-        description="Define the SigningCertificateRevocationInformationIncludeMode type.",
-    )
-    SignatureTimestampData: Optional["SignatureTimestampData"] = Field(
-        None, description="Configure SignatureTimestampData for this object."
-    )
+    SigningCertificateRevocationInformationIncludeMode: Annotated[
+        Optional["SigningCertificateRevocationInformationIncludeMode"],
+        Field(
+            description="Define the SigningCertificateRevocationInformationIncludeMode type."
+        ),
+    ]
+    SignatureTimestampData: Annotated[
+        Optional["SignatureTimestampData"],
+        Field(None, description="Configure SignatureTimestampData for this object."),
+    ]
     EnableEutlVerification: Optional[bool] = Field(
         None, description="Enable EUTL verification"
     )
@@ -2109,17 +2326,29 @@ class PdfSignatureProperties(BaseModel):
     )
 
 
+PdfSignatureProperties.model_rebuild()
+
+
 class WorkstepIdStampConfiguration(BaseModel):
-    ReferenceCorner: Optional["ReferenceCorner"] = Field(
-        None, description="Defines the corner to reference."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    ReferenceCorner: Annotated[
+        Optional["ReferenceCorner"],
+        Field(None, description="Defines the corner to reference."),
+    ]
     Color: Optional[str] = Field(None, description='Defines the color. (e.g. "blue")')
-    Location: Optional["WorkstepIdStampConfigurationLocation"] = Field(
-        None, description="Defines the location of this object."
-    )
+    Location: Annotated[
+        Optional["WorkstepIdStampConfigurationLocation"],
+        Field(None, description="Defines the location of this object."),
+    ]
+
+
+WorkstepIdStampConfiguration.model_rebuild()
 
 
 class EnvelopeOverrideOptionsRecipient(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     RecipientId: Optional[str] = Field(
         None, description="The id of the recipient to replace."
     )
@@ -2129,20 +2358,31 @@ class EnvelopeOverrideOptionsRecipient(BaseModel):
     Email: Optional[str] = Field(
         None, description="The email of the recipient to replace."
     )
-    Recipient: Optional["SendEnvelopeRecipient"] = Field(
-        None,
-        description="The new recipient which should replace the existing recipient.",
-    )
+    Recipient: Annotated[
+        Optional["SendEnvelopeRecipient"],
+        Field(
+            description="The new recipient which should replace the existing recipient."
+        ),
+    ]
+
+
+EnvelopeOverrideOptionsRecipient.model_rebuild()
 
 
 class SigTemplate(BaseModel):
-    Size: Optional["Size"] = Field(
-        None, description="Define width and height of the elements."
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    Size: Annotated[
+        Optional["Size"],
+        Field(None, description="Define width and height of the elements."),
+    ]
     AllowedSignatureTypes: Optional[List[SigType]] = Field(
         None,
         description="Abstract class, use the derived classes:\r\n- SigTypeAutomaticSignature\r\n- SigTypeBiometricSignature\r\n- SigTypeBiometricSignatureAndLocalCertificate\r\n- SigTypeExternalSigningProcess\r\n- SigTypeLocalCertificate\r\n- SigTypeClick2Sign\r\n- SigTypeDraw2Sign\r\n- SigTypeType2Sign\r\n- SigTypeTransactionCode\r\n- SigTypeTransactionCodeAndBiometricSignature\r\n- SigTypeTransactionCodeAndLocalCertificate\r\n- SigTypeTransactionCodeBiometricSignatureAndLocalCertificate\r\n            \r\nFor usage see sample code.",
     )
+
+
+SigTemplate.model_rebuild()
 
 
 class Teams(BaseModel):
@@ -2150,52 +2390,82 @@ class Teams(BaseModel):
 
 
 class UserCreateModel(BaseModel):
-    UserDescription: Optional["UserDescription"] = Field(
-        None, description="The user which should be created."
-    )
-    UserActivationDescriptor: Optional["UserActivationDescriptor"] = Field(
-        None,
-        description="Information about the user activation after the user creation.",
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    UserDescription: Annotated[
+        Optional["UserDescription"],
+        Field(None, description="The user which should be created."),
+    ]
+    UserActivationDescriptor: Annotated[
+        Optional["UserActivationDescriptor"],
+        Field(
+            description="Information about the user activation after the user creation."
+        ),
+    ]
+
+
+UserCreateModel.model_rebuild()
 
 
 class SignatureConfiguration(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     SpcId: Optional[str] = Field(None, description="Signature plugin configuration id.")
-    PdfSignatureProperties: Optional["PdfSignatureProperties"] = Field(
-        None, description="Configurate the signature properties."
-    )
-    PdfSignatureCryptographicData: Optional["PdfSignatureCryptographicData"] = Field(
-        None, description="Configurate the cryptographic data."
-    )
-    CertificateFilter: Optional["CertificateFilter"] = Field(
-        None, description="Signatureplugin certificate filter configuration."
-    )
+    PdfSignatureProperties: Annotated[
+        Optional["PdfSignatureProperties"],
+        Field(None, description="Configurate the signature properties."),
+    ]
+    PdfSignatureCryptographicData: Annotated[
+        Optional["PdfSignatureCryptographicData"],
+        Field(None, description="Configurate the cryptographic data."),
+    ]
+    CertificateFilter: Annotated[
+        Optional["CertificateFilter"],
+        Field(None, description="Signatureplugin certificate filter configuration."),
+    ]
+
+
+SignatureConfiguration.model_rebuild()
 
 
 class AuditingToolsConfiguration(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     WriteAuditTrail: Optional[bool] = Field(
         None, description="Defines if an audit trail file should be written."
     )
-    IdStampConfiguration: Optional["WorkstepIdStampConfiguration"] = Field(
-        None,
-        description="Defines the configuration how and where on the documents the workstepId should be stamped.",
-    )
-    NotificationConfiguration: Optional["NotificationConfiguration"] = Field(
-        None, description="Configures the service notificiations where being sent to."
-    )
+    IdStampConfiguration: Annotated[
+        Optional["WorkstepIdStampConfiguration"],
+        Field(
+            description="Defines the configuration how and where on the documents the workstepId should be stamped."
+        ),
+    ]
+    NotificationConfiguration: Annotated[
+        Optional["NotificationConfiguration"],
+        Field(
+            None,
+            description="Configures the service notificiations where being sent to.",
+        ),
+    ]
+
+
+AuditingToolsConfiguration.model_rebuild()
 
 
 class EnvelopeOverrideOptions(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Recipients: Optional[List[EnvelopeOverrideOptionsRecipient]] = Field(
         None,
         description="A list of recipients which should replace the recipients in the template.",
     )
-    AddFormFields: Optional["AddFormFields"] = Field(
-        None, description="Added form fields."
-    )
-    OverrideFormFieldValues: Optional["OverrideFormFieldOptions"] = Field(
-        None, description="Form field descriptions which should be filled."
-    )
+    AddFormFields: Annotated[
+        Optional["AddFormFields"], Field(None, description="Added form fields.")
+    ]
+    OverrideFormFieldValues: Annotated[
+        Optional["OverrideFormFieldOptions"],
+        Field(None, description="Form field descriptions which should be filled."),
+    ]
     Name: Optional[str] = Field(None, description="Name of the envelope.")
     EmailSubject: Optional[str] = Field(
         None, description="Email subject of the envelope."
@@ -2227,13 +2497,19 @@ class EnvelopeOverrideOptions(BaseModel):
     StatusUpdateCallbackUrl: Optional[str] = Field(
         None, description="The callback url of status changes for the envelope."
     )
-    WorkstepEventCallback: Optional["WorkstepEventCallback"] = Field(
-        None, description="Workstep event callback options."
-    )
-    MetaDataXml: Optional[str] = None
+    WorkstepEventCallback: Annotated[
+        Optional["WorkstepEventCallback"],
+        Field(None, description="Workstep event callback options."),
+    ]
+    MetaDataXml: Optional[str] = Field(None)
+
+
+EnvelopeOverrideOptions.model_rebuild()
 
 
 class AdHocWorkstepConfiguration(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     WorkstepLabel: Optional[str] = Field(None, description="A label for this workstep")
     SmallTextZoomFactorPercent: Optional[int] = Field(
         None,
@@ -2243,110 +2519,163 @@ class AdHocWorkstepConfiguration(BaseModel):
         None,
         description="Defines the time to live of all the documents created by the workstep. After this time to live is expired, all documents are deleted. '0' sets the time to live to forever.",
     )
-    FinishAction: Optional["FinishAction"] = Field(
-        None,
-        description="Configure the actions done by the server and the by the clients when the workstep is finished.",
-    )
+    FinishAction: Annotated[
+        Optional["FinishAction"],
+        Field(
+            description="Configure the actions done by the server and the by the clients when the workstep is finished."
+        ),
+    ]
     NoSequenceEnforced: Optional[bool] = Field(
         None, description="Define the sequence mode."
     )
-    SigTemplate: Optional["SigTemplate"] = Field(
-        None, description="A template for signature definitions."
-    )
-    ParseFormFields: Optional["ParseFormFields"] = Field(
-        None, description="Configuration for parsing the form fields."
-    )
-    AdhocPolicies: Optional["AdhocPolicies"] = Field(
-        None,
-        description="If the workstep is not generated by hand but automatically generated by the Workstep Controller AdhocPolicies are specified.",
-    )
-    ViewerPreferences: Optional["ViewerPreferences"] = Field(
-        None,
-        description="The Viewer Preferences can be used to adapt the appearance and the behavior of the SignAnyWhere Viewer.",
-    )
+    SigTemplate: Annotated[
+        Optional["SigTemplate"],
+        Field(None, description="A template for signature definitions."),
+    ]
+    ParseFormFields: Annotated[
+        Optional["ParseFormFields"],
+        Field(None, description="Configuration for parsing the form fields."),
+    ]
+    AdhocPolicies: Annotated[
+        Optional["AdhocPolicies"],
+        Field(
+            description="If the workstep is not generated by hand but automatically generated by the Workstep Controller AdhocPolicies are specified."
+        ),
+    ]
+    ViewerPreferences: Annotated[
+        Optional["ViewerPreferences"],
+        Field(
+            None,
+            description="The Viewer Preferences can be used to adapt the appearance and the behavior of the SignAnyWhere Viewer.",
+        ),
+    ]
     SignatureConfigurations: Optional[List[SignatureConfiguration]] = Field(
         None,
         description="Configurate the signatures for this workstep. One default configuration has to be defined. The default configuration is used for flatten signatures, adhoc signatures and signature fields which do not reference a special signature plugin configuration. The default configuration does not contain the attribute 'spcId'. If the attribute 'spcId' is defined the signature plugin configuration does only apply to signature fields referencing the configuration by specifiying",
     )
-    SigStringParsingConfiguration: Optional["SigStringParsingConfiguration"] = Field(
-        None, description="Configure the signature string parsing."
-    )
-    LinkParsingConfiguration: Optional["LinkParsingConfiguration"] = Field(
-        None, description="Configure link parsing."
-    )
-    GeneralPolicies: Optional["GeneralPolicies"] = Field(
-        None, description="Defines general policies for this workstep."
-    )
-    FinalizeActions: Optional["FinalizeActions"] = Field(
-        None,
-        description="Allows to define actions which will be executed when the workstep will be finished. Those actions are performed before the ServerAction will be called and, depending on the type of the action, it might change the documents according to the workstep!",
-    )
+    SigStringParsingConfiguration: Annotated[
+        Optional["SigStringParsingConfiguration"],
+        Field(None, description="Configure the signature string parsing."),
+    ]
+    LinkParsingConfiguration: Annotated[
+        Optional["LinkParsingConfiguration"],
+        Field(None, description="Configure link parsing."),
+    ]
+    GeneralPolicies: Annotated[
+        Optional["GeneralPolicies"],
+        Field(None, description="Defines general policies for this workstep."),
+    ]
+    FinalizeActions: Annotated[
+        Optional["FinalizeActions"],
+        Field(
+            None,
+            description="Allows to define actions which will be executed when the workstep will be finished. Those actions are performed before the ServerAction will be called and, depending on the type of the action, it might change the documents according to the workstep!",
+        ),
+    ]
     TransactionCodeConfigurations: Optional[List[TransactionCodeConfiguration]] = Field(
         None, description="Collection of TransactionCodeConfigurations"
     )
 
 
+AdHocWorkstepConfiguration.model_rebuild()
+
+
 class EnvelopeSendFromTemplateModel(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     TemplateId: Optional[str] = Field(None, description="The Id of the template.")
-    EnvelopeOverrideOptions: Optional["EnvelopeOverrideOptions"] = Field(
-        None, description="Options which should be overriden for teh template."
-    )
+    EnvelopeOverrideOptions: Annotated[
+        Optional["EnvelopeOverrideOptions"],
+        Field(None, description="Options which should be overriden for teh template."),
+    ]
+
+
+EnvelopeSendFromTemplateModel.model_rebuild()
 
 
 class WorkstepConfiguration(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     WorkstepLabel: Optional[str] = Field(None, description="A label for this workstep.")
     SmallTextZoomFactorPercent: Optional[int] = Field(
         None,
         description="Defines a image generation correction factor. If for example this document contains very small text, which might not be readable with the standard image resolution of the client, this factor can be used to tell the client to get a higher resolution.",
     )
-    FinishAction: Optional["FinishAction"] = Field(
-        None,
-        description="Configure the actions done by the server and the by the clients when the workstep is finished.",
-    )
-    IntroTexts: Optional["IntroTexts"] = Field(None, description="Intro texts.")
-    ReceiverInformation: Optional["ReceiverInformation"] = Field(
-        None, description="Information about the recipient of the document."
-    )
-    SenderInformation: Optional["SenderInformation"] = Field(
-        None, description="Information about the sender of the document."
-    )
+    FinishAction: Annotated[
+        Optional["FinishAction"],
+        Field(
+            None,
+            description="Configure the actions done by the server and the by the clients when the workstep is finished.",
+        ),
+    ]
+    IntroTexts: Annotated[
+        Optional["IntroTexts"], Field(None, description="Intro texts.")
+    ] = None
+    ReceiverInformation: Annotated[
+        Optional["ReceiverInformation"],
+        Field(None, description="Information about the recipient of the document."),
+    ]
+    SenderInformation: Annotated[
+        Optional["SenderInformation"],
+        Field(None, description="Information about the sender of the document."),
+    ]
     TransactionCodeConfigurations: Optional[List[TransactionCodeConfiguration]] = Field(
         None, description="Collection of TransactionCodeConfigurations"
     )
     SignatureConfigurations: Optional[List[SignatureConfiguration]] = Field(
         None, description="Collection of SignatureConfigurations"
     )
-    ViewerPreferences: Optional["ViewerPreferences"] = Field(
-        None,
-        description="The Viewer Preferences can be used to adapt the appearance and the behavior of the SignAnyWhere Viewer.",
-    )
-    ResourceUris: Optional["ResourceUris"] = Field(None, description="Rescource uris.")
-    AuthenticationMethods: Optional["AuthenticationMethods"] = Field(
-        None, description="Authentication methods."
-    )
+    ViewerPreferences: Annotated[
+        Optional["ViewerPreferences"],
+        Field(
+            None,
+            description="The Viewer Preferences can be used to adapt the appearance and the behavior of the SignAnyWhere Viewer.",
+        ),
+    ]
+    ResourceUris: Annotated[
+        Optional["ResourceUris"], Field(None, description="Rescource uris.")
+    ]
+    AuthenticationMethods: Annotated[
+        Optional["AuthenticationMethods"],
+        Field(None, description="Authentication methods."),
+    ]
     AdditionalClientWorkstepInformation: Optional[str] = Field(
         None, description="Additional client workstep information."
     )
-    AuditingToolsConfiguration: Optional["AuditingToolsConfiguration"] = Field(
-        None, description="Configuration regarding tools for auditing."
-    )
-    Policy: Optional["Policy"] = Field(None, description="Workstep policies.")
-    Navigation: Optional["Navigation"] = Field(
-        None, description="Navigation configuration. (e.g. HyperLinks)"
-    )
+    AuditingToolsConfiguration: Annotated[
+        Optional["AuditingToolsConfiguration"],
+        Field(None, description="Configuration regarding tools for auditing."),
+    ]
+    Policy: Annotated[Optional["Policy"], Field(None, description="Workstep policies.")]
+    Navigation: Annotated[
+        Optional["Navigation"],
+        Field(None, description="Navigation configuration. (e.g. HyperLinks)"),
+    ]
+
+
+WorkstepConfiguration.model_rebuild()
 
 
 class DraftCreateFromTemplateModel(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     TemplateId: Optional[str] = Field(None, description="The id of the template.")
-    EnvelopeOverrideOptions: Optional["EnvelopeOverrideOptions"] = Field(
-        None, description="The options to override from the template."
-    )
-    CreateDraftOptions: Optional["CreateDraftOptions"] = Field(
-        None, description="Draft creation options."
-    )
+    EnvelopeOverrideOptions: Annotated[
+        Optional["EnvelopeOverrideOptions"],
+        Field(None, description="The options to override from the template."),
+    ]
+    CreateDraftOptions: Annotated[
+        Optional["CreateDraftOptions"],
+        Field(None, description="Draft creation options."),
+    ]
+
+
+DraftCreateFromTemplateModel.model_rebuild()
 
 
 class EnvelopeStatusRecipient(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Id: Optional[str] = Field(None, description="The id of the recipient.")
     FirstName: Optional[str] = Field(
         None, description="The first name of the recipient."
@@ -2361,13 +2690,15 @@ class EnvelopeStatusRecipient(BaseModel):
     LanguageCode: Optional[str] = Field(
         None, description="The language code of the recipient."
     )
-    Status: Optional["Status2"] = Field(
-        None, description="The current workstep result status of the recipient."
-    )
-    StatusReason: Optional[str] = None
-    RecipientType: Optional["RecipientType1"] = Field(
-        None, description="The type of the recipient."
-    )
+    Status: Annotated[
+        Optional["Status2"],
+        Field(None, description="The current workstep result status of the recipient."),
+    ]
+    StatusReason: Optional[str]
+    RecipientType: Annotated[
+        Optional["RecipientType1"],
+        Field(None, description="The type of the recipient."),
+    ]
     SignedDate: Optional[datetime] = Field(
         None, description="The date when the recipient finished its actions."
     )
@@ -2392,34 +2723,51 @@ class EnvelopeStatusRecipient(BaseModel):
         None,
         description="Defines if the recipient is parallel and the corresponding envelope has recipients with the same order index.",
     )
-    WorkstepConfiguration: Optional["WorkstepConfiguration"] = Field(
-        None, description="WorkstepConfiguration."
-    )
+    WorkstepConfiguration: Annotated[
+        Optional["WorkstepConfiguration"],
+        Field(None, description="WorkstepConfiguration."),
+    ]
     DisclaimerDocuments: Optional[List[DisclaimerDocument]] = Field(
         None,
         description="A list of disclaimer documents including their type for downloading.",
     )
 
 
+EnvelopeStatusRecipient.model_rebuild()
+
+
 class EnvelopePrepareModel(BaseModel):
-    SspFileIds: Optional[List[str]] = None
-    AdHocWorkstepConfiguration: Optional["AdHocWorkstepConfiguration"] = None
-    PrepareSendEnvelopeStepsDescriptor: Optional[
-        "PrepareSendEnvelopeStepsDescriptor"
-    ] = None
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    SspFileIds: Optional[List[str]]
+    AdHocWorkstepConfiguration: Optional["AdHocWorkstepConfiguration"]
+    PrepareSendEnvelopeStepsDescriptor: Optional["PrepareSendEnvelopeStepsDescriptor"]
+
+
+EnvelopePrepareModel.model_rebuild()
 
 
 class ReplaceRecipientData(BaseModel):
-    Recipient: Optional["SendEnvelopeRecipient"] = Field(
-        None, description="New information for the recipient which is replaced"
-    )
-    WorkstepConfiguration: Optional["WorkstepConfiguration"] = Field(
-        None,
-        description="Optional, new workstep configuration for the recipient which is replaced\r\nOnly supported for <code>RecipientType</code> Signer and Pkcs7Signer.",
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    Recipient: Annotated[
+        Optional["SendEnvelopeRecipient"],
+        Field(None, description="New information for the recipient which is replaced"),
+    ]
+    WorkstepConfiguration: Annotated[
+        Optional["WorkstepConfiguration"],
+        Field(
+            description="Optional, new workstep configuration for the recipient which is replaced\r\nOnly supported for <code>RecipientType</code> Signer and Pkcs7Signer."
+        ),
+    ]
+
+
+ReplaceRecipientData.model_rebuild()
 
 
 class SendEnvelopeStep(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     OrderIndex: Optional[int] = Field(None, description="The order index of the step.")
     Recipients: Optional[List[SendEnvelopeRecipient]] = Field(
         None,
@@ -2428,13 +2776,16 @@ class SendEnvelopeStep(BaseModel):
     EmailBodyExtra: Optional[str] = Field(
         None, description="The additional email body for the step."
     )
-    RecipientType: Optional["RecipientType"] = Field(
-        None, description="The recipient type of the step."
-    )
-    WorkstepConfiguration: Optional["WorkstepConfiguration"] = Field(
-        None,
-        description="The configuration for the step.\r\nOnly necessary for <code>RecipientType</code> Signer and Pkcs7Signer.",
-    )
+    RecipientType: Annotated[
+        Optional["RecipientType"],
+        Field(None, description="The recipient type of the step."),
+    ]
+    WorkstepConfiguration: Annotated[
+        Optional["WorkstepConfiguration"],
+        Field(
+            description="The configuration for the step.\r\nOnly necessary for <code>RecipientType</code> Signer and Pkcs7Signer."
+        ),
+    ]
     DocumentOptions: Optional[List[SendEnvelopeDocumentOption]] = Field(
         None, description="The document options for the step."
     )
@@ -2443,8 +2794,15 @@ class SendEnvelopeStep(BaseModel):
     )
 
 
+SendEnvelopeStep.model_rebuild()
+
+
 class EnvelopeBulkStatus(BaseModel):
-    Status: Optional["Status1"] = Field(None, description="The status of the envelope.")
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    Status: Annotated[
+        Optional["Status1"], Field(None, description="The status of the envelope.")
+    ]
     Email: Optional[str] = Field(
         None,
         description="The email of the bulk recipient. Empty if the envelope is not a bulk.",
@@ -2465,13 +2823,23 @@ class EnvelopeBulkStatus(BaseModel):
     )
 
 
+EnvelopeBulkStatus.model_rebuild()
+
+
 class PrepareSendEnvelopeStepsResult(BaseModel):
-    AdHocWorkstepConfigResult: Optional["WorkstepConfiguration"] = None
-    Steps: Optional[List[SendEnvelopeStep]] = None
-    AddFormFields: Optional["AddFormFields"] = None
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    AdHocWorkstepConfigResult: Optional["WorkstepConfiguration"]
+    Steps: Optional[List[SendEnvelopeStep]]
+    AddFormFields: Optional["AddFormFields"]
+
+
+PrepareSendEnvelopeStepsResult.model_rebuild()
 
 
 class SendEnvelopeDescriptionTemplate(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Name: Optional[str] = Field(None, description="The name of the envelope.")
     EmailSubject: Optional[str] = Field(
         None, description="The subject of the sent out emails."
@@ -2507,19 +2875,25 @@ class SendEnvelopeDescriptionTemplate(BaseModel):
     LockFormFieldsAtEnvelopeFinish: Optional[bool] = Field(
         None, description="If true, form fields are locked after envelope is finished."
     )
-    WorkstepEventCallback: Optional["WorkstepEventCallback"] = Field(
-        None, description="Workstep event callback options."
-    )
+    WorkstepEventCallback: Annotated[
+        Optional["WorkstepEventCallback"],
+        Field(None, description="Workstep event callback options."),
+    ]
     Steps: Optional[List[SendEnvelopeStep]] = Field(
         None, description="The steps for the envelope."
     )
-    AddFormFields: Optional["AddFormFields"] = Field(
-        None, description="Added form fields."
-    )
-    MetaDataXml: Optional[str] = None
+    AddFormFields: Annotated[
+        Optional["AddFormFields"], Field(None, description="Added form fields.")
+    ]
+    MetaDataXml: Optional[str] = Field(None)
+
+
+SendEnvelopeDescriptionTemplate.model_rebuild()
 
 
 class SendEnvelopeDescription(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     Name: Optional[str] = Field(None, description="The name of the envelope.")
     EmailSubject: Optional[str] = Field(
         None, description="The subject of the sent out emails."
@@ -2555,30 +2929,40 @@ class SendEnvelopeDescription(BaseModel):
     LockFormFieldsAtEnvelopeFinish: Optional[bool] = Field(
         None, description="If true, form fields are locked after envelope is finished."
     )
-    WorkstepEventCallback: Optional["WorkstepEventCallback"] = Field(
-        None, description="Workstep event callback options."
-    )
+    WorkstepEventCallback: Annotated[
+        Optional["WorkstepEventCallback"],
+        Field(None, description="Workstep event callback options."),
+    ]
     Steps: Optional[List[SendEnvelopeStep]] = Field(
         None, description="The steps for the envelope."
     )
-    AddFormFields: Optional["AddFormFields"] = Field(
-        None, description="Added form fields."
-    )
-    OverrideFormFieldValues: Optional["OverrideFormFieldOptions"] = Field(
-        None, description="Form field descriptions which should be filled."
-    )
-    MetaDataXml: Optional[str] = None
+    AddFormFields: Annotated[
+        Optional["AddFormFields"], Field(None, description="Added form fields.")
+    ]
+    OverrideFormFieldValues: Annotated[
+        Optional["OverrideFormFieldOptions"],
+        Field(None, description="Form field descriptions which should be filled."),
+    ]
+    MetaDataXml: Optional[str] = Field(None)
     AttachSignedDocumentsToEnvelopeLog: Optional[bool] = Field(
         None,
         description="If true, the signed document(s) will be added to the envelope log as attachment.",
     )
 
 
+SendEnvelopeDescription.model_rebuild()
+
+
 class EnvelopeStatus(BaseModel):
-    Status: Optional["Status"] = Field(
-        None,
-        description="The overall status of the envelope or the bulk status in case of a bulk.",
-    )
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    Status: Annotated[
+        Optional["Status"],
+        Field(
+            None,
+            description="The overall status of the envelope or the bulk status in case of a bulk.",
+        ),
+    ]
     SendDate: Optional[datetime] = Field(
         None, description="The date when the envelope was sent."
     )
@@ -2601,44 +2985,70 @@ class EnvelopeStatus(BaseModel):
         None,
         description="The bulk id of the envelope. If the envelope is not a bulk, this value is empty.",
     )
-    BasicOptions: Optional["EnvelopeBasicOptions"] = Field(
-        None, description="Properties of the envelope (e.g. reminder settings)."
-    )
+    BasicOptions: Annotated[
+        Optional["EnvelopeBasicOptions"],
+        Field(None, description="Properties of the envelope (e.g. reminder settings)."),
+    ]
     LockFormFieldsAtEnvelopeFinish: Optional[bool] = Field(
         None,
         description="Defines if form fields are locked after envelope is finished.",
     )
 
 
+EnvelopeStatus.model_rebuild()
+
+
 class EnvelopeSendModel(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     SspFileIds: Optional[List[str]] = Field(
         None, description="The ids of uploaded files."
     )
-    SendEnvelopeDescription: Optional["SendEnvelopeDescription"] = Field(
-        None, description="The description of the envelope."
-    )
+    SendEnvelopeDescription: Annotated[
+        Optional["SendEnvelopeDescription"],
+        Field(None, description="The description of the envelope."),
+    ]
+
+
+EnvelopeSendModel.model_rebuild()
 
 
 class CopyDocumentFromTemplateResult(BaseModel):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     SspFileIds: Optional[List[str]] = Field(None, description="SspFileId.")
-    SendEnvelopeDescription: Optional["SendEnvelopeDescriptionTemplate"] = Field(
-        None, description="SendEnvelopeDescription."
-    )
+    SendEnvelopeDescription: Annotated[
+        Optional["SendEnvelopeDescriptionTemplate"],
+        Field(None, description="SendEnvelopeDescription."),
+    ]
+
+
+CopyDocumentFromTemplateResult.model_rebuild()
 
 
 class DraftCreateModel(BaseModel):
-    SspFileIds: Optional[List[str]] = None
-    SendEnvelopeDescription: Optional["SendEnvelopeDescription"] = None
-    CreateDraftOptions: Optional["CreateDraftOptions"] = None
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
+    SspFileIds: Optional[List[str]]
+    SendEnvelopeDescription: Optional["SendEnvelopeDescription"]
+    CreateDraftOptions: Optional["CreateDraftOptions"]
+
+
+DraftCreateModel.model_rebuild()
 
 
 class Signature(WorkstepTask):
+    model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
+
     PositionPage: Optional[int] = Field(None, description="Page position.")
-    Position: Optional["Position"] = Field(
-        None, description="HyperLink position configuration."
-    )
-    Size: Optional["Size"] = Field(None, description="HyperLink size configuration.")
-    AdditionalParameters: Optional[List[KeyValuePair]] = None
+    Position: Annotated[
+        Optional["Position"],
+        Field(None, description="HyperLink position configuration."),
+    ]
+    Size: Annotated[
+        Optional["Size"], Field(None, description="HyperLink size configuration.")
+    ]
+    AdditionalParameters: Optional[List[KeyValuePair]]
     AllowedSignatureTypes: Optional[List[SigType]] = Field(
         None,
         description="Abstract class, use the derived classes:\r\n- SigTypeAutomaticSignature\r\n- SigTypeBiometricSignature\r\n- SigTypeBiometricSignatureAndLocalCertificate\r\n- SigTypeExternalSigningProcess\r\n- SigTypeLocalCertificate\r\n- SigTypeClick2Sign\r\n- SigTypeDraw2Sign\r\n- SigTypeType2Sign\r\n- SigTypeTransactionCode\r\n- SigTypeTransactionCodeAndBiometricSignature\r\n- SigTypeTransactionCodeAndLocalCertificate\r\n- SigTypeTransactionCodeBiometricSignatureAndLocalCertificate\r\n            \r\nFor usage see sample code.",
@@ -2676,5 +3086,7 @@ class Signature(WorkstepTask):
         description="Defines multiple tasks which can be executed as a batch (e.g. signatures which accept same data).",
     )
 
+
+Signature.model_rebuild()
 
 TeamMember.update_forward_refs()

@@ -190,7 +190,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = envelope_data.json()
+        request_data = envelope_data.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -241,7 +241,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = envelope_data.json()
+        request_data = envelope_data.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -528,7 +528,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = cancel_request.json()
+        request_data = cancel_request.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -564,7 +564,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = models_v6.EnvelopeDeleteRequest(EnvelopeId=envelope_id).json()
+        request_data = models_v6.EnvelopeDeleteRequest(
+            EnvelopeId=envelope_id
+        ).model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -643,7 +645,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = draft_create_model.json()
+        request_data = draft_create_model.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -684,7 +686,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = create_from_template_model.json()
+        request_data = create_from_template_model.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -721,7 +723,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = descriptor.json()
+        request_data = descriptor.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -758,7 +760,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = prepare_model.json()
+        request_data = prepare_model.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -799,7 +801,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = restart_expired_request.json()
+        request_data = restart_expired_request.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -839,7 +841,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = send_from_template_model.json()
+        request_data = send_from_template_model.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -880,7 +882,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = remind_request.json()
+        request_data = remind_request.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -995,7 +997,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = activity_delete_request.json()
+        request_data = activity_delete_request.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -1035,7 +1037,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = activity_replace_request.json()
+        request_data = activity_replace_request.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -1075,7 +1077,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = delete_request.json()
+        request_data = delete_request.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
@@ -1147,7 +1149,7 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = teams.json()
+        request_data = teams.model_dump_json()
         response = requests.post(
             url=service_url, data=request_data, headers=self._get_request_headers()
         )
