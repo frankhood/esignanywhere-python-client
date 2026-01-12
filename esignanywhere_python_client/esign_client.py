@@ -1,7 +1,7 @@
 import inspect
 import logging
 from io import BufferedReader
-from typing import Any, Dict, Union
+from typing import Any
 
 import requests
 
@@ -43,7 +43,7 @@ class ESignAnyWhereClient:
         self,
         service_url: str,
         method_name: str,
-        request_data: Dict[str, Any],
+        request_data: dict[str, Any],
         response: requests.Response,
     ):
         if response.status_code == 401:
@@ -113,7 +113,7 @@ class ESignAnyWhereClient:
 
     def upload_file(
         self,
-        resource_to_upload: Union[str, BufferedReader],
+        resource_to_upload: str | BufferedReader,
         version="v6",
     ):
         """

@@ -18,7 +18,7 @@ class TestFindEnvelope(unittest.TestCase):
         self.email = os.environ.get("ESIGNANYWHERE_EMAIL", "mail@example.com")
 
     def test_find_envelope(self):
-        start_time = datetime.datetime.now(datetime.timezone.utc).replace(
+        start_time = datetime.datetime.now(datetime.UTC).replace(
             microsecond=0
         ) - datetime.timedelta(days=1)
 
