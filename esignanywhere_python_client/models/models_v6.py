@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Any, Annotated, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field, RootModel
@@ -48,9 +48,12 @@ class AutomaticProfileGetAllSignaturePluginDefinition(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Profiles: list[AutomaticProfileGetAllProfile] | None = Field(
-        None, description="The profiles available for automatic signing."
-    )
+    Profiles: Annotated[
+        Optional[list["AutomaticProfileGetAllProfile"]],
+        Field(
+            None, description="The profiles available for automatic signing."
+        ),
+    ]
 
 
 class RenderingLanguageCode(Enum):
@@ -290,9 +293,13 @@ class DraftGetSignAutomatic(BaseModel):
     ProfileId: str | None = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None,
+            description="The rendering language for the automatic signatures.",
+        ),
+    ]
 
 
 class LanguageCode(Enum):
@@ -536,18 +543,25 @@ class DraftGetContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None,
+            description="The language of the recipient.",
+        ),
+    ]
 
 
 class DraftGetAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
 
 
 class DraftGetFilesPage(BaseModel):
@@ -645,7 +659,10 @@ class DraftGetElementsPhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type1 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type1"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class TextAlign(Enum):
@@ -671,10 +688,13 @@ class DraftGetElementsTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
-
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None,
+            description="The alignment of the text. The default alignment is left.",
+        ),
+    ]
 
 class DraftGetElementsPosition(BaseModel):
 
@@ -725,12 +745,20 @@ class DraftGetElementsRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None,
+            description="The alignment of the text. The default alignment is left.",
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None,
+            description="The size of the form field.",
+        ),
+    ]
 
 
 class UseExternalSignatureImage(Enum):
@@ -780,9 +808,13 @@ class DraftGetElementsBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None,
+            description="The allowed positioning of the biometric signature.",
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -802,27 +834,47 @@ class DraftGetElementsPredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["DraftGetElementsTextFormat"],
+        Field(
+            None,
+            description="The configuration of the text format.",
+        ),
+    ]
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None,
+            description="The position of the  within the document.",
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None,
+            description="The size of the form field.",
+        ),
+    ]
 
 
 class DraftGetElementsLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None,
+            description="The position of the  within the document.",
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None,
+            description="The size of the form field.",
+        ),
+    ]
 
 
 class DraftGetElementsFieldValidationRange(BaseModel):
@@ -1162,10 +1214,13 @@ class DraftGetConfigurationAgentRedirectConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Policy: Policy | None = Field(
-        None,
-        description="Defines the redirect target page which should be opened when the agent mode is active.",
-    )
+    Policy: Annotated[
+        Optional["Policy"],
+        Field(
+            None,
+            description="Defines the redirect target page which should be opened when the agent mode is active.",
+        ),
+    ]
     Allow: bool | None = Field(None, description="If true, the agent mode can be used.")
     IFrameAllowList: list[str] | None = Field(
         None,
@@ -1211,9 +1266,13 @@ class DraftGetConfigurationAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None,
+            description="The language of the translated agreement.",
+        ),
+    ]
     Text: str | None = Field(None, description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -1368,10 +1427,13 @@ class DraftGetConfigurationBasicRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
 
 
 class Mode(Enum):
@@ -1386,9 +1448,13 @@ class DraftGetConfigurationBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None,
+            description="The mode, that will be used for batch signing.",
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -1550,15 +1616,23 @@ class DraftGetConfigurationDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            default=None,
+            description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            default=None,
+            description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -1874,28 +1948,38 @@ class DraftCreateAgentRedirectConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Policy: Policy | None = Field(
-        None,
-        description="Defines the redirect target page which should be opened when the agent mode is active. \r\nMust not be set, when 'Allow' is not set to true.",
-    )
+    Policy: Annotated[
+        Optional["Policy"],
+        Field(
+            default=None,
+            description="Defines the redirect target page which should be opened when the agent mode is active. \r\nMust not be set, when 'Allow' is not set to true.",
+        ),
+    ]
     Allow: bool | None = Field(
         None,
         description="If true, the agent mode can be used. \r\nIf false, both 'Policy'and 'IFrameAllowList' must not be set.",
     )
-    IFrameAllowList: list[IFrameAllowListItem] | None = Field(
-        None,
-        description="The URLs where the designer interface of eSignAnyWhere may be embedded.\r\nMust not be set, when 'Allow' is not set to true.",
-        max_items=50,
-    )
+    IFrameAllowList: Annotated[
+        Optional[list["IFrameAllowListItem"]],
+        Field(
+            None,
+            description="The URLs where the designer interface of eSignAnyWhere may be embedded.\r\nMust not be set, when 'Allow' is not set to true.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftCreateAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    language_code: LanguageCode = Field(
-        ..., description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            ...,
+            description="The language of the translated agreement."
+        ),
+    ]
     Text: str = Field(..., description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -1954,10 +2038,20 @@ class DraftCreateLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            ...,
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            ...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateContactInformation(BaseModel):
@@ -1970,18 +2064,24 @@ class DraftCreateContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
-
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None,
+            description="The language of the recipient."
+        ),
+    ]
 
 class DraftCreateBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -2004,19 +2104,33 @@ class DraftCreateNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: DraftCreateFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
-
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            default=None,
+            description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            default=None,
+            description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["DraftCreateFieldValidationRange"],
+        Field(
+            default=None,
+            description="The range of the values."
+        ),
+    ]
 
 class Type3(Enum):
     International = "International"
@@ -2028,7 +2142,10 @@ class DraftCreatePhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type3 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type3"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class DraftCreateActionCallbackSelection(BaseModel):
@@ -2170,9 +2287,13 @@ class DraftCreateTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            default=None,
+            description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class DraftCreateBiometricSignatureType(BaseModel):
@@ -2193,9 +2314,13 @@ class DraftCreateBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            default=None,
+            description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -2255,9 +2380,14 @@ class DraftCreateSwissComOnDemandSignatureData(BaseModel):
     )
     Country: str | None = Field(None, description="The country.")
     Locality: str | None = Field(None, description="The locality.")
-    OrganizationUnits: list[OrganizationUnit] | None = Field(
-        None, description="The organizational units.", max_items=228
-    )
+    OrganizationUnits: Annotated[
+        Optional[list["OrganizationUnit"]],
+        Field(
+            default=None,
+            description="The organizational units.", 
+            max_items=228
+        ),
+    ]
     Organization: str | None = Field(None, description="The organization.")
     SerialNumber: str | None = Field(None, description="The serial number.")
     StateOrProvince: str | None = Field(None, description="The state or province.")
@@ -2341,15 +2471,23 @@ class DraftCreateDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            default=None,
+            description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            default=None,
+            description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -2711,16 +2849,23 @@ class DraftCreateBasicRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftCreateContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftCreateContactInformation"],
+        Field(
+            default=None,
+            description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified."
+        ),
+    ]
 
 
 class DraftCreateStampImprintDateConfiguration(BaseModel):
@@ -2742,9 +2887,13 @@ class DraftCreateSignaturePluginSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreatePluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreatePluginStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateSwedishBankIdSignatureType(BaseModel):
@@ -2755,9 +2904,13 @@ class DraftCreateSwedishBankIdSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateSwedishBankIdStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateSwedishBankIdStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateOneTimePasswordSignatureType(BaseModel):
@@ -2767,16 +2920,24 @@ class DraftCreateOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            default=None,
+            description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateOneTimePasswordStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateOneTimePasswordStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateRemoteCertificateSignatureType(BaseModel):
@@ -2786,16 +2947,24 @@ class DraftCreateRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            default=None,
+            description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateRemoteCertificateStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateRemoteCertificateStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateATrustCertificateSignatureType(BaseModel):
@@ -2822,9 +2991,13 @@ class DraftCreateSwissComOnDemandSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateSwissComOnDemandStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateSwissComOnDemandStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateDisposableCertificateSignatureType(BaseModel):
@@ -2837,66 +3010,96 @@ class DraftCreateDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            default=None,
+            description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (DraftCreateDisposableCertificateStampImprint) = (
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateDisposableCertificateStampImprint"],
         Field(
-            None, description="The configuration of the stamp imprint of the signature."
-        )
-    )
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            default=None,
+            description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateTypeToSignStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            default=None,
+            description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateDrawToSignStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            default=None,
+            description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateClickToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateClickToSignStampImprint"],
+        Field(
+            default=None,
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateRadioButtonItemDefinition(BaseModel):
@@ -2910,33 +3113,59 @@ class DraftCreateRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            default=...,
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftCreateTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[DraftCreateChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-    )
+    TextFormat: Annotated[
+        Optional["DraftCreateTextFormat"],
+        Field(
+            default=None,
+            description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional["DraftCreateChoiceItem"],
+        Field(
+            default=...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
-
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            default=...,
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 class DraftCreateRadioButtonGroupDefinition(BaseModel):
 
@@ -2946,34 +3175,53 @@ class DraftCreateRadioButtonGroupDefinition(BaseModel):
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[DraftCreateRadioButtonItemDefinition] | None = Field(
-        None,
-        description="The list of radio buttons that belong to the same group.",
-        max_items=50,
-    )
+    Items: Annotated[
+        Optional[list["DraftCreateRadioButtonItemDefinition"]],
+        Field(
+            default=None,
+            description="The list of radio buttons that belong to the same group.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftCreateComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftCreateTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[DraftCreateChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-    )
+    TextFormat: Annotated[
+        Optional["DraftCreateTextFormat"],
+        Field(
+            default=None,
+            description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional["DraftCreateChoiceItem"],
+        Field(
+            default=...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
-
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            default=...,
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 class DraftCreateCheckBoxDefinition(BaseModel):
 
@@ -2982,10 +3230,20 @@ class DraftCreateCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            default=...,
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -3002,13 +3260,27 @@ class DraftCreateTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: DraftCreateTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["DraftCreateTextFormat"],
+        Field(
+            default=None,
+            description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            default=...,
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateDefaultSignature(BaseModel):
@@ -3068,17 +3340,22 @@ class DraftCreateListBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
-    PreSelectedItems: list[PreSelectedItem] | None = Field(
-        None,
-        description="The export values of the items which should be initially selected.",
-        max_items=50,
-    )
+    PreSelectedItems: Annotated[
+        Optional[list["PreSelectedItem"]],
+        Field(
+            default=None,
+            description="The export values of the items which should be initially selected.",
+            max_items=50,
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftCreateListBoxDefinition | None = Field(
-        None,
-        description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
-    )
-
+    FieldDefinition: Annotated[
+        Optional["DraftCreateListBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
+        ),
+    ]
 
 class DraftCreateRadioButtonGroup(BaseModel):
 
@@ -3097,10 +3374,13 @@ class DraftCreateRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftCreateRadioButtonGroupDefinition | None = Field(
-        None,
-        description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreateRadioButtonGroupDefinition"],
+        Field(
+            default=None,
+            description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
+        ),
+    ]
 
 
 class DraftCreateComboBox(BaseModel):
@@ -3115,10 +3395,13 @@ class DraftCreateComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftCreateComboBoxDefinition | None = Field(
-        None,
-        description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreateComboBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
+        ),
+    ]
 
 
 class DraftCreateCheckBox(BaseModel):
@@ -3135,11 +3418,13 @@ class DraftCreateCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftCreateCheckBoxDefinition | None = Field(
-        None,
-        description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
-
+    FieldDefinition: Annotated[
+        Optional["DraftCreateCheckBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 class DraftCreateReminderConfiguration(BaseModel):
 
@@ -3182,9 +3467,13 @@ class DraftUpdateAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    language_code: LanguageCode = Field(
-        ..., description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            default=...,
+            description="The language of the translated agreement."
+        ),
+    ]
     Text: str = Field(..., description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -3344,19 +3633,25 @@ class DraftUpdateAgentRedirectConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Policy: Policy | None = Field(
-        None,
-        description="Defines the redirect target page which should be opened when the agent mode is active. \r\nMust not be set, when 'Allow' is not set to true.",
-    )
+    Policy: Annotated[
+        Optional["Policy"],
+        Field(
+            default=None,
+            description="Defines the redirect target page which should be opened when the agent mode is active. \r\nMust not be set, when 'Allow' is not set to true.",
+        ),
+    ]
     Allow: bool | None = Field(
         None,
         description="If true, the agent mode can be used. \r\nIf false, both 'Policy'and 'IFrameAllowList' must not be set.",
     )
-    IFrameAllowList: list[IFrameAllowListItem] | None = Field(
-        None,
-        description="The URLs where the designer interface of eSignAnyWhere may be embedded.\r\nMust not be set, when 'Allow' is not set to true.",
-        max_items=50,
-    )
+    IFrameAllowList: Annotated[
+        Optional[list["IFrameAllowListItem"]],
+        Field(
+            None,
+            description="The URLs where the designer interface of eSignAnyWhere may be embedded.\r\nMust not be set, when 'Allow' is not set to true.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftUpdateExpirationConfiguration(BaseModel):
@@ -3469,9 +3764,12 @@ class DraftActivityReplaceBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -3526,9 +3824,14 @@ class DraftActivityReplaceSwissComOnDemandSignatureData(BaseModel):
     )
     Country: str | None = Field(None, description="The country.")
     Locality: str | None = Field(None, description="The locality.")
-    OrganizationUnits: list[OrganizationUnit] | None = Field(
-        None, description="The organizational units.", max_items=228
-    )
+    OrganizationUnits: Annotated[
+        Optional[list["OrganizationUnit"]],
+        Field(
+            None, 
+            description="The organizational units.", 
+            max_items=228
+        ),
+    ]
     Organization: str | None = Field(None, description="The organization.")
     SerialNumber: str | None = Field(None, description="The serial number.")
     StateOrProvince: str | None = Field(None, description="The state or province.")
@@ -3638,20 +3941,40 @@ class DraftActivityReplaceAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., 
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(
+            ..., 
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftActivityReplaceReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., 
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(
+            ..., 
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftActivityReplaceSignaturePluginParameter(BaseModel):
@@ -3690,10 +4013,20 @@ class DraftActivityReplaceLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., 
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(
+            ..., 
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftActivityReplaceFieldValidationRange(BaseModel):
@@ -3994,10 +4327,13 @@ class DraftActivityReplaceSignaturePluginSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftActivityReplacePluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
-
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplacePluginStampImprint"],
+        Field(
+            None, 
+            description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 class DraftActivityReplaceSwedishBankIdSignatureType(BaseModel):
 
@@ -4007,11 +4343,12 @@ class DraftActivityReplaceSwedishBankIdSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (
-        DraftActivityReplaceSwedishBankIdStampImprint
-    ) = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceSwedishBankIdStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftActivityReplaceOneTimePasswordSignatureType(BaseModel):
@@ -4021,18 +4358,22 @@ class DraftActivityReplaceOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (
-        DraftActivityReplaceOneTimePasswordStampImprint
-    ) = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceOneTimePasswordStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature"
+        ),
+    ]
 
 
 class DraftActivityReplaceRemoteCertificateSignatureType(BaseModel):
@@ -4042,18 +4383,22 @@ class DraftActivityReplaceRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (
-        DraftActivityReplaceRemoteCertificateStampImprint
-    ) = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceRemoteCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature"
+        ),
+    ]
 
 
 class DraftActivityReplaceBiometricSignatureType(BaseModel):
@@ -4074,9 +4419,12 @@ class DraftActivityReplaceBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -4107,11 +4455,12 @@ class DraftActivityReplaceSwissComOnDemandSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (
-        DraftActivityReplaceSwissComOnDemandStampImprint
-    ) = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceSwissComOnDemandStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftActivityReplaceDisposableCertificateSignatureType(BaseModel):
@@ -4124,18 +4473,22 @@ class DraftActivityReplaceDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (
-        DraftActivityReplaceDisposableCertificateStampImprint
-    ) = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceDisposableCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftActivityReplaceLocalCertificateSignatureType(BaseModel):
@@ -4146,66 +4499,84 @@ class DraftActivityReplaceLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: None | (
-        DraftActivityReplaceLocalCertificateStampImprint
-    ) = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceLocalCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftActivityReplaceTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftActivityReplaceTypeToSignStampImprint | None = (
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceTypeToSignStampImprint"],
         Field(
             None, description="The configuration of the stamp imprint of the signature."
-        )
-    )
+        ),
+    ]
 
 
 class DraftActivityReplaceDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftActivityReplaceDrawToSignStampImprint | None = (
+    StampImprintConfiguration: Annotated[
+        Optional["DraftActivityReplaceDrawToSignStampImprint"],
         Field(
             None, description="The configuration of the stamp imprint of the signature."
-        )
-    )
+        ),
+    ]
 
 
 class DraftActivityReplaceClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -4215,7 +4586,6 @@ class DraftActivityReplaceClickToSignSignatureType(BaseModel):
             None, description="The configuration of the stamp imprint of the signature."
         )
     )
-
 
 class DraftActivityReplaceRadioButtonItemDefinition(BaseModel):
 
@@ -4228,10 +4598,20 @@ class DraftActivityReplaceRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., 
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(
+            ..., 
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftActivityReplaceTextFormat(BaseModel):
@@ -4251,9 +4631,13 @@ class DraftActivityReplaceTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            ..., 
+            description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class Type5(Enum):
@@ -4266,7 +4650,10 @@ class DraftActivityReplacePhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type5 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type5"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class DraftActivityReplaceNumberValidationConfiguration(BaseModel):
@@ -4277,41 +4664,72 @@ class DraftActivityReplaceNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: DraftActivityReplaceFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None,
+            description="The defined symbol location."
+        )
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None,
+            description="The expected thousands separator."
+        )
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None,
+            description="The expected decimal separator."
+        )
+    ]
+    Range: Annotated[
+        Optional["DraftActivityReplaceFieldValidationRange"],
+        Field(
+            None,
+            description="The range of the values."
+        )
+    ]
 
 
 class DraftActivityReplaceListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftActivityReplaceTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[DraftActivityReplaceChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-    )
+    TextFormat: Annotated[
+        Optional["DraftActivityReplaceTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["DraftActivityReplaceChoiceItem"]],
+        Field(
+            None,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
-
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., 
+            description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(
+            ..., 
+            description="The size of the element."
+        ),
+    ]
 
 class DraftActivityReplaceRadioButtonGroupDefinition(BaseModel):
 
@@ -4321,33 +4739,47 @@ class DraftActivityReplaceRadioButtonGroupDefinition(BaseModel):
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[DraftActivityReplaceRadioButtonItemDefinition] | None = Field(
-        None,
-        description="The list of radio buttons that belong to the same group.",
-        max_items=50,
-    )
-
+    Items: Annotated[
+        Optional[list["DraftActivityReplaceRadioButtonItemDefinition"]],
+        Field(
+            None,
+            description="The list of radio buttons that belong to the same group.",
+            max_items=50,
+        ),
+    ]
 
 class DraftActivityReplaceComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftActivityReplaceTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[DraftActivityReplaceChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-    )
+    TextFormat: Annotated[
+        Optional["DraftActivityReplaceTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["DraftActivityReplaceChoiceItem"]],
+        Field(
+            ...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class DraftActivityReplaceCheckBoxDefinition(BaseModel):
@@ -4357,10 +4789,16 @@ class DraftActivityReplaceCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(..., description="The size of the element."),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -4377,13 +4815,22 @@ class DraftActivityReplaceTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: DraftActivityReplaceTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["DraftActivityReplaceTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class DraftActivityReplaceDisposableCertificateSignatureData(BaseModel):
@@ -4397,15 +4844,21 @@ class DraftActivityReplaceDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            None, description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            None, description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -4469,10 +4922,13 @@ class DraftActivityReplaceReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: DraftActivityReplaceReadingAreaDefinition | None = Field(
-        None,
-        description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
-    )
+    Definition: Annotated[
+        Optional["DraftActivityReplaceReadingAreaDefinition"],
+        Field(
+            default=None,
+            description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
+        ),
+    ]
 
 
 class DraftActivityReplaceAttachment(BaseModel):
@@ -4486,15 +4942,21 @@ class DraftActivityReplaceAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None,
-        description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            default=None,
+            description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftActivityReplaceAttachmentDefinition | None = Field(
-        None,
-        description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceAttachmentDefinition"],
+        Field(
+            default=None,
+            description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceListBox(BaseModel):
@@ -4507,16 +4969,22 @@ class DraftActivityReplaceListBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
-    PreSelectedItems: list[PreSelectedItem] | None = Field(
-        None,
-        description="The export values of the items which should be initially selected.",
-        max_items=50,
-    )
+    PreSelectedItems: Annotated[
+        Optional[list["PreSelectedItem"]],
+        Field(
+            default=None,
+            description="The export values of the items which should be initially selected.",
+            max_items=50,
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftActivityReplaceListBoxDefinition | None = Field(
-        None,
-        description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceListBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceRadioButtonGroup(BaseModel):
@@ -4536,10 +5004,13 @@ class DraftActivityReplaceRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftActivityReplaceRadioButtonGroupDefinition | None = Field(
-        None,
-        description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceRadioButtonGroupDefinition"],
+        Field(
+            default=None,
+            description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceComboBox(BaseModel):
@@ -4554,10 +5025,13 @@ class DraftActivityReplaceComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftActivityReplaceComboBoxDefinition | None = Field(
-        None,
-        description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceComboBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceCheckBox(BaseModel):
@@ -4574,10 +5048,13 @@ class DraftActivityReplaceCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftActivityReplaceCheckBoxDefinition | None = Field(
-        None,
-        description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceCheckBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceEmailAppLinks(BaseModel):
@@ -4605,9 +5082,12 @@ class DraftActivityReplaceContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the recipient."
+        ),
+    ]
 
 
 class DraftActivityReplacePoliciesForP7MAction(BaseModel):
@@ -4689,16 +5169,22 @@ class DraftActivityReplaceBasicRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftActivityReplaceContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftActivityReplaceContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
 
 
 class EnvelopeStatus(Enum):
@@ -4732,9 +5218,12 @@ class EnvelopeGetSignAutomatic(BaseModel):
     ProfileId: str | None = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
 
 
 class EnvelopeGetContactInformation(BaseModel):
@@ -4747,9 +5236,12 @@ class EnvelopeGetContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the recipient."
+        ),
+    ]
 
 
 class EnvelopeGetLongLivedDisposableCertificateWarning(BaseModel):
@@ -4856,7 +5348,10 @@ class EnvelopeGetElementsPhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type7 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type7"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class EnvelopeGetElementsTextFormat(BaseModel):
@@ -4876,9 +5371,12 @@ class EnvelopeGetElementsTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None, description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class EnvelopeGetElementsPosition(BaseModel):
@@ -4930,12 +5428,18 @@ class EnvelopeGetElementsRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsATrustCertificateSignatureType(BaseModel):
@@ -4968,9 +5472,12 @@ class EnvelopeGetElementsBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -4990,27 +5497,42 @@ class EnvelopeGetElementsPredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsFieldValidationRange(BaseModel):
@@ -5372,9 +5894,12 @@ class EnvelopeGetConfigurationAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the translated agreement."
+        ),
+    ]
     Text: str | None = Field(None, description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -5513,19 +6038,25 @@ class EnvelopeGetConfigurationBasicRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -5663,15 +6194,21 @@ class EnvelopeGetConfigurationDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            None, description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            None, description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -5829,9 +6366,12 @@ class EnvelopeFindRequest(BaseModel):
         None,
         description="If set, the given text is searched in following fields:\r\nenvelope name and description\r\nnotification subject and message \r\nsender email address, given name and surname  \r\nrecipient email address, given name and surname\r\nNote: Using this search option is very resource intensive! It might take very long.",
     )
-    Status: Status1 | None = Field(
-        None, description="If set, envelopes in the given status are matched."
-    )
+    Status: Annotated[
+        Optional["Status1"],
+        Field(
+            None, description="If set, envelopes in the given status are matched."
+        ),
+    ]
     InStatusSinceDays: int | None = Field(
         None,
         description="If set, envelopes having the given status for the specified days are matched.\r\nIt must be combined with Status.",
@@ -5870,7 +6410,10 @@ class EnvelopeFindEnvelope(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Status: Status2 | None = Field(None, description="The status of the envelope.")
+    Status: Annotated[
+        Optional["Status2"],
+        Field(default=None, description="The status of the envelope."),
+    ]
     Id: str | None = Field(None, description="The identifier of the envelope.")
     Name: str | None = Field(None, description="The name of the envelope.")
     MetaData: str | None = Field(None, description="The metadata of the envelope.")
@@ -5936,9 +6479,13 @@ class EnvelopeSendAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    language_code: LanguageCode = Field(
-        ..., description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            default=...,
+            description="The language of the translated agreement."
+        ),
+    ]
     Text: str = Field(..., description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -5997,9 +6544,12 @@ class EnvelopeSendBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -6018,10 +6568,16 @@ class EnvelopeSendSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendClientFinishAction(BaseModel):
@@ -6072,9 +6628,12 @@ class EnvelopeSendSwissComOnDemandSignatureData(BaseModel):
     )
     Country: str | None = Field(None, description="The country.")
     Locality: str | None = Field(None, description="The locality.")
-    OrganizationUnits: list[OrganizationUnit] | None = Field(
-        None, description="The organizational units.", max_items=228
-    )
+    OrganizationUnits: Annotated[
+        Optional[list["OrganizationUnit"]],
+        Field(
+            None, description="The organizational units.", max_items=228
+        ),
+    ]
     Organization: str | None = Field(None, description="The organization.")
     SerialNumber: str | None = Field(None, description="The serial number.")
     StateOrProvince: str | None = Field(None, description="The state or province.")
@@ -6149,20 +6708,32 @@ class EnvelopeSendAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendSignaturePluginParameter(BaseModel):
@@ -6189,10 +6760,16 @@ class EnvelopeSendLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendPluginStampImprint(BaseModel):
@@ -6485,9 +7062,12 @@ class EnvelopeSendSignaturePluginSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendPluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendPluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendSwedishBankIdSignatureType(BaseModel):
@@ -6498,9 +7078,12 @@ class EnvelopeSendSwedishBankIdSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendSwedishBankIdStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendSwedishBankIdStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendOneTimePasswordSignatureType(BaseModel):
@@ -6510,16 +7093,22 @@ class EnvelopeSendOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendOneTimePasswordStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendOneTimePasswordStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendRemoteCertificateSignatureType(BaseModel):
@@ -6529,16 +7118,22 @@ class EnvelopeSendRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendRemoteCertificateStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendRemoteCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendBiometricSignatureType(BaseModel):
@@ -6559,9 +7154,12 @@ class EnvelopeSendBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -6592,9 +7190,12 @@ class EnvelopeSendSwissComOnDemandSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendSwissComOnDemandStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendSwissComOnDemandStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendDisposableCertificateSignatureType(BaseModel):
@@ -6607,9 +7208,12 @@ class EnvelopeSendDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -6629,67 +7233,94 @@ class EnvelopeSendLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendLocalCertificateStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendLocalCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendTypeToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendDrawToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeSendClickToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeSendClickToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeSendDisposableCertificateSignatureData(BaseModel):
@@ -6703,15 +7334,21 @@ class EnvelopeSendDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            None, description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            None, description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -6775,10 +7412,13 @@ class EnvelopeSendReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: EnvelopeSendReadingAreaDefinition | None = Field(
-        None,
-        description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
-    )
+    Definition: Annotated[
+        Optional["EnvelopeSendReadingAreaDefinition"],
+        Field(
+            default=None,
+            description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
+        ),
+    ]
 
 
 class EnvelopeSendAttachment(BaseModel):
@@ -6792,15 +7432,21 @@ class EnvelopeSendAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None,
-        description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            default=None,
+            description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeSendAttachmentDefinition | None = Field(
-        None,
-        description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendAttachmentDefinition"],
+        Field(
+            default=None,
+            description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendEmailAppLinks(BaseModel):
@@ -6828,9 +7474,12 @@ class EnvelopeSendContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the recipient."
+        ),
+    ]
 
 
 class EnvelopeSendGeneralPoliciesForP7MAction(BaseModel):
@@ -6920,26 +7569,35 @@ class EnvelopeSendVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: EnvelopeSendSignatureFieldDefinition = Field(
-        ...,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendSignatureFieldDefinition"],
+        Field(
+            ...,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendBasicRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeSendContactInformation = Field(
-        ..., description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeSendContactInformation"],
+        Field(
+            ..., description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
 
 
 class EnvelopeSendRadioButtonItemDefinition(BaseModel):
@@ -6953,10 +7611,16 @@ class EnvelopeSendRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendTextFormat(BaseModel):
@@ -6976,9 +7640,12 @@ class EnvelopeSendTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None, description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class Type9(Enum):
@@ -6991,7 +7658,10 @@ class EnvelopeSendPhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type9 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type9"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class EnvelopeSendNumberValidationConfiguration(BaseModel):
@@ -7002,18 +7672,30 @@ class EnvelopeSendNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: EnvelopeSendFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["EnvelopeSendFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeSendActionCallbackSelection(BaseModel):
@@ -7145,37 +7827,55 @@ class EnvelopeSendSignAutomatic(BaseModel):
     ProfileId: str = Field(
         ..., description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
-    VisibleSignatures: list[EnvelopeSendVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-        max_items=50,
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
+    VisibleSignatures: Annotated[
+        Optional[list["EnvelopeSendVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeSendListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[EnvelopeSendChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-        min_items=1,
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["EnvelopeSendChoiceItem"]],
+        Field(
+            ...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+            min_items=1,
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendRadioButtonGroupDefinition(BaseModel):
@@ -7186,33 +7886,48 @@ class EnvelopeSendRadioButtonGroupDefinition(BaseModel):
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[EnvelopeSendRadioButtonItemDefinition] | None = Field(
-        None,
-        description="The list of radio buttons that belong to the same group.",
-        max_items=50,
-    )
+    Items: Annotated[
+        Optional[list["EnvelopeSendRadioButtonItemDefinition"]],
+        Field(
+            default=None,
+            description="The list of radio buttons that belong to the same group.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeSendComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[EnvelopeSendChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["EnvelopeSendChoiceItem"]],
+        Field(
+            ...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendCheckBoxDefinition(BaseModel):
@@ -7222,10 +7937,16 @@ class EnvelopeSendCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -7242,13 +7963,22 @@ class EnvelopeSendTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: EnvelopeSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["EnvelopeSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendListBox(BaseModel):
@@ -7261,16 +7991,22 @@ class EnvelopeSendListBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
-    PreSelectedItems: list[PreSelectedItem] | None = Field(
-        None,
-        description="The export values of the items which should be initially selected.",
-        max_items=50,
-    )
+    PreSelectedItems: Annotated[
+        Optional[list["PreSelectedItem"]],
+        Field(
+            default=None,
+            description="The export values of the items which should be initially selected.",
+            max_items=50,
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeSendListBoxDefinition | None = Field(
-        None,
-        description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendListBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendRadioButtonGroup(BaseModel):
@@ -7290,10 +8026,13 @@ class EnvelopeSendRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeSendRadioButtonGroupDefinition | None = Field(
-        None,
-        description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendRadioButtonGroupDefinition"],
+        Field(
+            default=None,
+            description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendComboBox(BaseModel):
@@ -7308,10 +8047,13 @@ class EnvelopeSendComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeSendComboBoxDefinition | None = Field(
-        None,
-        description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendComboBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendCheckBox(BaseModel):
@@ -7328,10 +8070,13 @@ class EnvelopeSendCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeSendCheckBoxDefinition | None = Field(
-        None,
-        description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendCheckBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendExpirationConfiguration(BaseModel):
@@ -7455,9 +8200,12 @@ class EnvelopeActivityReplaceBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -7512,9 +8260,12 @@ class EnvelopeActivityReplaceSwissComOnDemandSignatureData(BaseModel):
     )
     Country: str | None = Field(None, description="The country.")
     Locality: str | None = Field(None, description="The locality.")
-    OrganizationUnits: list[OrganizationUnit] | None = Field(
-        None, description="The organizational units.", max_items=228
-    )
+    OrganizationUnits: Annotated[
+        Optional[list["OrganizationUnit"]],
+        Field(
+            None, description="The organizational units.", max_items=228
+        ),
+    ]
     Organization: str | None = Field(None, description="The organization.")
     SerialNumber: str | None = Field(None, description="The serial number.")
     StateOrProvince: str | None = Field(None, description="The state or province.")
@@ -7624,24 +8375,36 @@ class EnvelopeActivityReplaceAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeActivityReplaceSize = Field(
-        ..., description="The size of the element."
-    )
+    Position: Annotated[
+        Optional["EnvelopeActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeActivityReplaceSize"],
+        Field(
+            ..., description="The size of the element."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeActivityReplaceSize = Field(
-        ..., description="The size of the element."
-    )
+    Position: Annotated[
+        Optional["EnvelopeActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeActivityReplaceSize"],
+        Field(
+            ..., description="The size of the element."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSignaturePluginParameter(BaseModel):
@@ -7668,12 +8431,18 @@ class EnvelopeActivityReplaceLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeActivityReplaceSize = Field(
-        ..., description="The size of the element."
-    )
+    Position: Annotated[
+        Optional["EnvelopeActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeActivityReplaceSize"],
+        Field(
+            ..., description="The size of the element."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceFieldValidationRange(BaseModel):
@@ -7701,9 +8470,12 @@ class EnvelopeActivityReplaceTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None, description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class EnvelopeActivityReplacePluginStampImprint(BaseModel):
@@ -7996,9 +8768,12 @@ class EnvelopeActivityReplaceSignaturePluginSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeActivityReplacePluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeActivityReplacePluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSwedishBankIdSignatureType(BaseModel):
@@ -8023,9 +8798,12 @@ class EnvelopeActivityReplaceOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8044,9 +8822,12 @@ class EnvelopeActivityReplaceRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8076,9 +8857,12 @@ class EnvelopeActivityReplaceBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8126,9 +8910,12 @@ class EnvelopeActivityReplaceDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8148,12 +8935,18 @@ class EnvelopeActivityReplaceLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8169,9 +8962,12 @@ class EnvelopeActivityReplaceTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8187,9 +8983,12 @@ class EnvelopeActivityReplaceDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8205,9 +9004,12 @@ class EnvelopeActivityReplaceClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -8229,7 +9031,10 @@ class EnvelopeActivityReplacePhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type11 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type11"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class EnvelopeActivityReplaceNumberValidationConfiguration(BaseModel):
@@ -8240,18 +9045,30 @@ class EnvelopeActivityReplaceNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: EnvelopeActivityReplaceFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["EnvelopeActivityReplaceFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceDisposableCertificateSignatureData(BaseModel):
@@ -8265,15 +9082,21 @@ class EnvelopeActivityReplaceDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            None, description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            None, description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -8337,10 +9160,13 @@ class EnvelopeActivityReplaceReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: EnvelopeActivityReplaceReadingAreaDefinition | None = Field(
-        None,
-        description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
-    )
+    Definition: Annotated[
+        Optional["EnvelopeActivityReplaceReadingAreaDefinition"],
+        Field(
+            default=None,
+            description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceAttachment(BaseModel):
@@ -8354,15 +9180,21 @@ class EnvelopeActivityReplaceAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None,
-        description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            default=None,
+            description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeActivityReplaceAttachmentDefinition | None = Field(
-        None,
-        description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplaceAttachmentDefinition"],
+        Field(
+            default=None,
+            description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceListBox(BaseModel):
@@ -8371,11 +9203,14 @@ class EnvelopeActivityReplaceListBox(BaseModel):
 
     ElementId: str = Field(..., description="The identifier of the element.")
     Required: bool | None = Field(None, description="If true, the element is required.")
-    PreSelectedItems: list[PreSelectedItem] | None = Field(
-        None,
-        description="The export values of the items which should be initially selected.",
-        max_items=50,
-    )
+    PreSelectedItems: Annotated[
+        Optional[list["PreSelectedItem"]],
+        Field(
+            default=None,
+            description="The export values of the items which should be initially selected.",
+            max_items=50,
+        ),
+    ]
     DocumentNumber: int = Field(
         ...,
         description="The reference number of the containing document. It starts with 1.",
@@ -8457,9 +9292,12 @@ class EnvelopeActivityReplaceContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the recipient."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceGeneralPoliciesForP7MAction(BaseModel):
@@ -8541,16 +9379,22 @@ class EnvelopeActivityReplaceBasicRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeActivityReplaceContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeActivityReplaceContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
 
 
 class BulkStatus(Enum):
@@ -8569,7 +9413,10 @@ class EnvelopeBulkGetChildEnvelope(BaseModel):
     SentDate: datetime | None = Field(
         None, description="Date when the envelope was sent."
     )
-    Status: Status2 | None = Field(None, description="The status of the envelope.")
+    Status: Annotated[
+        Optional["Status2"],
+        Field(default=None, description="The status of the envelope."),
+    ]
     Email: str | None = Field(
         None,
         description="The email address of the bulk recipient for which this child envelope was created.",
@@ -8675,9 +9522,13 @@ class EnvelopeBulkSendAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    language_code: LanguageCode = Field(
-        ..., description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            default=...,
+            description="The language of the translated agreement."
+        ),
+    ]
     Text: str = Field(..., description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -8736,9 +9587,12 @@ class EnvelopeBulkSendBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -8757,10 +9611,16 @@ class EnvelopeBulkSendSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendClientFinishAction(BaseModel):
@@ -8811,9 +9671,12 @@ class EnvelopeBulkSendSwissComOnDemandSignatureData(BaseModel):
     )
     Country: str | None = Field(None, description="The country.")
     Locality: str | None = Field(None, description="The locality.")
-    OrganizationUnits: list[OrganizationUnit] | None = Field(
-        None, description="The organizational units.", max_items=228
-    )
+    OrganizationUnits: Annotated[
+        Optional[list["OrganizationUnit"]],
+        Field(
+            None, description="The organizational units.", max_items=228
+        ),
+    ]
     Organization: str | None = Field(None, description="The organization.")
     SerialNumber: str | None = Field(None, description="The serial number.")
     StateOrProvince: str | None = Field(None, description="The state or province.")
@@ -8890,20 +9753,32 @@ class EnvelopeBulkSendAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendSignaturePluginParameter(BaseModel):
@@ -8930,10 +9805,16 @@ class EnvelopeBulkSendLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendPluginStampImprint(BaseModel):
@@ -9226,9 +10107,12 @@ class EnvelopeBulkSendSignaturePluginSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeBulkSendPluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeBulkSendPluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeBulkSendSwedishBankIdSignatureType(BaseModel):
@@ -9239,9 +10123,12 @@ class EnvelopeBulkSendSwedishBankIdSignatureType(BaseModel):
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeBulkSendSwedishBankIdStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeBulkSendSwedishBankIdStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeBulkSendOneTimePasswordSignatureType(BaseModel):
@@ -9251,9 +10138,12 @@ class EnvelopeBulkSendOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -9272,9 +10162,12 @@ class EnvelopeBulkSendRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -9304,9 +10197,12 @@ class EnvelopeBulkSendBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -9354,9 +10250,12 @@ class EnvelopeBulkSendDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -9376,12 +10275,18 @@ class EnvelopeBulkSendLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
@@ -9397,48 +10302,66 @@ class EnvelopeBulkSendTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeBulkSendTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeBulkSendTypeToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeBulkSendDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeBulkSendDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeBulkSendDrawToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeBulkSendClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: EnvelopeBulkSendClickToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeBulkSendClickToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeBulkSendDisposableCertificateSignatureData(BaseModel):
@@ -9452,15 +10375,21 @@ class EnvelopeBulkSendDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            None, description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            None, description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -9524,10 +10453,13 @@ class EnvelopeBulkSendReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: EnvelopeBulkSendReadingAreaDefinition | None = Field(
-        None,
-        description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
-    )
+    Definition: Annotated[
+        Optional["EnvelopeBulkSendReadingAreaDefinition"],
+        Field(
+            default=None,
+            description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendAttachment(BaseModel):
@@ -9541,15 +10473,21 @@ class EnvelopeBulkSendAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None,
-        description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            default=None,
+            description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeBulkSendAttachmentDefinition | None = Field(
-        None,
-        description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendAttachmentDefinition"],
+        Field(
+            default=None,
+            description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendEmailAppLinks(BaseModel):
@@ -9577,9 +10515,12 @@ class EnvelopeBulkSendContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the recipient."
+        ),
+    ]
 
 
 class EnvelopeBulkSendGeneralPoliciesForP7MAction(BaseModel):
@@ -9669,26 +10610,35 @@ class EnvelopeBulkSendVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: EnvelopeBulkSendSignatureFieldDefinition = Field(
-        ...,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendSignatureFieldDefinition"],
+        Field(
+            ...,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendBasicRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeBulkSendContactInformation = Field(
-        ..., description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeBulkSendContactInformation"],
+        Field(
+            ..., description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendRadioButtonItemDefinition(BaseModel):
@@ -9702,10 +10652,16 @@ class EnvelopeBulkSendRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendTextFormat(BaseModel):
@@ -9723,9 +10679,12 @@ class EnvelopeBulkSendTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None, description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class Type13(Enum):
@@ -9738,7 +10697,10 @@ class EnvelopeBulkSendPhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type13 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type13"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class EnvelopeBulkSendNumberValidationConfiguration(BaseModel):
@@ -9749,18 +10711,30 @@ class EnvelopeBulkSendNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: EnvelopeBulkSendFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["EnvelopeBulkSendFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeBulkSendActionCallbackSelection(BaseModel):
@@ -9892,37 +10866,55 @@ class EnvelopeBulkSendSignAutomatic(BaseModel):
     ProfileId: str = Field(
         ..., description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
-    VisibleSignatures: list[EnvelopeBulkSendVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-        max_items=50,
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
+    VisibleSignatures: Annotated[
+        Optional[list["EnvelopeBulkSendVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeBulkSendListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeBulkSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[EnvelopeBulkSendChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-        min_items=1,
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeBulkSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["EnvelopeBulkSendChoiceItem"]],
+        Field(
+            ...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+            min_items=1,
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendRadioButtonGroupDefinition(BaseModel):
@@ -9933,33 +10925,48 @@ class EnvelopeBulkSendRadioButtonGroupDefinition(BaseModel):
         None,
         description="If true, radiobuttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[EnvelopeBulkSendRadioButtonItemDefinition] | None = Field(
-        None,
-        description="The list of radio buttons that belong to the same group.",
-        max_items=50,
-    )
+    Items: Annotated[
+        Optional[list["EnvelopeBulkSendRadioButtonItemDefinition"]],
+        Field(
+            default=None,
+            description="The list of radio buttons that belong to the same group.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeBulkSendComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeBulkSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[EnvelopeBulkSendChoiceItem] = Field(
-        ...,
-        description="A list of items that can be selected for the element.",
-        max_items=50,
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeBulkSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["EnvelopeBulkSendChoiceItem"]],
+        Field(
+            ...,
+            description="A list of items that can be selected for the element.",
+            max_items=50,
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendCheckBoxDefinition(BaseModel):
@@ -9969,10 +10976,16 @@ class EnvelopeBulkSendCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -9989,13 +11002,22 @@ class EnvelopeBulkSendTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: EnvelopeBulkSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["EnvelopeBulkSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendListBox(BaseModel):
@@ -10008,16 +11030,22 @@ class EnvelopeBulkSendListBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
-    PreSelectedItems: list[PreSelectedItem] | None = Field(
-        None,
-        description="The export values of the items which should be initially selected.",
-        max_items=50,
-    )
+    PreSelectedItems: Annotated[
+        Optional[list["PreSelectedItem"]],
+        Field(
+            default=None,
+            description="The export values of the items which should be initially selected.",
+            max_items=50,
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeBulkSendListBoxDefinition | None = Field(
-        None,
-        description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendListBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the list box field.\r\nIt must be specified when the list box is added.\r\nIt must not be specified when the list box already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendRadioButtonGroup(BaseModel):
@@ -10037,10 +11065,13 @@ class EnvelopeBulkSendRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeBulkSendRadioButtonGroupDefinition | None = Field(
-        None,
-        description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendRadioButtonGroupDefinition"],
+        Field(
+            default=None,
+            description="The definition of the radio button group.\r\nIt must be specified when the radio button group is added.\r\nIt must not be specified when the radio button group already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendComboBox(BaseModel):
@@ -10055,10 +11086,13 @@ class EnvelopeBulkSendComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeBulkSendComboBoxDefinition | None = Field(
-        None,
-        description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendComboBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the combo box.\r\nIt must be specified when the combo box is added.\r\nIt must not be specified when the combo box already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendCheckBox(BaseModel):
@@ -10075,10 +11109,13 @@ class EnvelopeBulkSendCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeBulkSendCheckBoxDefinition | None = Field(
-        None,
-        description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendCheckBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the check box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendExpirationConfiguration(BaseModel):
@@ -10231,7 +11268,10 @@ class FilePreparePhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type15 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type15"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class FilePrepareTextFormat(BaseModel):
@@ -10251,9 +11291,12 @@ class FilePrepareTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None, description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class FilePreparePosition(BaseModel):
@@ -10305,12 +11348,18 @@ class FilePrepareRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareATrustCertificateSignatureType(BaseModel):
@@ -10343,9 +11392,12 @@ class FilePrepareBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -10365,12 +11417,18 @@ class FilePrepareLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareFieldValidationRange(BaseModel):
@@ -10691,9 +11749,12 @@ class TeamGetAllTeamMember(BaseModel):
         None,
         description="The email address of the team member.\r\nThis references a user email address.",
     )
-    Members: list[TeamGetAllTeamMember] | None = Field(
-        None, description="The members of the subteam."
-    )
+    Members: Annotated[
+        Optional[list["TeamGetAllTeamMember"]],
+        Field(
+            None, description="The members of the subteam."
+        ),
+    ]
 
 
 class TeamReplaceTeamMember(BaseModel):
@@ -10704,9 +11765,12 @@ class TeamReplaceTeamMember(BaseModel):
         None,
         description="The email address of the team member.\r\nThis references a user email address.",
     )
-    Members: list[TeamReplaceTeamMember] | None = Field(
-        None, description="The members of the subteam."
-    )
+    Members: Annotated[
+        Optional[list["TeamReplaceTeamMember"]],
+        Field(
+            None, description="The members of the subteam."
+        ),
+    ]
 
 
 class TemplateGetSignAutomatic(BaseModel):
@@ -10716,9 +11780,12 @@ class TemplateGetSignAutomatic(BaseModel):
     ProfileId: str | None = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
 
 
 class TemplateGetSignPlaceholder(BaseModel):
@@ -10743,18 +11810,24 @@ class TemplateGetContactInformation(BaseModel):
     PhoneNumber: str | None = Field(
         None, description="The phone number of the recipient."
     )
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the recipient."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the recipient."
+        ),
+    ]
 
 
 class TemplateGetAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: TemplateGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["TemplateGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
 
 
 class TemplateGetFilesPage(BaseModel):
@@ -10818,7 +11891,10 @@ class TemplateGetElementsPhoneValidationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type17 | None = Field(None, description="The format of the phone numbers.")
+    Type: Annotated[
+        Optional["Type17"],
+        Field(default=None, description="The format of the phone numbers."),
+    ]
 
 
 class TemplateGetElementsTextFormat(BaseModel):
@@ -10838,9 +11914,12 @@ class TemplateGetElementsTextFormat(BaseModel):
     )
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
-    TextAlign: TextAlign | None = Field(
-        None, description="The alignment of the text. The default alignment is left."
-    )
+    TextAlign: Annotated[
+        Optional["TextAlign"],
+        Field(
+            None, description="The alignment of the text. The default alignment is left."
+        ),
+    ]
 
 
 class TemplateGetElementsPosition(BaseModel):
@@ -10892,12 +11971,18 @@ class TemplateGetElementsRadioButtonItemDefinition(BaseModel):
         None, description="If true, the radio button is checked by default."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsATrustCertificateSignatureType(BaseModel):
@@ -10930,9 +12015,12 @@ class TemplateGetElementsBiometricSignatureType(BaseModel):
     BiometricServerUserId: str | None = Field(
         None, description="The identifier of the user on the biometric server."
     )
-    SignaturePositioning: SignaturePositioning | None = Field(
-        None, description="The allowed positioning of the biometric signature."
-    )
+    SignaturePositioning: Annotated[
+        Optional["SignaturePositioning"],
+        Field(
+            None, description="The allowed positioning of the biometric signature."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -10952,27 +12040,42 @@ class TemplateGetElementsPredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: TemplateGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["TemplateGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsLinkDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsFieldValidationRange(BaseModel):
@@ -11306,10 +12409,13 @@ class TemplateGetConfigurationAgentRedirectConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Policy: Policy | None = Field(
-        None,
-        description="Defines the redirect target page which should be opened when the agent mode is active.",
-    )
+    Policy: Annotated[
+        Optional["Policy"],
+        Field(
+            default=None,
+            description="Defines the redirect target page which should be opened when the agent mode is active.",
+        ),
+    ]
     Allow: bool | None = Field(None, description="If true, the agent mode can be used.")
     IFrameAllowList: list[str] | None = Field(
         None,
@@ -11355,9 +12461,12 @@ class TemplateGetConfigurationAgreementTranslation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    LanguageCode: LanguageCode | None = Field(
-        None, description="The language of the translated agreement."
-    )
+    LanguageCode: Annotated[
+        Optional["LanguageCode"],
+        Field(
+            None, description="The language of the translated agreement."
+        ),
+    ]
     Text: str | None = Field(None, description="The translated agreement.")
     Header: str | None = Field(
         None, description="The header for the translated agreement."
@@ -11506,19 +12615,25 @@ class TemplateGetConfigurationBasicRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
 
 
 class TemplateGetConfigurationBatchConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Mode: Mode | None = Field(
-        None, description="The mode, that will be used for batch signing."
-    )
+    Mode: Annotated[
+        Optional["Mode"],
+        Field(
+            None, description="The mode, that will be used for batch signing."
+        ),
+    ]
     RequireScrollingOverAllSignaturesBeforeSigning: bool | None = Field(
         None,
         description="If true, the user has to review all signatures in the batch signing dialog before signing.\r\nThis is only applicable when the <code>Mode</code> is set to <code>OptIn</code> or <code>OptOut</code>.",
@@ -11656,15 +12771,21 @@ class TemplateGetConfigurationDisposableCertificateSignatureData(BaseModel):
     IdentificationIssuingCountry: str | None = Field(
         None, description="The issuing country of the identification."
     )
-    IdentificationType: IdentificationType | None = Field(
-        None, description="The type of identification in use."
-    )
+    IdentificationType: Annotated[
+        Optional["IdentificationType"],
+        Field(
+            None, description="The type of identification in use."
+        ),
+    ]
     PhoneNumber: str | None = Field(
         None, description="The phone number registered for identification."
     )
-    DocumentType: DocumentType | None = Field(
-        None, description="The type of document used for the identification."
-    )
+    DocumentType: Annotated[
+        Optional["DocumentType"],
+        Field(
+            None, description="The type of document used for the identification."
+        ),
+    ]
     DocumentIssuedBy: str | None = Field(
         None, description="The authority that issued the document."
     )
@@ -11848,9 +12969,12 @@ class AuthorizationWhoAmIResponse(BaseModel):
         None,
         description="The security identifier for synchronizing an external user provider.",
     )
-    SamlAssignments: list[AuthorizationWhoAmISamlAssignment] | None = Field(
-        None, description="The SAML providers available for login."
-    )
+    SamlAssignments: Annotated[
+        Optional[list["AuthorizationWhoAmISamlAssignment"]],
+        Field(
+            None, description="The SAML providers available for login."
+        ),
+    ]
     OAuthAssignments: list[str] | None = Field(
         None, description="The names of the OAuth providers available for login."
     )
@@ -11861,10 +12985,13 @@ class AutomaticProfileGetAllResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RemoteCertificateProfiles: list[AutomaticProfileGetAllProfile] | None = Field(
-        None,
-        description="The remote certificate profiles available for automatic signing.",
-    )
+    RemoteCertificateProfiles: Annotated[
+        Optional[list["AutomaticProfileGetAllProfile"]],
+        Field(
+            default=None,
+            description="The remote certificate profiles available for automatic signing.",
+        ),
+    ]
     SignaturePlugins: None | (list[AutomaticProfileGetAllSignaturePluginDefinition]) = (
         Field(
             None, description="The signature plugins available for automatic signing."
@@ -11876,9 +13003,12 @@ class DraftGetSendCopy(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     CopyingGroup: int | None = Field(
         None, description="The parallel group for copy actions."
     )
@@ -11897,9 +13027,12 @@ class DraftGetSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     SigningGroup: int | None = Field(
         None, description="The parallel group for sign actions."
     )
@@ -11909,9 +13042,12 @@ class DraftGetView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     ViewingGroup: int | None = Field(
         None, description="The parallel group for view actions."
     )
@@ -11921,9 +13057,12 @@ class DraftGetSignAsP7M(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     SignAsP7MGroup: int | None = Field(
         None, description="The parallel group for P7M actions."
     )
@@ -11935,9 +13074,12 @@ class DraftGetFilesDocument(BaseModel):
 
     FileName: str | None = Field(None, description="The name of the file.")
     PageCount: int | None = Field(None, description="The number of pages.")
-    Pages: list[DraftGetFilesPage] | None = Field(
-        None, description="The pages of the document."
-    )
+    Pages: Annotated[
+        Optional[list["DraftGetFilesPage"]],
+        Field(
+            None, description="The pages of the document."
+        ),
+    ]
     DocumentNumber: int | None = Field(
         None, description="The reference number of the document. It starts with 1."
     )
@@ -11956,15 +13098,24 @@ class DraftGetElementsTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: DraftGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["DraftGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class DraftGetElementsCheckBoxDefinition(BaseModel):
@@ -11974,12 +13125,18 @@ class DraftGetElementsCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -11987,22 +13144,34 @@ class DraftGetElementsComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[DraftGetElementsChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["DraftGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["DraftGetElementsChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class DraftGetElementsRadioButtonDefinition(BaseModel):
@@ -12013,43 +13182,64 @@ class DraftGetElementsRadioButtonDefinition(BaseModel):
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[DraftGetElementsRadioButtonItemDefinition] | None = Field(
-        None, description="The list of radiobuttons that belong to the same group."
-    )
+    Items: Annotated[
+        Optional[list["DraftGetElementsRadioButtonItemDefinition"]],
+        Field(
+            None, description="The list of radiobuttons that belong to the same group."
+        ),
+    ]
 
 
 class DraftGetElementsListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[DraftGetElementsChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["DraftGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["DraftGetElementsChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class DraftGetElementsSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class DraftGetElementsSignatureTaskConfiguration(BaseModel):
@@ -12066,12 +13256,18 @@ class DraftGetElementsAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class DraftGetElementsPredefinedText(BaseModel):
@@ -12084,9 +13280,12 @@ class DraftGetElementsPredefinedText(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Value: str | None = Field(None, description="The value of the predefined text.")
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsEmail(BaseModel):
@@ -12098,9 +13297,12 @@ class DraftGetElementsEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsInitials(BaseModel):
@@ -12116,9 +13318,12 @@ class DraftGetElementsInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsGivenName(BaseModel):
@@ -12130,9 +13335,12 @@ class DraftGetElementsGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsSurname(BaseModel):
@@ -12144,9 +13352,12 @@ class DraftGetElementsSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsFullName(BaseModel):
@@ -12158,9 +13369,12 @@ class DraftGetElementsFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsDate(BaseModel):
@@ -12173,9 +13387,12 @@ class DraftGetElementsDate(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class DraftGetElementsHyperLink(BaseModel):
@@ -12188,21 +13405,30 @@ class DraftGetElementsHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftGetElementsLinkDefinition | None = Field(
-        None, description="The definition of the hyperlink element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsLinkDefinition"],
+        Field(
+            None, description="The definition of the hyperlink element."
+        ),
+    ]
 
 
 class DraftGetElementsReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: DraftGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["DraftGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class DraftGetElementsDateValidationConfiguration(BaseModel):
@@ -12210,9 +13436,12 @@ class DraftGetElementsDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: DraftGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["DraftGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftGetElementsNumberValidationConfiguration(BaseModel):
@@ -12223,18 +13452,30 @@ class DraftGetElementsNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: DraftGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["DraftGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftGetElementsTimeValidationConfiguration(BaseModel):
@@ -12242,54 +13483,75 @@ class DraftGetElementsTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: DraftGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["DraftGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftGetElementsClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: DraftGetElementsClickToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftGetElementsClickToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftGetElementsDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: DraftGetElementsDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftGetElementsDrawToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftGetElementsTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: DraftGetElementsTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftGetElementsTypeToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftGetElementsLocalCertificateSignatureType(BaseModel):
@@ -12300,12 +13562,18 @@ class DraftGetElementsLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -12326,9 +13594,12 @@ class DraftGetElementsDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -12363,9 +13634,12 @@ class DraftGetElementsRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -12383,9 +13657,12 @@ class DraftGetElementsOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -12403,9 +13680,12 @@ class DraftGetElementsSwedishBankIdSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: DraftGetElementsSwedishBankIdStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftGetElementsSwedishBankIdStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftGetElementsSignaturePluginSignatureType(BaseModel):
@@ -12416,9 +13696,12 @@ class DraftGetElementsSignaturePluginSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: DraftGetElementsPluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftGetElementsPluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftGetElementsVisibleSignature(BaseModel):
@@ -12434,52 +13717,85 @@ class DraftGetElementsVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: DraftGetElementsSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
 
 
 class DraftGetConfigurationAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[DraftGetConfigurationAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-    )
+    Translations: Annotated[
+        Optional[list["DraftGetConfigurationAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+        ),
+    ]
 
 
 class DraftGetConfigurationDefaultSignatureTypeConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    None_: DraftGetConfigurationDefaultSignature | None = Field(
-        None, alias="None", description='"None" SignatureType.'
-    )
-    ClickToSign: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"click to sign" SignatureType.'
-    )
-    DrawToSign: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"draw to sign" SignatureType.'
-    )
-    TypeToSign: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"type to sign" SignatureType.'
-    )
-    LocalCertificate: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"local certificate" SignatureType.'
-    )
-    DisposableCertificate: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"disposable certificate" SignatureType.'
-    )
-    Biometric: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"biometric signature" SignatureType.'
-    )
-    RemoteCertificate: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"remote certificate" SignatureType.'
-    )
-    OneTimePassword: DraftGetConfigurationDefaultSignature | None = Field(
-        None, description='"one time password (SMS-OTP)" SignatureType.'
-    )
+    None_: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, alias="None", description='"None" SignatureType.'
+        ),
+    ]
+    ClickToSign: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"click to sign" SignatureType.'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"draw to sign" SignatureType.'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"type to sign" SignatureType.'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"local certificate" SignatureType.'
+        ),
+    ]
+    DisposableCertificate: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"disposable certificate" SignatureType.'
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"biometric signature" SignatureType.'
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"remote certificate" SignatureType.'
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["DraftGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"one time password (SMS-OTP)" SignatureType.'
+        ),
+    ]
 
 
 class DraftGetConfigurationActivityActionCallbackConfiguration(BaseModel):
@@ -12510,9 +13826,12 @@ class DraftGetConfigurationFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: DraftGetConfigurationWebFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["DraftGetConfigurationWebFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
     SignificantClientSignatureCaptureForIos: None | (
         DraftGetConfigurationAppFinishAction
     ) = Field(
@@ -12531,9 +13850,12 @@ class DraftGetConfigurationFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: DraftGetConfigurationKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["DraftGetConfigurationKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class DraftGetConfigurationSignaturePluginSignatureData(BaseModel):
@@ -12543,10 +13865,13 @@ class DraftGetConfigurationSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[DraftGetConfigurationSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-    )
+    Fields: Annotated[
+        Optional[list["DraftGetConfigurationSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+        ),
+    ]
 
 
 class DraftGetConfigurationOAuthAuthentication(BaseModel):
@@ -12556,9 +13881,12 @@ class DraftGetConfigurationOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[DraftGetConfigurationAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response."
-    )
+    Validations: Annotated[
+        Optional[list["DraftGetConfigurationAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response."
+        ),
+    ]
 
 
 class DraftGetConfigurationSamlAuthentication(BaseModel):
@@ -12566,27 +13894,36 @@ class DraftGetConfigurationSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[DraftGetConfigurationAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response."
-    )
+    Validations: Annotated[
+        Optional[list["DraftGetConfigurationAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response."
+        ),
+    ]
 
 
 class DraftFindResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Drafts: list[DraftFindDraft] | None = Field(
-        None, description="The drafts which match the search criteria."
-    )
+    Drafts: Annotated[
+        Optional[list["DraftFindDraft"]],
+        Field(
+            None, description="The drafts which match the search criteria."
+        ),
+    ]
 
 
 class EnvelopeBulkSendResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    EnvelopeBulkChildren: list[EnvelopeBulkSendChild] | None = Field(
-        None, description="The information about the created BulkChild envelopes."
-    )
+    EnvelopeBulkChildren: Annotated[
+        Optional[list["EnvelopeBulkSendChild"]],
+        Field(
+            None, description="The information about the created BulkChild envelopes."
+        ),
+    ]
     EnvelopeBulkParentId: str | None = Field(
         None, description="The identifier of the BulkParent envelope."
     )
@@ -12596,44 +13933,74 @@ class DraftCreateAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[DraftCreateAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-        max_items=228,
-    )
+    Translations: Annotated[
+        Optional[list["DraftCreateAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+            max_items=228,
+        ),
+    ]
 
 
 class DraftCreateDefaultSignatureTypeConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    None_: DraftCreateDefaultSignature | None = Field(
-        None, alias="None", description='"None" SignatureType.'
-    )
-    ClickToSign: DraftCreateDefaultSignature | None = Field(
-        None, description='"click to sign" SignatureType.'
-    )
-    DrawToSign: DraftCreateDefaultSignature | None = Field(
-        None, description='"draw to sign" SignatureType.'
-    )
-    TypeToSign: DraftCreateDefaultSignature | None = Field(
-        None, description='"type to sign" SignatureType.'
-    )
-    LocalCertificate: DraftCreateDefaultSignature | None = Field(
-        None, description='"local certificate" SignatureType.'
-    )
-    DisposableCertificate: DraftCreateDefaultSignature | None = Field(
-        None, description='"disposable certificate" SignatureType.'
-    )
-    Biometric: DraftCreateDefaultSignature | None = Field(
-        None, description='"biometric signature" SignatureType.'
-    )
-    RemoteCertificate: DraftCreateDefaultSignature | None = Field(
-        None, description='"remote certificate" SignatureType.'
-    )
-    OneTimePassword: DraftCreateDefaultSignature | None = Field(
-        None, description='"one time password (SMS-OTP)" SignatureType.'
-    )
+    None_: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, alias="None", description='"None" SignatureType.'
+        ),
+    ]
+    ClickToSign: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"click to sign" SignatureType.'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"draw to sign" SignatureType.'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"type to sign" SignatureType.'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"local certificate" SignatureType.'
+        ),
+    ]
+    DisposableCertificate: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"disposable certificate" SignatureType.'
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"biometric signature" SignatureType.'
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"remote certificate" SignatureType.'
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["DraftCreateDefaultSignature"],
+        Field(
+            None, description='"one time password (SMS-OTP)" SignatureType.'
+        ),
+    ]
 
 
 class DraftCreateActivityActionCallbackConfiguration(BaseModel):
@@ -12643,19 +14010,31 @@ class DraftCreateActivityActionCallbackConfiguration(BaseModel):
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
-    ActionCallbackSelection: DraftCreateActionCallbackSelection | None = Field(
-        None, description="The selection of events which trigger the callback."
-    )
+    ActionCallbackSelection: Annotated[
+        Optional["DraftCreateActionCallbackSelection"],
+        Field(
+            None, description="The selection of events which trigger the callback."
+        ),
+    ]
 
 
 class DraftCreateSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateSignatureTaskConfiguration(BaseModel):
@@ -12672,10 +14051,19 @@ class DraftCreateAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateHyperLink(BaseModel):
@@ -12688,29 +14076,44 @@ class DraftCreateHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftCreateLinkDefinition | None = Field(
-        None,
-        description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreateLinkDefinition"],
+        Field(
+            default=None,
+            description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
+        ),
+    ]
 
 
 class DraftCreateReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateSendCopy(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftCreateBasicRecipientConfiguration | None = Field(
-        None, description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftCreateBasicRecipientConfiguration"],
+        Field(
+            None, description="The configuration of the recipient."
+        ),
+    ]
     CopyingGroup: str | None = Field(
         None, description="The group for defining parallel copy actions."
     )
@@ -12721,9 +14124,12 @@ class DraftCreateDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: DraftCreateFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["DraftCreateFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftCreateTimeValidationConfiguration(BaseModel):
@@ -12731,35 +14137,56 @@ class DraftCreateTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: DraftCreateFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["DraftCreateFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftCreatePredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftCreateTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: DraftCreatePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftCreateSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["DraftCreateTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["DraftCreatePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftCreateSize"],
+        Field(
+            default=...,
+            description="The size of the element."
+        ),
+    ]
 
 
 class DraftCreateFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: DraftCreateClientFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
-    SignificantClientSignatureCaptureForIos: DraftCreateAppFinishAction | None = Field(
-        None,
-        description="The actions for the SIGNificant Client Signature Capture App for iOS.",
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["DraftCreateClientFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
+    SignificantClientSignatureCaptureForIos: Annotated[
+        Optional["DraftCreateAppFinishAction"],
+        Field(
+            default=None,
+            description="The actions for the SIGNificant Client Signature Capture App for iOS.",
+        ),
+    ]
     SignificantClientSignatureCaptureForAndroid: None | (DraftCreateAppFinishAction) = (
         Field(
             None,
@@ -12772,9 +14199,12 @@ class DraftCreateFinishAction(BaseModel):
             description="The actions for the SIGNificant Client Signature Capture App for Windows.",
         )
     )
-    KioskSdk: DraftCreateKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["DraftCreateKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class DraftCreateLocalCertificateSignatureType(BaseModel):
@@ -12785,19 +14215,28 @@ class DraftCreateLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None,
         description="If true, the signature type is set as preferred.\r\nOnly one signature type may be marked.",
     )
-    StampImprintConfiguration: DraftCreateLocalCertificateStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["DraftCreateLocalCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class DraftCreateSignaturePluginSignatureData(BaseModel):
@@ -12807,11 +14246,14 @@ class DraftCreateSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[DraftCreateSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-        max_items=50,
-    )
+    Fields: Annotated[
+        Optional[list["DraftCreateSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftCreateOAuthAuthentication(BaseModel):
@@ -12821,9 +14263,12 @@ class DraftCreateOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[DraftCreateAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["DraftCreateAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response.", max_items=100
+        ),
+    ]
 
 
 class DraftCreateSamlAuthentication(BaseModel):
@@ -12831,9 +14276,12 @@ class DraftCreateSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[DraftCreateAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["DraftCreateAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response.", max_items=100
+        ),
+    ]
 
 
 class DraftCreateP7MSignatureMethods(BaseModel):
@@ -12843,17 +14291,26 @@ class DraftCreateP7MSignatureMethods(BaseModel):
     LocalCertificate: bool | None = Field(
         None, description="If true, a local certificate can be used."
     )
-    DisposableCertificate: DraftCreateDisposableCertificateSignatureData | None = Field(
-        None, description="The disposable certificate configuration for the action."
-    )
-    RemoteCertificate: DraftCreateRemoteCertificateSignatureData | None = Field(
-        None, description="The remote certificate configuration for the action."
-    )
-    SignaturePluginData: list[DraftCreateSignaturePluginSignatureData] | None = Field(
-        None,
-        description="The signature plugin configurations for the action.",
-        max_items=20,
-    )
+    DisposableCertificate: Annotated[
+        Optional["DraftCreateDisposableCertificateSignatureData"],
+        Field(
+            None, description="The disposable certificate configuration for the action."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftCreateRemoteCertificateSignatureData"],
+        Field(
+            None, description="The remote certificate configuration for the action."
+        ),
+    ]
+    SignaturePluginData: Annotated[
+        Optional[list["DraftCreateSignaturePluginSignatureData"]],
+        Field(
+            default=None,
+            description="The signature plugin configurations for the action.",
+            max_items=20,
+        ),
+    ]
 
 
 class DraftCreateVisibleSignature(BaseModel):
@@ -12868,10 +14325,13 @@ class DraftCreateVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: DraftCreateSignatureFieldDefinition = Field(
-        ...,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreateSignatureFieldDefinition"],
+        Field(
+            ...,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
 
 
 class DraftCreateSignAutomatic(BaseModel):
@@ -12881,14 +14341,20 @@ class DraftCreateSignAutomatic(BaseModel):
     ProfileId: str | None = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
-    VisibleSignatures: list[DraftCreateVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-        max_items=50,
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
+    VisibleSignatures: Annotated[
+        Optional[list["DraftCreateVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftCreateInitials(BaseModel):
@@ -12904,10 +14370,13 @@ class DraftCreateInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateReadAreaConfirmation(BaseModel):
@@ -12922,10 +14391,13 @@ class DraftCreateReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: DraftCreateReadingAreaDefinition | None = Field(
-        None,
-        description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
-    )
+    Definition: Annotated[
+        Optional["DraftCreateReadingAreaDefinition"],
+        Field(
+            default=None,
+            description="The definition of the area.\r\nWhen adding a new element, it has to be specified .\r\nWhen the field already exists, it must not be specified.",
+        ),
+    ]
 
 
 class DraftCreateCallbackConfiguration(BaseModel):
@@ -12954,44 +14426,74 @@ class DraftUpdateAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[DraftUpdateAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-        max_items=228,
-    )
+    Translations: Annotated[
+        Optional[list["DraftUpdateAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+            max_items=228,
+        ),
+    ]
 
 
 class DraftUpdateDefaultSignatureTypeConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    None_: DraftUpdateDefaultSignature | None = Field(
-        None, alias="None", description='"None" SignatureType.'
-    )
-    ClickToSign: DraftUpdateDefaultSignature | None = Field(
-        None, description='"click to sign" SignatureType.'
-    )
-    DrawToSign: DraftUpdateDefaultSignature | None = Field(
-        None, description='"draw to sign" SignatureType.'
-    )
-    TypeToSign: DraftUpdateDefaultSignature | None = Field(
-        None, description='"type to sign" SignatureType.'
-    )
-    LocalCertificate: DraftUpdateDefaultSignature | None = Field(
-        None, description='"local certificate" SignatureType.'
-    )
-    DisposableCertificate: DraftUpdateDefaultSignature | None = Field(
-        None, description='"disposable certificate" SignatureType.'
-    )
-    Biometric: DraftUpdateDefaultSignature | None = Field(
-        None, description='"biometric signature" SignatureType.'
-    )
-    RemoteCertificate: DraftUpdateDefaultSignature | None = Field(
-        None, description='"remote certificate" SignatureType.'
-    )
-    OneTimePassword: DraftUpdateDefaultSignature | None = Field(
-        None, description='"one time password (SMS-OTP)" SignatureType.'
-    )
+    None_: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, alias="None", description='"None" SignatureType.'
+        ),
+    ]
+    ClickToSign: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"click to sign" SignatureType.'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"draw to sign" SignatureType.'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"type to sign" SignatureType.'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"local certificate" SignatureType.'
+        ),
+    ]
+    DisposableCertificate: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"disposable certificate" SignatureType.'
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"biometric signature" SignatureType.'
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"remote certificate" SignatureType.'
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["DraftUpdateDefaultSignature"],
+        Field(
+            None, description='"one time password (SMS-OTP)" SignatureType.'
+        ),
+    ]
 
 
 class DraftUpdateActivityActionCallbackConfiguration(BaseModel):
@@ -13001,9 +14503,12 @@ class DraftUpdateActivityActionCallbackConfiguration(BaseModel):
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
-    ActionCallbackSelection: DraftUpdateActionCallbackSelection | None = Field(
-        None, description="The selection of events which trigger the callback."
-    )
+    ActionCallbackSelection: Annotated[
+        Optional["DraftUpdateActionCallbackSelection"],
+        Field(
+            None, description="The selection of events which trigger the callback."
+        ),
+    ]
 
 
 class DraftUpdateCallbackConfiguration(BaseModel):
@@ -13050,31 +14555,55 @@ class DraftUpdateRequest(BaseModel):
         None,
         description="If true, every signer and viewer will receive a copy of the finished documents.",
     )
-    SealingConfiguration: DraftUpdateSealingConfiguration | None = Field(
-        None, description="The configuration for envelope sealing."
-    )
-    EmailConfiguration: DraftUpdateEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: DraftUpdateReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
-    ExpirationConfiguration: DraftUpdateExpirationConfiguration | None = Field(
-        None, description="The configuration of the expiration for the envelope."
-    )
-    CallbackConfiguration: DraftUpdateCallbackConfiguration | None = Field(
-        None, description="The configuration of the callbacks for a custom integration."
-    )
-    AgentRedirectConfiguration: DraftUpdateAgentRedirectConfiguration | None = Field(
-        None, description="The configuration of the redirects for the agent mode."
-    )
-    AgreementConfiguration: DraftUpdateAgreementConfiguration | None = Field(
-        None,
-        description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
-    )
-    RedirectConfiguration: DraftUpdateRedirectConfiguration | None = Field(
-        None, description="The configuration of the draft redirect URLs."
-    )
+    SealingConfiguration: Annotated[
+        Optional["DraftUpdateSealingConfiguration"],
+        Field(
+            None, description="The configuration for envelope sealing."
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["DraftUpdateEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["DraftUpdateReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
+    ExpirationConfiguration: Annotated[
+        Optional["DraftUpdateExpirationConfiguration"],
+        Field(
+            None, description="The configuration of the expiration for the envelope."
+        ),
+    ]
+    CallbackConfiguration: Annotated[
+        Optional["DraftUpdateCallbackConfiguration"],
+        Field(
+            None, description="The configuration of the callbacks for a custom integration."
+        ),
+    ]
+    AgentRedirectConfiguration: Annotated[
+        Optional["DraftUpdateAgentRedirectConfiguration"],
+        Field(
+            None, description="The configuration of the redirects for the agent mode."
+        ),
+    ]
+    AgreementConfiguration: Annotated[
+        Optional["DraftUpdateAgreementConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
+        ),
+    ]
+    RedirectConfiguration: Annotated[
+        Optional["DraftUpdateRedirectConfiguration"],
+        Field(
+            None, description="The configuration of the draft redirect URLs."
+        ),
+    ]
     DefaultSignatureTypeConfiguration: None | (
         DraftUpdateDefaultSignatureTypeConfiguration
     ) = Field(
@@ -13087,18 +14616,30 @@ class DraftReorderActivitiesAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    View: DraftReorderActivitiesView | None = Field(
-        None, description="Define groups for parallel view actions."
-    )
-    Copy: DraftReorderActivitiesCopy | None = Field(
-        None, description="Define groups for parallel copy actions."
-    )
-    Sign: DraftReorderActivitiesSign | None = Field(
-        None, description="Define groups for parallel sign actions."
-    )
-    SignAsP7M: DraftReorderActivitiesSignAsP7M | None = Field(
-        None, description="Define groups for parallel P7M sign actions."
-    )
+    View: Annotated[
+        Optional["DraftReorderActivitiesView"],
+        Field(
+            None, description="Define groups for parallel view actions."
+        ),
+    ]
+    Copy: Annotated[
+        Optional["DraftReorderActivitiesCopy"],
+        Field(
+            None, description="Define groups for parallel copy actions."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["DraftReorderActivitiesSign"],
+        Field(
+            None, description="Define groups for parallel sign actions."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["DraftReorderActivitiesSignAsP7M"],
+        Field(
+            None, description="Define groups for parallel P7M sign actions."
+        ),
+    ]
 
 
 class DraftActivityReplaceSendCopy(BaseModel):
@@ -13114,9 +14655,12 @@ class DraftActivityReplaceFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: DraftActivityReplaceClientFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["DraftActivityReplaceClientFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
     SignificantClientSignatureCaptureForIos: None | (
         DraftActivityReplaceAppFinishAction
     ) = Field(
@@ -13135,19 +14679,28 @@ class DraftActivityReplaceFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: DraftActivityReplaceKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["DraftActivityReplaceKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class DraftActivityReplaceSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class DraftActivityReplaceSignaturePluginSignatureData(BaseModel):
@@ -13157,11 +14710,14 @@ class DraftActivityReplaceSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[DraftActivityReplaceSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-        max_items=50,
-    )
+    Fields: Annotated[
+        Optional[list["DraftActivityReplaceSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftActivityReplaceOAuthAuthentication(BaseModel):
@@ -13171,9 +14727,12 @@ class DraftActivityReplaceOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[DraftActivityReplaceAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["DraftActivityReplaceAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response.", max_items=100
+        ),
+    ]
 
 
 class DraftActivityReplaceSamlAuthentication(BaseModel):
@@ -13181,48 +14740,75 @@ class DraftActivityReplaceSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[DraftActivityReplaceAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["DraftActivityReplaceAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response.", max_items=100
+        ),
+    ]
 
 
 class DraftActivityReplaceAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: DraftActivityReplaceClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: DraftActivityReplaceDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: DraftActivityReplaceTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: DraftActivityReplaceLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
+    ClickToSign: Annotated[
+        Optional["DraftActivityReplaceClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["DraftActivityReplaceDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["DraftActivityReplaceTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["DraftActivityReplaceLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
     DisposableCertificate: None | (
         DraftActivityReplaceDisposableCertificateSignatureType
     ) = Field(None, description="Allow signing with a disposable certificate.")
-    SwissComOnDemand: DraftActivityReplaceSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
+    SwissComOnDemand: Annotated[
+        Optional["DraftActivityReplaceSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
     ATrustCertificate: DraftActivityReplaceATrustCertificateSignatureType | None = (
         Field(None, description="Allow signing with an A-Trust certificate.")
     )
-    Biometric: DraftActivityReplaceBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
+    Biometric: Annotated[
+        Optional["DraftActivityReplaceBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
     RemoteCertificate: DraftActivityReplaceRemoteCertificateSignatureType | None = (
         Field(None, description="Allow signing with a remote certificate.")
     )
-    OneTimePassword: DraftActivityReplaceOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: DraftActivityReplaceSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
+    OneTimePassword: Annotated[
+        Optional["DraftActivityReplaceOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["DraftActivityReplaceSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
     SignaturePlugins: None | (
         list[DraftActivityReplaceSignaturePluginSignatureType]
     ) = Field(None, description="Allow signing with signature plugins.", max_items=20)
@@ -13248,10 +14834,13 @@ class DraftActivityReplaceHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftActivityReplaceLinkDefinition | None = Field(
-        None,
-        description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceLinkDefinition"],
+        Field(
+            default=None,
+            description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceDateValidationConfiguration(BaseModel):
@@ -13259,9 +14848,12 @@ class DraftActivityReplaceDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: DraftActivityReplaceFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["DraftActivityReplaceFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftActivityReplaceTimeValidationConfiguration(BaseModel):
@@ -13269,22 +14861,34 @@ class DraftActivityReplaceTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: DraftActivityReplaceFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["DraftActivityReplaceFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class DraftActivityReplacePredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: DraftActivityReplaceTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: DraftActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: DraftActivityReplaceSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["DraftActivityReplaceTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["DraftActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["DraftActivityReplaceSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class DraftActivityReplaceInitials(BaseModel):
@@ -13300,10 +14904,13 @@ class DraftActivityReplaceInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceSignatureField(BaseModel):
@@ -13325,16 +14932,25 @@ class DraftActivityReplaceSignatureField(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: DraftActivityReplaceAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: DraftActivityReplaceSignatureFieldDefinition | None = Field(
-        None,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
-    TaskConfiguration: DraftActivityReplaceSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["DraftActivityReplaceAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceSignatureFieldDefinition"],
+        Field(
+            default=None,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["DraftActivityReplaceSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class DraftActivityReplaceP7MSignatureMethods(BaseModel):
@@ -13373,10 +14989,13 @@ class DraftActivityReplaceVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: DraftActivityReplaceSignatureFieldDefinition = Field(
-        ...,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceSignatureFieldDefinition"],
+        Field(
+            ...,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceSignAutomatic(BaseModel):
@@ -13386,23 +15005,32 @@ class DraftActivityReplaceSignAutomatic(BaseModel):
     ProfileId: str | None = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
-    VisibleSignatures: list[DraftActivityReplaceVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-        max_items=50,
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
+    VisibleSignatures: Annotated[
+        Optional[list["DraftActivityReplaceVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeGetSendCopy(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     CopyingGroup: int | None = Field(
         None, description="The parallel group for copy actions."
     )
@@ -13412,9 +15040,12 @@ class EnvelopeGetSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     LongLivedDisposableCertificateWarnings: None | (
         list[EnvelopeGetLongLivedDisposableCertificateWarning]
     ) = Field(
@@ -13429,9 +15060,12 @@ class EnvelopeGetView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     ViewingGroup: int | None = Field(
         None, description="The parallel group for view actions."
     )
@@ -13441,9 +15075,12 @@ class EnvelopeGetSignAsP7M(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     SignAsP7MGroup: int | None = Field(
         None, description="The parallel group for P7M actions."
     )
@@ -13459,9 +15096,12 @@ class EnvelopeGetFilesDocument(BaseModel):
         None,
         description='The identifier of the audit trail file for this particular document.\r\nOnly available if "generate separate audit trail per document" was enabled for the organization.',
     )
-    Attachments: list[EnvelopeGetFilesDocumentAttachment] | None = Field(
-        None, description="The attachments contained in the document."
-    )
+    Attachments: Annotated[
+        Optional[list["EnvelopeGetFilesDocumentAttachment"]],
+        Field(
+            None, description="The attachments contained in the document."
+        ),
+    ]
     PageCount: int | None = Field(None, description="The number of pages.")
     DocumentNumber: int | None = Field(
         None, description="The reference number of the document. It starts with 1."
@@ -13477,10 +15117,13 @@ class EnvelopeGetHistoryEvent(BaseModel):
         description="Date of the creation of the event, some events may be fired at a later point after the CreationDate\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
     )
     Type: str | None = Field(None, description="Type of the event")
-    AffectedRecipient: EnvelopeGetHistoryEventRecipient | None = Field(
-        None,
-        description="The recipient affected by this event. \r\nMay be empty if its an envelope related event or the \r\nauthorized user is not allowed to manage the envelope",
-    )
+    AffectedRecipient: Annotated[
+        Optional["EnvelopeGetHistoryEventRecipient"],
+        Field(
+            default=None,
+            description="The recipient affected by this event. \r\nMay be empty if its an envelope related event or the \r\nauthorized user is not allowed to manage the envelope",
+        ),
+    ]
     Completed: bool | None = Field(
         None,
         description="Indicates whether or not the event is completed.\r\nAn event can be completed while having an error\r\nif the RemainingAttempts count reaches zero",
@@ -13527,15 +15170,24 @@ class EnvelopeGetElementsTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: EnvelopeGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsCheckBoxDefinition(BaseModel):
@@ -13545,12 +15197,18 @@ class EnvelopeGetElementsCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -13558,22 +15216,34 @@ class EnvelopeGetElementsComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[EnvelopeGetElementsChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["EnvelopeGetElementsChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsRadioButtonDefinition(BaseModel):
@@ -13584,43 +15254,64 @@ class EnvelopeGetElementsRadioButtonDefinition(BaseModel):
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[EnvelopeGetElementsRadioButtonItemDefinition] | None = Field(
-        None, description="The list of radiobuttons that belong to the same group."
-    )
+    Items: Annotated[
+        Optional[list["EnvelopeGetElementsRadioButtonItemDefinition"]],
+        Field(
+            None, description="The list of radiobuttons that belong to the same group."
+        ),
+    ]
 
 
 class EnvelopeGetElementsListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[EnvelopeGetElementsChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["EnvelopeGetElementsChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsSignatureTaskConfiguration(BaseModel):
@@ -13637,12 +15328,18 @@ class EnvelopeGetElementsAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsPredefinedText(BaseModel):
@@ -13655,9 +15352,12 @@ class EnvelopeGetElementsPredefinedText(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsEmail(BaseModel):
@@ -13669,9 +15369,12 @@ class EnvelopeGetElementsEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsInitials(BaseModel):
@@ -13687,9 +15390,12 @@ class EnvelopeGetElementsInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsGivenName(BaseModel):
@@ -13701,9 +15407,12 @@ class EnvelopeGetElementsGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsSurname(BaseModel):
@@ -13715,9 +15424,12 @@ class EnvelopeGetElementsSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsFullName(BaseModel):
@@ -13729,9 +15441,12 @@ class EnvelopeGetElementsFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsDate(BaseModel):
@@ -13744,9 +15459,12 @@ class EnvelopeGetElementsDate(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsHyperLink(BaseModel):
@@ -13759,21 +15477,30 @@ class EnvelopeGetElementsHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeGetElementsLinkDefinition | None = Field(
-        None, description="The definition of the hyperlink element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsLinkDefinition"],
+        Field(
+            None, description="The definition of the hyperlink element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: EnvelopeGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["EnvelopeGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsDateValidationConfiguration(BaseModel):
@@ -13781,9 +15508,12 @@ class EnvelopeGetElementsDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: EnvelopeGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeGetElementsNumberValidationConfiguration(BaseModel):
@@ -13794,18 +15524,30 @@ class EnvelopeGetElementsNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: EnvelopeGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["EnvelopeGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeGetElementsTimeValidationConfiguration(BaseModel):
@@ -13813,18 +15555,24 @@ class EnvelopeGetElementsTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: EnvelopeGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeGetElementsClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13839,30 +15587,42 @@ class EnvelopeGetElementsDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: EnvelopeGetElementsDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeGetElementsDrawToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeGetElementsTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: EnvelopeGetElementsTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeGetElementsTypeToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeGetElementsLocalCertificateSignatureType(BaseModel):
@@ -13873,12 +15633,18 @@ class EnvelopeGetElementsLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13899,9 +15665,12 @@ class EnvelopeGetElementsDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13936,9 +15705,12 @@ class EnvelopeGetElementsRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13956,9 +15728,12 @@ class EnvelopeGetElementsOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -13991,9 +15766,12 @@ class EnvelopeGetElementsSignaturePluginSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: EnvelopeGetElementsPluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["EnvelopeGetElementsPluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class EnvelopeGetElementsVisibleSignature(BaseModel):
@@ -14009,29 +15787,38 @@ class EnvelopeGetElementsVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: EnvelopeGetElementsSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
 
 
 class EnvelopeGetViewerLinksResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ViewerLinks: list[EnvelopeGetViewerLinksViewerLink] | None = Field(
-        None,
-        description="The links to access the SignAnyWhere Viewer for the active activities of the envelope.",
-    )
+    ViewerLinks: Annotated[
+        Optional[list["EnvelopeGetViewerLinksViewerLink"]],
+        Field(
+            default=None,
+            description="The links to access the SignAnyWhere Viewer for the active activities of the envelope.",
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[EnvelopeGetConfigurationAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-    )
+    Translations: Annotated[
+        Optional[list["EnvelopeGetConfigurationAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationActivityActionCallbackConfiguration(BaseModel):
@@ -14062,9 +15849,12 @@ class EnvelopeGetConfigurationFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: EnvelopeGetConfigurationWebFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["EnvelopeGetConfigurationWebFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
     SignificantClientSignatureCaptureForIos: None | (
         EnvelopeGetConfigurationAppFinishAction
     ) = Field(
@@ -14083,9 +15873,12 @@ class EnvelopeGetConfigurationFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: EnvelopeGetConfigurationKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["EnvelopeGetConfigurationKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationSignaturePluginSignatureData(BaseModel):
@@ -14095,10 +15888,13 @@ class EnvelopeGetConfigurationSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[EnvelopeGetConfigurationSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-    )
+    Fields: Annotated[
+        Optional[list["EnvelopeGetConfigurationSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationOAuthAuthentication(BaseModel):
@@ -14108,9 +15904,12 @@ class EnvelopeGetConfigurationOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[EnvelopeGetConfigurationAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response."
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeGetConfigurationAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationSamlAuthentication(BaseModel):
@@ -14118,29 +15917,38 @@ class EnvelopeGetConfigurationSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[EnvelopeGetConfigurationAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response."
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeGetConfigurationAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response."
+        ),
+    ]
 
 
 class EnvelopeFindResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Envelopes: list[EnvelopeFindEnvelope] | None = Field(
-        None, description="The envelopes which match the search criteria."
-    )
+    Envelopes: Annotated[
+        Optional[list["EnvelopeFindEnvelope"]],
+        Field(
+            None, description="The envelopes which match the search criteria."
+        ),
+    ]
 
 
 class EnvelopeSendAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[EnvelopeSendAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-        max_items=228,
-    )
+    Translations: Annotated[
+        Optional[list["EnvelopeSendAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+            max_items=228,
+        ),
+    ]
 
 
 class EnvelopeSendActivityActionCallbackConfiguration(BaseModel):
@@ -14150,18 +15958,24 @@ class EnvelopeSendActivityActionCallbackConfiguration(BaseModel):
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
-    ActionCallbackSelection: EnvelopeSendActionCallbackSelection | None = Field(
-        None, description="The selection of events which trigger the callback."
-    )
+    ActionCallbackSelection: Annotated[
+        Optional["EnvelopeSendActionCallbackSelection"],
+        Field(
+            None, description="The selection of events which trigger the callback."
+        ),
+    ]
 
 
 class EnvelopeSendSendCopy(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeSendBasicRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeSendBasicRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
     CopyingGroup: str | None = Field(
         None, description="The group for defining parallel copy actions."
     )
@@ -14172,9 +15986,12 @@ class EnvelopeSendDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: EnvelopeSendFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeSendFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeSendTimeValidationConfiguration(BaseModel):
@@ -14182,22 +15999,31 @@ class EnvelopeSendTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: EnvelopeSendFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeSendFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeSendFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: EnvelopeSendClientFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
-    SignificantClientSignatureCaptureForIos: EnvelopeSendAppFinishAction | None = Field(
-        None,
-        description="The actions for the SIGNificant Client Signature Capture App for iOS.",
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["EnvelopeSendClientFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
+    SignificantClientSignatureCaptureForIos: Annotated[
+        Optional["EnvelopeSendAppFinishAction"],
+        Field(
+            default=None,
+            description="The actions for the SIGNificant Client Signature Capture App for iOS.",
+        ),
+    ]
     SignificantClientSignatureCaptureForAndroid: None | (
         EnvelopeSendAppFinishAction
     ) = Field(
@@ -14210,9 +16036,12 @@ class EnvelopeSendFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: EnvelopeSendKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["EnvelopeSendKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class EnvelopeSendSignaturePluginSignatureData(BaseModel):
@@ -14222,11 +16051,14 @@ class EnvelopeSendSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[EnvelopeSendSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-        max_items=50,
-    )
+    Fields: Annotated[
+        Optional[list["EnvelopeSendSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeSendOAuthAuthentication(BaseModel):
@@ -14234,9 +16066,12 @@ class EnvelopeSendOAuthAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str = Field(..., description="The name of the OAuth provider.")
-    Validations: list[EnvelopeSendAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeSendAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response.", max_items=100
+        ),
+    ]
 
 
 class EnvelopeSendSamlAuthentication(BaseModel):
@@ -14244,51 +16079,87 @@ class EnvelopeSendSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str = Field(..., description="The name of the SAML provider.")
-    Validations: list[EnvelopeSendAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeSendAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response.", max_items=100
+        ),
+    ]
 
 
 class EnvelopeSendAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: EnvelopeSendClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: EnvelopeSendDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: EnvelopeSendTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: EnvelopeSendLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
+    ClickToSign: Annotated[
+        Optional["EnvelopeSendClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["EnvelopeSendDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["EnvelopeSendTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["EnvelopeSendLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
     DisposableCertificate: EnvelopeSendDisposableCertificateSignatureType | None = (
         Field(None, description="Allow signing with a disposable certificate.")
     )
-    SwissComOnDemand: EnvelopeSendSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: EnvelopeSendATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: EnvelopeSendBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: EnvelopeSendRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: EnvelopeSendOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: EnvelopeSendSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
-    SignaturePlugins: list[EnvelopeSendSignaturePluginSignatureType] | None = Field(
-        None, description="Allow signing with signature plugins.", max_items=20
-    )
+    SwissComOnDemand: Annotated[
+        Optional["EnvelopeSendSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["EnvelopeSendATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["EnvelopeSendBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeSendRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["EnvelopeSendOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeSendSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
+    SignaturePlugins: Annotated[
+        Optional[list["EnvelopeSendSignaturePluginSignatureType"]],
+        Field(
+            None, description="Allow signing with signature plugins.", max_items=20
+        ),
+    ]
 
 
 class EnvelopeSendSignatureTaskConfiguration(BaseModel):
@@ -14311,23 +16182,35 @@ class EnvelopeSendHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeSendLinkDefinition | None = Field(
-        None,
-        description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendLinkDefinition"],
+        Field(
+            default=None,
+            description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendPredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeSendSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["EnvelopeSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeSendInitials(BaseModel):
@@ -14343,10 +16226,13 @@ class EnvelopeSendInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendSignatureField(BaseModel):
@@ -14368,16 +16254,25 @@ class EnvelopeSendSignatureField(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: EnvelopeSendAllowedSignatureTypes = Field(
-        ..., description="The allowed types for the signature."
-    )
-    FieldDefinition: EnvelopeSendSignatureFieldDefinition | None = Field(
-        None,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
-    TaskConfiguration: EnvelopeSendSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["EnvelopeSendAllowedSignatureTypes"],
+        Field(
+            ..., description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendSignatureFieldDefinition"],
+        Field(
+            default=None,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["EnvelopeSendSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class EnvelopeSendP7MSignatureMethods(BaseModel):
@@ -14392,14 +16287,20 @@ class EnvelopeSendP7MSignatureMethods(BaseModel):
             None, description="The disposable certificate configuration for the action."
         )
     )
-    RemoteCertificate: EnvelopeSendRemoteCertificateSignatureData | None = Field(
-        None, description="The remote certificate configuration for the action."
-    )
-    SignaturePluginData: list[EnvelopeSendSignaturePluginSignatureData] | None = Field(
-        None,
-        description="The signature plugin configurations for the action.",
-        max_items=20,
-    )
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeSendRemoteCertificateSignatureData"],
+        Field(
+            None, description="The remote certificate configuration for the action."
+        ),
+    ]
+    SignaturePluginData: Annotated[
+        Optional[list["EnvelopeSendSignaturePluginSignatureData"]],
+        Field(
+            default=None,
+            description="The signature plugin configurations for the action.",
+            max_items=20,
+        ),
+    ]
 
 
 class EnvelopeSendCallbackConfiguration(BaseModel):
@@ -14434,9 +16335,12 @@ class EnvelopeActivityReplaceFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: EnvelopeActivityReplaceClientFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["EnvelopeActivityReplaceClientFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
     SignificantClientSignatureCaptureForIos: None | (
         EnvelopeActivityReplaceAppFinishAction
     ) = Field(
@@ -14455,21 +16359,30 @@ class EnvelopeActivityReplaceFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: EnvelopeActivityReplaceKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["EnvelopeActivityReplaceKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: EnvelopeActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeActivityReplaceSize = Field(
-        ..., description="The size of the element."
-    )
+    Position: Annotated[
+        Optional["EnvelopeActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeActivityReplaceSize"],
+        Field(
+            ..., description="The size of the element."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSignaturePluginSignatureData(BaseModel):
@@ -14479,11 +16392,14 @@ class EnvelopeActivityReplaceSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[EnvelopeActivityReplaceSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-        max_items=50,
-    )
+    Fields: Annotated[
+        Optional[list["EnvelopeActivityReplaceSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceOAuthAuthentication(BaseModel):
@@ -14493,11 +16409,14 @@ class EnvelopeActivityReplaceOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[EnvelopeActivityReplaceAuthenticationValidation] | None = Field(
-        None,
-        description="The validation rules for the OAuth response.",
-        max_items=100,
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeActivityReplaceAuthenticationValidation"]],
+        Field(
+            default=None,
+            description="The validation rules for the OAuth response.",
+            max_items=100,
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSamlAuthentication(BaseModel):
@@ -14505,26 +16424,38 @@ class EnvelopeActivityReplaceSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[EnvelopeActivityReplaceAuthenticationValidation] | None = Field(
-        None,
-        description="The validation rules for the SAML response.",
-        max_items=100,
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeActivityReplaceAuthenticationValidation"]],
+        Field(
+            default=None,
+            description="The validation rules for the SAML response.",
+            max_items=100,
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: EnvelopeActivityReplaceClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: EnvelopeActivityReplaceDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: EnvelopeActivityReplaceTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
+    ClickToSign: Annotated[
+        Optional["EnvelopeActivityReplaceClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["EnvelopeActivityReplaceDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["EnvelopeActivityReplaceTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
     LocalCertificate: EnvelopeActivityReplaceLocalCertificateSignatureType | None = (
         Field(None, description="Allow signing with a local certificate.")
     )
@@ -14537,18 +16468,27 @@ class EnvelopeActivityReplaceAllowedSignatureTypes(BaseModel):
     ATrustCertificate: None | (
         EnvelopeActivityReplaceATrustCertificateSignatureType
     ) = Field(None, description="Allow signing with an A-Trust certificate.")
-    Biometric: EnvelopeActivityReplaceBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
+    Biometric: Annotated[
+        Optional["EnvelopeActivityReplaceBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
     RemoteCertificate: None | (
         EnvelopeActivityReplaceRemoteCertificateSignatureType
     ) = Field(None, description="Allow signing with a remote certificate.")
-    OneTimePassword: EnvelopeActivityReplaceOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: EnvelopeActivityReplaceSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
+    OneTimePassword: Annotated[
+        Optional["EnvelopeActivityReplaceOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeActivityReplaceSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
     SignaturePlugins: None | (
         list[EnvelopeActivityReplaceSignaturePluginSignatureType]
     ) = Field(None, description="Allow signing with signature plugins.", max_items=20)
@@ -14574,10 +16514,13 @@ class EnvelopeActivityReplaceHyperLink(BaseModel):
         ...,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeActivityReplaceLinkDefinition | None = Field(
-        None,
-        description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplaceLinkDefinition"],
+        Field(
+            default=None,
+            description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceDateValidationConfiguration(BaseModel):
@@ -14585,9 +16528,12 @@ class EnvelopeActivityReplaceDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: EnvelopeActivityReplaceFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeActivityReplaceFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceTimeValidationConfiguration(BaseModel):
@@ -14595,24 +16541,36 @@ class EnvelopeActivityReplaceTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: EnvelopeActivityReplaceFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeActivityReplaceFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeActivityReplacePredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeActivityReplaceTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeActivityReplacePosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeActivityReplaceSize = Field(
-        ..., description="The size of the element."
-    )
+    TextFormat: Annotated[
+        Optional["EnvelopeActivityReplaceTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeActivityReplacePosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeActivityReplaceSize"],
+        Field(
+            ..., description="The size of the element."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceInitials(BaseModel):
@@ -14628,10 +16586,13 @@ class EnvelopeActivityReplaceInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSignatureField(BaseModel):
@@ -14653,16 +16614,25 @@ class EnvelopeActivityReplaceSignatureField(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: EnvelopeActivityReplaceAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: EnvelopeActivityReplaceSignatureFieldDefinition | None = Field(
-        None,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
-    TaskConfiguration: EnvelopeActivityReplaceSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["EnvelopeActivityReplaceAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplaceSignatureFieldDefinition"],
+        Field(
+            default=None,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["EnvelopeActivityReplaceSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceP7MSignatureMethods(BaseModel):
@@ -14701,10 +16671,13 @@ class EnvelopeActivityReplaceVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: EnvelopeActivityReplaceSignatureFieldDefinition | None = Field(
-        None,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplaceSignatureFieldDefinition"],
+        Field(
+            default=None,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSignAutomatic(BaseModel):
@@ -14714,47 +16687,65 @@ class EnvelopeActivityReplaceSignAutomatic(BaseModel):
     ProfileId: str | None = Field(
         None, description="The identifier of the profile for the automatic signatures."
     )
-    RenderingLanguageCode: RenderingLanguageCode | None = Field(
-        None, description="The rendering language for the automatic signatures."
-    )
-    VisibleSignatures: list[EnvelopeActivityReplaceVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-        max_items=50,
-    )
+    RenderingLanguageCode: Annotated[
+        Optional["RenderingLanguageCode"],
+        Field(
+            None, description="The rendering language for the automatic signatures."
+        ),
+    ]
+    VisibleSignatures: Annotated[
+        Optional[list["EnvelopeActivityReplaceVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeBulkGetResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    BulkStatus: BulkStatus | None = Field(
-        None, description="The status of the BulkParent envelope."
-    )
-    Children: list[EnvelopeBulkGetChildEnvelope] | None = Field(
-        None, description="The children of the bulk envelope."
-    )
+    BulkStatus: Annotated[
+        Optional["BulkStatus"],
+        Field(
+            None, description="The status of the BulkParent envelope."
+        ),
+    ]
+    Children: Annotated[
+        Optional[list["EnvelopeBulkGetChildEnvelope"]],
+        Field(
+            None, description="The children of the bulk envelope."
+        ),
+    ]
 
 
 class EnvelopeBulkFindResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    BulkParentEnvelopes: list[EnvelopeBulkFindParentEnvelope] | None = Field(
-        None,
-        description="The BulkParent envelopes where the child envelopes match the search criteria.",
-    )
+    BulkParentEnvelopes: Annotated[
+        Optional[list["EnvelopeBulkFindParentEnvelope"]],
+        Field(
+            default=None,
+            description="The BulkParent envelopes where the child envelopes match the search criteria.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[EnvelopeBulkSendAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-        max_items=228,
-    )
+    Translations: Annotated[
+        Optional[list["EnvelopeBulkSendAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+            max_items=228,
+        ),
+    ]
 
 
 class EnvelopeBulkSendActivityActionCallbackConfiguration(BaseModel):
@@ -14764,18 +16755,24 @@ class EnvelopeBulkSendActivityActionCallbackConfiguration(BaseModel):
     Url: str = Field(
         ..., description="The callback URL triggered for the selected events."
     )
-    ActionCallbackSelection: EnvelopeBulkSendActionCallbackSelection | None = Field(
-        None, description="The selection of events which trigger the callback."
-    )
+    ActionCallbackSelection: Annotated[
+        Optional["EnvelopeBulkSendActionCallbackSelection"],
+        Field(
+            None, description="The selection of events which trigger the callback."
+        ),
+    ]
 
 
 class EnvelopeBulkSendSendCopy(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeBulkSendBasicRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeBulkSendBasicRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
     CopyingGroup: str | None = Field(
         None, description="The group for defining parallel copy actions."
     )
@@ -14786,9 +16783,12 @@ class EnvelopeBulkSendDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: EnvelopeBulkSendFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeBulkSendFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeBulkSendTimeValidationConfiguration(BaseModel):
@@ -14796,18 +16796,24 @@ class EnvelopeBulkSendTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: EnvelopeBulkSendFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["EnvelopeBulkSendFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class EnvelopeBulkSendFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: EnvelopeBulkSendClientFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["EnvelopeBulkSendClientFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
     SignificantClientSignatureCaptureForIos: None | (
         EnvelopeBulkSendAppFinishAction
     ) = Field(
@@ -14826,9 +16832,12 @@ class EnvelopeBulkSendFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: EnvelopeBulkSendKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["EnvelopeBulkSendKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class EnvelopeBulkSendSignaturePluginSignatureData(BaseModel):
@@ -14838,11 +16847,14 @@ class EnvelopeBulkSendSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[EnvelopeBulkSendSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-        max_items=50,
-    )
+    Fields: Annotated[
+        Optional[list["EnvelopeBulkSendSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeBulkSendOAuthAuthentication(BaseModel):
@@ -14852,9 +16864,12 @@ class EnvelopeBulkSendOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[EnvelopeBulkSendAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeBulkSendAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response.", max_items=100
+        ),
+    ]
 
 
 class EnvelopeBulkSendSamlAuthentication(BaseModel):
@@ -14862,51 +16877,87 @@ class EnvelopeBulkSendSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[EnvelopeBulkSendAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response.", max_items=100
-    )
+    Validations: Annotated[
+        Optional[list["EnvelopeBulkSendAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response.", max_items=100
+        ),
+    ]
 
 
 class EnvelopeBulkSendAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: EnvelopeBulkSendClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: EnvelopeBulkSendDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: EnvelopeBulkSendTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: EnvelopeBulkSendLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
+    ClickToSign: Annotated[
+        Optional["EnvelopeBulkSendClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["EnvelopeBulkSendDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["EnvelopeBulkSendTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["EnvelopeBulkSendLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
     DisposableCertificate: None | (
         EnvelopeBulkSendDisposableCertificateSignatureType
     ) = Field(None, description="Allow signing with a disposable certificate.")
-    SwissComOnDemand: EnvelopeBulkSendSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: EnvelopeBulkSendATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: EnvelopeBulkSendBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: EnvelopeBulkSendRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: EnvelopeBulkSendOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: EnvelopeBulkSendSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
-    SignaturePlugins: list[EnvelopeBulkSendSignaturePluginSignatureType] | None = Field(
-        None, description="Allow signing with signature plugins.", max_items=20
-    )
+    SwissComOnDemand: Annotated[
+        Optional["EnvelopeBulkSendSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["EnvelopeBulkSendATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["EnvelopeBulkSendBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeBulkSendRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["EnvelopeBulkSendOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeBulkSendSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
+    SignaturePlugins: Annotated[
+        Optional[list["EnvelopeBulkSendSignaturePluginSignatureType"]],
+        Field(
+            None, description="Allow signing with signature plugins.", max_items=20
+        ),
+    ]
 
 
 class EnvelopeBulkSendSignatureTaskConfiguration(BaseModel):
@@ -14929,23 +16980,35 @@ class EnvelopeBulkSendHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeBulkSendLinkDefinition | None = Field(
-        None,
-        description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendLinkDefinition"],
+        Field(
+            default=None,
+            description="The definition of the hyperlink element.\r\nIt must be specified when the hyperlink element is added.\r\nIt must not be specified when the hyperlink element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendPredefinedElementDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: EnvelopeBulkSendTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: EnvelopeBulkSendPosition = Field(
-        ..., description="The position of the element within the document."
-    )
-    Size: EnvelopeBulkSendSize = Field(..., description="The size of the element.")
+    TextFormat: Annotated[
+        Optional["EnvelopeBulkSendTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["EnvelopeBulkSendPosition"],
+        Field(
+            ..., description="The position of the element within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["EnvelopeBulkSendSize"],
+        Field(..., description="The size of the element."),
+    ]
 
 
 class EnvelopeBulkSendInitials(BaseModel):
@@ -14961,10 +17024,13 @@ class EnvelopeBulkSendInitials(BaseModel):
         None,
         description="If true, the initials from the middle names are included as well. \r\nThe initials are read from the given name. Additional names are expected to be separated by a space.",
     )
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendSignatureField(BaseModel):
@@ -14986,16 +17052,25 @@ class EnvelopeBulkSendSignatureField(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: EnvelopeBulkSendAllowedSignatureTypes = Field(
-        ..., description="The allowed types for the signature."
-    )
-    FieldDefinition: EnvelopeBulkSendSignatureFieldDefinition | None = Field(
-        None,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
-    TaskConfiguration: EnvelopeBulkSendSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["EnvelopeBulkSendAllowedSignatureTypes"],
+        Field(
+            ..., description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendSignatureFieldDefinition"],
+        Field(
+            default=None,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["EnvelopeBulkSendSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class EnvelopeBulkSendP7MSignatureMethods(BaseModel):
@@ -15010,9 +17085,12 @@ class EnvelopeBulkSendP7MSignatureMethods(BaseModel):
     ) = Field(
         None, description="The disposable certificate configuration for the action."
     )
-    RemoteCertificate: EnvelopeBulkSendRemoteCertificateSignatureData | None = Field(
-        None, description="The remote certificate configuration for the action."
-    )
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeBulkSendRemoteCertificateSignatureData"],
+        Field(
+            None, description="The remote certificate configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (list[EnvelopeBulkSendSignaturePluginSignatureData]) = (
         Field(
             None,
@@ -15045,21 +17123,27 @@ class FilePrepareRequest(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    FileIds: list[FileId] = Field(
-        ...,
-        description="The identifiers of the uploaded files.",
-        max_items=50,
-        min_items=1,
-    )
+    FileIds: Annotated[
+        Optional[list["FileId"]],
+        Field(
+            ...,
+            description="The identifiers of the uploaded files.",
+            max_items=50,
+            min_items=1,
+        ),
+    ]
     ClearAdvancedDocumentTags: bool | None = Field(
         None,
         description="If true, the parsed advanced document tags are deleted from the document.",
     )
-    SigStringConfigurations: list[FilePrepareSigStringConfiguration] | None = Field(
-        None,
-        description="The configurations for the parsing of SigString. The default [`sig`] is always added.",
-        max_items=50,
-    )
+    SigStringConfigurations: Annotated[
+        Optional[list["FilePrepareSigStringConfiguration"]],
+        Field(
+            default=None,
+            description="The configurations for the parsing of SigString. The default [`sig`] is always added.",
+            max_items=50,
+        ),
+    ]
 
 
 class FilePrepareTextBoxDefinition(BaseModel):
@@ -15075,15 +17159,24 @@ class FilePrepareTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: FilePrepareTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["FilePrepareTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareCheckBoxDefinition(BaseModel):
@@ -15093,12 +17186,18 @@ class FilePrepareCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -15106,22 +17205,34 @@ class FilePrepareComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: FilePrepareTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[FilePrepareChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["FilePrepareTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["FilePrepareChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareRadioButtonDefinition(BaseModel):
@@ -15132,43 +17243,64 @@ class FilePrepareRadioButtonDefinition(BaseModel):
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[FilePrepareRadioButtonItemDefinition] | None = Field(
-        None, description="The list of radiobuttons that belong to the same group."
-    )
+    Items: Annotated[
+        Optional[list["FilePrepareRadioButtonItemDefinition"]],
+        Field(
+            None, description="The list of radiobuttons that belong to the same group."
+        ),
+    ]
 
 
 class FilePrepareListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: FilePrepareTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[FilePrepareChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["FilePrepareTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["FilePrepareChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareSignatureTaskConfiguration(BaseModel):
@@ -15185,12 +17317,18 @@ class FilePrepareAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: FilePreparePosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: FilePrepareSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["FilePreparePosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["FilePrepareSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class FilePrepareHyperLink(BaseModel):
@@ -15203,9 +17341,12 @@ class FilePrepareHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: FilePrepareLinkDefinition | None = Field(
-        None, description="The definition of the hyperlink element."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareLinkDefinition"],
+        Field(
+            None, description="The definition of the hyperlink element."
+        ),
+    ]
 
 
 class FilePrepareDateValidationConfiguration(BaseModel):
@@ -15213,9 +17354,12 @@ class FilePrepareDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: FilePrepareFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["FilePrepareFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class FilePrepareNumberValidationConfiguration(BaseModel):
@@ -15226,18 +17370,30 @@ class FilePrepareNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: FilePrepareFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["FilePrepareFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class FilePrepareTimeValidationConfiguration(BaseModel):
@@ -15245,54 +17401,75 @@ class FilePrepareTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: FilePrepareFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["FilePrepareFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class FilePrepareClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareClickToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareClickToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareDrawToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareTypeToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareLocalCertificateSignatureType(BaseModel):
@@ -15303,18 +17480,27 @@ class FilePrepareLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareLocalCertificateStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareLocalCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareDisposableCertificateSignatureType(BaseModel):
@@ -15327,9 +17513,12 @@ class FilePrepareDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -15350,9 +17539,12 @@ class FilePrepareSwissComOnDemandSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareSwissComOnDemandStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareSwissComOnDemandStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareRemoteCertificateSignatureType(BaseModel):
@@ -15362,15 +17554,21 @@ class FilePrepareRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareRemoteCertificateStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareRemoteCertificateStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareOneTimePasswordSignatureType(BaseModel):
@@ -15380,15 +17578,21 @@ class FilePrepareOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareOneTimePasswordStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareOneTimePasswordStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareSwedishBankIdSignatureType(BaseModel):
@@ -15398,9 +17602,12 @@ class FilePrepareSwedishBankIdSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePrepareSwedishBankIdStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePrepareSwedishBankIdStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareSignaturePluginSignatureType(BaseModel):
@@ -15411,9 +17618,12 @@ class FilePrepareSignaturePluginSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: FilePreparePluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["FilePreparePluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class FilePrepareVisibleSignature(BaseModel):
@@ -15429,9 +17639,12 @@ class FilePrepareVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: FilePrepareSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
 
 
 class LicenseGetResponse(BaseModel):
@@ -15443,26 +17656,38 @@ class LicenseGetResponse(BaseModel):
         None,
         description="The expiration date of the license.\r\nThe value null indicates that it does not expire.\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
     )
-    Envelopes: LicenseGetAmount | None = Field(
-        None, description="The license status for the number of envelopes."
-    )
-    EnvelopeSenderUsers: LicenseGetAmount | None = Field(
-        None,
-        description="The license status for the number of senders.\r\nIf the license type is <code>Trial</code>, <code>EnvelopeSenderUsers</code> and <code>EnvelopeViewerUsers</code> have a combined limit.",
-    )
-    EnvelopeViewerUsers: LicenseGetAmount | None = Field(
-        None,
-        description="The license status for the number of users which are only able to access their received envelopes.\r\nIf the license type is <code>Trial</code>, <code>EnvelopeSenderUsers</code> and <code>EnvelopeViewerUsers</code> have a combined limit.",
-    )
+    Envelopes: Annotated[
+        Optional["LicenseGetAmount"],
+        Field(
+            None, description="The license status for the number of envelopes."
+        ),
+    ]
+    EnvelopeSenderUsers: Annotated[
+        Optional["LicenseGetAmount"],
+        Field(
+            default=None,
+            description="The license status for the number of senders.\r\nIf the license type is <code>Trial</code>, <code>EnvelopeSenderUsers</code> and <code>EnvelopeViewerUsers</code> have a combined limit.",
+        ),
+    ]
+    EnvelopeViewerUsers: Annotated[
+        Optional["LicenseGetAmount"],
+        Field(
+            default=None,
+            description="The license status for the number of users which are only able to access their received envelopes.\r\nIf the license type is <code>Trial</code>, <code>EnvelopeSenderUsers</code> and <code>EnvelopeViewerUsers</code> have a combined limit.",
+        ),
+    ]
 
 
 class SealingCertificateGetAllResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SealingCertificates: list[SealingCertificateGetAllEntry] | None = Field(
-        None, description="Sealing certificates."
-    )
+    SealingCertificates: Annotated[
+        Optional[list["SealingCertificateGetAllEntry"]],
+        Field(
+            None, description="Sealing certificates."
+        ),
+    ]
 
 
 class TeamGetAllTeam(BaseModel):
@@ -15476,9 +17701,12 @@ class TeamGetAllTeam(BaseModel):
     ShareTemplates: bool | None = Field(
         None, description="If true, templates are shared with team members."
     )
-    Head: TeamGetAllTeamMember | None = Field(
-        None, description="The leader of the team."
-    )
+    Head: Annotated[
+        Optional["TeamGetAllTeamMember"],
+        Field(
+            None, description="The leader of the team."
+        ),
+    ]
 
 
 class TeamReplaceTeam(BaseModel):
@@ -15492,18 +17720,24 @@ class TeamReplaceTeam(BaseModel):
     ShareTemplates: bool | None = Field(
         None, description="If true, templates are shared with team members."
     )
-    Head: TeamReplaceTeamMember | None = Field(
-        None, description="The leader of the team."
-    )
+    Head: Annotated[
+        Optional["TeamReplaceTeamMember"],
+        Field(
+            None, description="The leader of the team."
+        ),
+    ]
 
 
 class TemplateGetSendCopy(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: TemplateGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["TemplateGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     CopyingGroup: int | None = Field(
         None, description="The parallel group for copy actions."
     )
@@ -15522,9 +17756,12 @@ class TemplateGetSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: TemplateGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["TemplateGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     SigningGroup: int | None = Field(
         None, description="The parallel group for sign actions."
     )
@@ -15534,9 +17771,12 @@ class TemplateGetView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: TemplateGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["TemplateGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     ViewingGroup: int | None = Field(
         None, description="The parallel group for view actions."
     )
@@ -15546,9 +17786,12 @@ class TemplateGetSignAsP7M(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: TemplateGetContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["TemplateGetContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     SignAsP7MGroup: int | None = Field(
         None, description="The parallel group for P7M actions."
     )
@@ -15560,9 +17803,12 @@ class TemplateGetFilesDocument(BaseModel):
 
     FileName: str | None = Field(None, description="The name of the file.")
     PageCount: int | None = Field(None, description="The number of pages.")
-    Pages: list[TemplateGetFilesPage] | None = Field(
-        None, description="The pages of the document."
-    )
+    Pages: Annotated[
+        Optional[list["TemplateGetFilesPage"]],
+        Field(
+            None, description="The pages of the document."
+        ),
+    ]
     DocumentNumber: int | None = Field(
         None, description="The reference number of the document. It starts with 1."
     )
@@ -15581,15 +17827,24 @@ class TemplateGetElementsTextBoxDefinition(BaseModel):
         None,
         description="If true, the text box behaves like a password input field and does not show the actually entered characters.",
     )
-    TextFormat: TemplateGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    TextFormat: Annotated[
+        Optional["TemplateGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsCheckBoxDefinition(BaseModel):
@@ -15599,12 +17854,18 @@ class TemplateGetElementsCheckBoxDefinition(BaseModel):
     ExportValue: str | None = Field(
         None, description="The value of the check box when it is checked."
     )
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
 
 
@@ -15612,22 +17873,34 @@ class TemplateGetElementsComboBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: TemplateGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[TemplateGetElementsChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["TemplateGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["TemplateGetElementsChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsEditable: bool | None = Field(
         None, description="If true, the combo box is editable."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsRadioButtonDefinition(BaseModel):
@@ -15638,43 +17911,64 @@ class TemplateGetElementsRadioButtonDefinition(BaseModel):
         None,
         description="If true, radio buttons with the same <code>ExportValue</code> are checked and unchecked together.",
     )
-    Items: list[TemplateGetElementsRadioButtonItemDefinition] | None = Field(
-        None, description="The list of radiobuttons that belong to the same group."
-    )
+    Items: Annotated[
+        Optional[list["TemplateGetElementsRadioButtonItemDefinition"]],
+        Field(
+            None, description="The list of radiobuttons that belong to the same group."
+        ),
+    ]
 
 
 class TemplateGetElementsListBoxDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFormat: TemplateGetElementsTextFormat | None = Field(
-        None, description="The configuration of the text format."
-    )
-    Items: list[TemplateGetElementsChoiceItem] | None = Field(
-        None, description="A list of items that can be selected for the element."
-    )
+    TextFormat: Annotated[
+        Optional["TemplateGetElementsTextFormat"],
+        Field(
+            None, description="The configuration of the text format."
+        ),
+    ]
+    Items: Annotated[
+        Optional[list["TemplateGetElementsChoiceItem"]],
+        Field(
+            None, description="A list of items that can be selected for the element."
+        ),
+    ]
     IsMultiSelect: bool | None = Field(
         None, description="If true, multiple values of the list box can be selected."
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsSignatureFieldDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsSignatureTaskConfiguration(BaseModel):
@@ -15691,12 +17985,18 @@ class TemplateGetElementsAttachmentDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsPredefinedText(BaseModel):
@@ -15709,9 +18009,12 @@ class TemplateGetElementsPredefinedText(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsEmail(BaseModel):
@@ -15723,9 +18026,12 @@ class TemplateGetElementsEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsInitials(BaseModel):
@@ -15741,9 +18047,12 @@ class TemplateGetElementsInitials(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsGivenName(BaseModel):
@@ -15755,9 +18064,12 @@ class TemplateGetElementsGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsSurname(BaseModel):
@@ -15769,9 +18081,12 @@ class TemplateGetElementsSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsFullName(BaseModel):
@@ -15783,9 +18098,12 @@ class TemplateGetElementsFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsDate(BaseModel):
@@ -15798,9 +18116,12 @@ class TemplateGetElementsDate(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     DateFormat: str | None = Field(None, description="The format of the date.")
-    FieldDefinition: TemplateGetElementsPredefinedElementDefinition | None = Field(
-        None, description="The definition of the predefined element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsPredefinedElementDefinition"],
+        Field(
+            None, description="The definition of the predefined element."
+        ),
+    ]
 
 
 class TemplateGetElementsHyperLink(BaseModel):
@@ -15813,21 +18134,30 @@ class TemplateGetElementsHyperLink(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: TemplateGetElementsLinkDefinition | None = Field(
-        None, description="The definition of the hyperlink element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsLinkDefinition"],
+        Field(
+            None, description="The definition of the hyperlink element."
+        ),
+    ]
 
 
 class TemplateGetElementsReadingAreaDefinition(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Position: TemplateGetElementsPosition | None = Field(
-        None, description="The position of the  within the document."
-    )
-    Size: TemplateGetElementsSize | None = Field(
-        None, description="The size of the form field."
-    )
+    Position: Annotated[
+        Optional["TemplateGetElementsPosition"],
+        Field(
+            None, description="The position of the  within the document."
+        ),
+    ]
+    Size: Annotated[
+        Optional["TemplateGetElementsSize"],
+        Field(
+            None, description="The size of the form field."
+        ),
+    ]
 
 
 class TemplateGetElementsDateValidationConfiguration(BaseModel):
@@ -15835,9 +18165,12 @@ class TemplateGetElementsDateValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DateFormat: str | None = Field(None, description="The format of the dates.")
-    Range: TemplateGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["TemplateGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class TemplateGetElementsNumberValidationConfiguration(BaseModel):
@@ -15848,18 +18181,30 @@ class TemplateGetElementsNumberValidationConfiguration(BaseModel):
         None, description="The expected amount of decimal digits."
     )
     Symbol: str | None = Field(None, description="The expected symbol.")
-    SymbolLocation: SymbolLocation | None = Field(
-        None, description="The defined symbol location."
-    )
-    GroupSeparator: GroupSeparator | None = Field(
-        None, description="The expected thousands separator."
-    )
-    DecimalSeparator: DecimalSeparator | None = Field(
-        None, description="The expected decimal separator."
-    )
-    Range: TemplateGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    SymbolLocation: Annotated[
+        Optional["SymbolLocation"],
+        Field(
+            None, description="The defined symbol location."
+        ),
+    ]
+    GroupSeparator: Annotated[
+        Optional["GroupSeparator"],
+        Field(
+            None, description="The expected thousands separator."
+        ),
+    ]
+    DecimalSeparator: Annotated[
+        Optional["DecimalSeparator"],
+        Field(
+            None, description="The expected decimal separator."
+        ),
+    ]
+    Range: Annotated[
+        Optional["TemplateGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class TemplateGetElementsTimeValidationConfiguration(BaseModel):
@@ -15867,18 +18212,24 @@ class TemplateGetElementsTimeValidationConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     TimeFormat: str | None = Field(None, description="The format of the time values.")
-    Range: TemplateGetElementsFieldValidationRange | None = Field(
-        None, description="The range of the values."
-    )
+    Range: Annotated[
+        Optional["TemplateGetElementsFieldValidationRange"],
+        Field(
+            None, description="The range of the values."
+        ),
+    ]
 
 
 class TemplateGetElementsClickToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -15893,30 +18244,42 @@ class TemplateGetElementsDrawToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: TemplateGetElementsDrawToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["TemplateGetElementsDrawToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class TemplateGetElementsTypeToSignSignatureType(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: TemplateGetElementsTypeToSignStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["TemplateGetElementsTypeToSignStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class TemplateGetElementsLocalCertificateSignatureType(BaseModel):
@@ -15927,12 +18290,18 @@ class TemplateGetElementsLocalCertificateSignatureType(BaseModel):
         None,
         description="If true, the usage of the preferred hash algorithm is enforced.",
     )
-    PreferredHashAlgorithm: PreferredHashAlgorithm | None = Field(
-        None, description="The preferred hash algorithm."
-    )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    PreferredHashAlgorithm: Annotated[
+        Optional["PreferredHashAlgorithm"],
+        Field(
+            None, description="The preferred hash algorithm."
+        ),
+    ]
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -15953,9 +18322,12 @@ class TemplateGetElementsDisposableCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -15990,9 +18362,12 @@ class TemplateGetElementsRemoteCertificateSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the certificate in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -16010,9 +18385,12 @@ class TemplateGetElementsOneTimePasswordSignatureType(BaseModel):
     ValidityInSeconds: int | None = Field(
         None, description="The validity of the password in seconds."
     )
-    UseExternalSignatureImage: UseExternalSignatureImage | None = Field(
-        None, description="The external signature image mode."
-    )
+    UseExternalSignatureImage: Annotated[
+        Optional["UseExternalSignatureImage"],
+        Field(
+            None, description="The external signature image mode."
+        ),
+    ]
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
@@ -16045,9 +18423,12 @@ class TemplateGetElementsSignaturePluginSignatureType(BaseModel):
     Preferred: bool | None = Field(
         None, description="If true, the signature type is set as preferred."
     )
-    StampImprintConfiguration: TemplateGetElementsPluginStampImprint | None = Field(
-        None, description="The configuration of the stamp imprint of the signature."
-    )
+    StampImprintConfiguration: Annotated[
+        Optional["TemplateGetElementsPluginStampImprint"],
+        Field(
+            None, description="The configuration of the stamp imprint of the signature."
+        ),
+    ]
 
 
 class TemplateGetElementsVisibleSignature(BaseModel):
@@ -16063,52 +18444,85 @@ class TemplateGetElementsVisibleSignature(BaseModel):
         None,
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
-    FieldDefinition: TemplateGetElementsSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
 
 
 class TemplateGetConfigurationAgreementConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Translations: list[TemplateGetConfigurationAgreementTranslation] | None = Field(
-        None,
-        description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
-    )
+    Translations: Annotated[
+        Optional[list["TemplateGetConfigurationAgreementTranslation"]],
+        Field(
+            default=None,
+            description="The agreement and its translations to be used.\r\nIf no custom agreement is specified, the default organization agreement will be used.",
+        ),
+    ]
 
 
 class TemplateGetConfigurationDefaultSignatureTypeConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    None_: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, alias="None", description='"None" SignatureType.'
-    )
-    ClickToSign: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"click to sign" SignatureType.'
-    )
-    DrawToSign: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"draw to sign" SignatureType.'
-    )
-    TypeToSign: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"type to sign" SignatureType.'
-    )
-    LocalCertificate: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"local certificate" SignatureType.'
-    )
-    DisposableCertificate: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"disposable certificate" SignatureType.'
-    )
-    Biometric: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"biometric signature" SignatureType.'
-    )
-    RemoteCertificate: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"remote certificate" SignatureType.'
-    )
-    OneTimePassword: TemplateGetConfigurationDefaultSignature | None = Field(
-        None, description='"one time password (SMS-OTP)" SignatureType.'
-    )
+    None_: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, alias="None", description='"None" SignatureType.'
+        ),
+    ]
+    ClickToSign: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"click to sign" SignatureType.'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"draw to sign" SignatureType.'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"type to sign" SignatureType.'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"local certificate" SignatureType.'
+        ),
+    ]
+    DisposableCertificate: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"disposable certificate" SignatureType.'
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"biometric signature" SignatureType.'
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"remote certificate" SignatureType.'
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["TemplateGetConfigurationDefaultSignature"],
+        Field(
+            None, description='"one time password (SMS-OTP)" SignatureType.'
+        ),
+    ]
 
 
 class TemplateGetConfigurationActivityActionCallbackConfiguration(BaseModel):
@@ -16139,9 +18553,12 @@ class TemplateGetConfigurationFinishAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAnyWhereViewer: TemplateGetConfigurationWebFinishAction | None = Field(
-        None, description="The actions for the SAW Viewer."
-    )
+    SignAnyWhereViewer: Annotated[
+        Optional["TemplateGetConfigurationWebFinishAction"],
+        Field(
+            None, description="The actions for the SAW Viewer."
+        ),
+    ]
     SignificantClientSignatureCaptureForIos: None | (
         TemplateGetConfigurationAppFinishAction
     ) = Field(
@@ -16160,9 +18577,12 @@ class TemplateGetConfigurationFinishAction(BaseModel):
         None,
         description="The actions for the SIGNificant Client Signature Capture App for Windows.",
     )
-    KioskSdk: TemplateGetConfigurationKioskFinishAction | None = Field(
-        None, description="The actions for the SIGNificant Kiosk SDK."
-    )
+    KioskSdk: Annotated[
+        Optional["TemplateGetConfigurationKioskFinishAction"],
+        Field(
+            None, description="The actions for the SIGNificant Kiosk SDK."
+        ),
+    ]
 
 
 class TemplateGetConfigurationSignaturePluginSignatureData(BaseModel):
@@ -16172,10 +18592,13 @@ class TemplateGetConfigurationSignaturePluginSignatureData(BaseModel):
     PluginId: str | None = Field(
         None, description="The identifier of the signature plugin."
     )
-    Fields: list[TemplateGetConfigurationSignaturePluginParameter] | None = Field(
-        None,
-        description="The plugin parameters referred to as the GSP sender data fields.",
-    )
+    Fields: Annotated[
+        Optional[list["TemplateGetConfigurationSignaturePluginParameter"]],
+        Field(
+            default=None,
+            description="The plugin parameters referred to as the GSP sender data fields.",
+        ),
+    ]
 
 
 class TemplateGetConfigurationOAuthAuthentication(BaseModel):
@@ -16185,9 +18608,12 @@ class TemplateGetConfigurationOAuthAuthentication(BaseModel):
     ProviderName: str | None = Field(
         None, description="The name of the OAuth provider."
     )
-    Validations: list[TemplateGetConfigurationAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the OAuth response."
-    )
+    Validations: Annotated[
+        Optional[list["TemplateGetConfigurationAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the OAuth response."
+        ),
+    ]
 
 
 class TemplateGetConfigurationSamlAuthentication(BaseModel):
@@ -16195,51 +18621,78 @@ class TemplateGetConfigurationSamlAuthentication(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ProviderName: str | None = Field(None, description="The name of the SAML provider.")
-    Validations: list[TemplateGetConfigurationAuthenticationValidation] | None = Field(
-        None, description="The validation rules for the SAML response."
-    )
+    Validations: Annotated[
+        Optional[list["TemplateGetConfigurationAuthenticationValidation"]],
+        Field(
+            None, description="The validation rules for the SAML response."
+        ),
+    ]
 
 
 class TemplateFindResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Templates: list[TemplateFindTemplate] | None = Field(
-        None, description="The templates matching the search criteria."
-    )
+    Templates: Annotated[
+        Optional[list["TemplateFindTemplate"]],
+        Field(
+            None, description="The templates matching the search criteria."
+        ),
+    ]
 
 
 class DraftGetAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: DraftGetSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignBulk: DraftGetSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
-    SignAutomatic: DraftGetSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: DraftGetSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: DraftGetView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: DraftGetSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
+    SendCopy: Annotated[
+        Optional["DraftGetSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["DraftGetSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["DraftGetSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["DraftGetSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["DraftGetView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["DraftGetSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
 
 
 class DraftGetFilesResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Documents: list[DraftGetFilesDocument] | None = Field(
-        None, description="The documents."
-    )
+    Documents: Annotated[
+        Optional[list["DraftGetFilesDocument"]],
+        Field(
+            None, description="The documents."
+        ),
+    ]
 
 
 class DraftGetElementsCheckBox(BaseModel):
@@ -16256,9 +18709,12 @@ class DraftGetElementsCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftGetElementsCheckBoxDefinition | None = Field(
-        None, description="The definition of the check box."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsCheckBoxDefinition"],
+        Field(
+            None, description="The definition of the check box."
+        ),
+    ]
 
 
 class DraftGetElementsComboBox(BaseModel):
@@ -16273,9 +18729,12 @@ class DraftGetElementsComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftGetElementsComboBoxDefinition | None = Field(
-        None, description="The definition of the combo box."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsComboBoxDefinition"],
+        Field(
+            None, description="The definition of the combo box."
+        ),
+    ]
 
 
 class DraftGetElementsRadioButtonGroup(BaseModel):
@@ -16295,9 +18754,12 @@ class DraftGetElementsRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftGetElementsRadioButtonDefinition | None = Field(
-        None, description="The definition of the radio button group."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsRadioButtonDefinition"],
+        Field(
+            None, description="The definition of the radio button group."
+        ),
+    ]
 
 
 class DraftGetElementsListBox(BaseModel):
@@ -16315,9 +18777,12 @@ class DraftGetElementsListBox(BaseModel):
         description="The export values of the items which should be initially selected.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftGetElementsListBoxDefinition | None = Field(
-        None, description="The definition of the list box field."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsListBoxDefinition"],
+        Field(
+            None, description="The definition of the list box field."
+        ),
+    ]
 
 
 class DraftGetElementsAttachment(BaseModel):
@@ -16331,49 +18796,79 @@ class DraftGetElementsAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None, description="The type of the displayed icon."
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            None, description="The type of the displayed icon."
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftGetElementsAttachmentDefinition | None = Field(
-        None, description="The definition of the attachment element."
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsAttachmentDefinition"],
+        Field(
+            None, description="The definition of the attachment element."
+        ),
+    ]
 
 
 class DraftGetElementsPredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[DraftGetElementsPredefinedText] | None = Field(
-        None, description="The predefined text fields."
-    )
-    EmailFields: list[DraftGetElementsEmail] | None = Field(
-        None, description="The recipient's email fields."
-    )
-    InitialsFields: list[DraftGetElementsInitials] | None = Field(
-        None, description="The recipient's initials fields."
-    )
-    GivenNameFields: list[DraftGetElementsGivenName] | None = Field(
-        None, description="The recipient's given name fields."
-    )
-    SurnameFields: list[DraftGetElementsSurname] | None = Field(
-        None, description="The recipient's surname fields."
-    )
-    FullNameFields: list[DraftGetElementsFullName] | None = Field(
-        None, description="The recipient's full name fields."
-    )
-    DateFields: list[DraftGetElementsDate] | None = Field(
-        None, description="The current date fields."
-    )
+    TextFields: Annotated[
+        Optional[list["DraftGetElementsPredefinedText"]],
+        Field(
+            None, description="The predefined text fields."
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["DraftGetElementsEmail"]],
+        Field(
+            None, description="The recipient's email fields."
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["DraftGetElementsInitials"]],
+        Field(
+            None, description="The recipient's initials fields."
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["DraftGetElementsGivenName"]],
+        Field(
+            None, description="The recipient's given name fields."
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["DraftGetElementsSurname"]],
+        Field(
+            None, description="The recipient's surname fields."
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["DraftGetElementsFullName"]],
+        Field(
+            None, description="The recipient's full name fields."
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["DraftGetElementsDate"]],
+        Field(
+            None, description="The current date fields."
+        ),
+    ]
 
 
 class DraftGetElementsLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[DraftGetElementsHyperLink] | None = Field(
-        None, description="The list of hyperlink elements."
-    )
+    HyperLinks: Annotated[
+        Optional[list["DraftGetElementsHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements."
+        ),
+    ]
 
 
 class DraftGetElementsReadAreaConfirmation(BaseModel):
@@ -16388,16 +18883,22 @@ class DraftGetElementsReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: DraftGetElementsReadingAreaDefinition | None = Field(
-        None, description="The definition of the area."
-    )
+    Definition: Annotated[
+        Optional["DraftGetElementsReadingAreaDefinition"],
+        Field(
+            None, description="The definition of the area."
+        ),
+    ]
 
 
 class DraftGetElementsFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type | None = Field(None, description="The type of the value.")
+    Type: Annotated[
+        Optional["Type"],
+        Field(default=None, description="The type of the value."),
+    ]
     DateValidationConfiguration: None | (
         DraftGetElementsDateValidationConfiguration
     ) = Field(None, description="The validation rules for dates.")
@@ -16416,52 +18917,88 @@ class DraftGetElementsAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: DraftGetElementsClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: DraftGetElementsDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: DraftGetElementsTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: DraftGetElementsLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
+    ClickToSign: Annotated[
+        Optional["DraftGetElementsClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["DraftGetElementsDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["DraftGetElementsTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["DraftGetElementsLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
     DisposableCertificate: None | (
         DraftGetElementsDisposableCertificateSignatureType
     ) = Field(None, description="Allow signing with a disposable certificate.")
-    SwissComOnDemand: DraftGetElementsSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: DraftGetElementsATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: DraftGetElementsBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: DraftGetElementsRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: DraftGetElementsOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: DraftGetElementsSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
-    SignaturePlugins: list[DraftGetElementsSignaturePluginSignatureType] | None = Field(
-        None, description="Allow signing with signature plugins."
-    )
+    SwissComOnDemand: Annotated[
+        Optional["DraftGetElementsSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["DraftGetElementsATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["DraftGetElementsBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftGetElementsRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["DraftGetElementsOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["DraftGetElementsSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
+    SignaturePlugins: Annotated[
+        Optional[list["DraftGetElementsSignaturePluginSignatureType"]],
+        Field(
+            None, description="Allow signing with signature plugins."
+        ),
+    ]
 
 
 class DraftGetElementsSignAutomatic(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    VisibleSignatures: list[DraftGetElementsVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-    )
+    VisibleSignatures: Annotated[
+        Optional[list["DraftGetElementsVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+        ),
+    ]
 
 
 class DraftGetConfigurationCallbackConfiguration(BaseModel):
@@ -16498,10 +19035,13 @@ class DraftGetConfigurationSignatureDataConfiguration(BaseModel):
     RemoteCertificate: DraftGetConfigurationRemoteCertificateSignatureData | None = (
         Field(None, description="The remote certificate configuration for the action.")
     )
-    SwissComOnDemand: DraftGetConfigurationSwissComOnDemandSignatureData | None = Field(
-        None,
-        description="The Swisscom On-Demand certificate configuration for the action.",
-    )
+    SwissComOnDemand: Annotated[
+        Optional["DraftGetConfigurationSwissComOnDemandSignatureData"],
+        Field(
+            default=None,
+            description="The Swisscom On-Demand certificate configuration for the action.",
+        ),
+    ]
     SmsOneTimePassword: None | (
         DraftGetConfigurationSmsOneTimePasswordSignatureData
     ) = Field(
@@ -16511,9 +19051,12 @@ class DraftGetConfigurationSignatureDataConfiguration(BaseModel):
     ATrustCertificate: DraftGetConfigurationATrustCertificateSignatureData | None = (
         Field(None, description="The A-Trust certificate configuration for the action.")
     )
-    SwedishBankId: DraftGetConfigurationSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
+    SwedishBankId: Annotated[
+        Optional["DraftGetConfigurationSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (
         list[DraftGetConfigurationSignaturePluginSignatureData]
     ) = Field(None, description="The signature plugin configurations for the action.")
@@ -16543,108 +19086,174 @@ class DraftGetConfigurationAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: DraftGetConfigurationAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
+    AccessCode: Annotated[
+        Optional["DraftGetConfigurationAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
     SmsOneTimePassword: None | (
         DraftGetConfigurationSmsOneTimePasswordAuthentication
     ) = Field(
         None,
         description="The configuration of the authentication with one time password over SMS.",
     )
-    SwedishBankId: DraftGetConfigurationSwedishBankIdAuthentication | None = Field(
-        None, description="The configuration of the authentication with Swedish BankID."
-    )
-    OAuthAuthentications: list[DraftGetConfigurationOAuthAuthentication] | None = Field(
-        None, description="The configurations of the authentication with OAuth."
-    )
-    SamlAuthentications: list[DraftGetConfigurationSamlAuthentication] | None = Field(
-        None, description="The configurations of the authentication with SAML."
-    )
+    SwedishBankId: Annotated[
+        Optional["DraftGetConfigurationSwedishBankIdAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with Swedish BankID."
+        ),
+    ]
+    OAuthAuthentications: Annotated[
+        Optional[list["DraftGetConfigurationOAuthAuthentication"]],
+        Field(
+            None, description="The configurations of the authentication with OAuth."
+        ),
+    ]
+    SamlAuthentications: Annotated[
+        Optional[list["DraftGetConfigurationSamlAuthentication"]],
+        Field(
+            None, description="The configurations of the authentication with SAML."
+        ),
+    ]
 
 
 class DraftSendResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Envelope: EnvelopeSendResponse | None = Field(
-        None,
-        description="The information about the sent envelope. Populated, when the draft did not contain a bulk action.",
-    )
-    EnvelopeBulk: EnvelopeBulkSendResponse | None = Field(
-        None,
-        description="The information about the sent bulk envelope. Populated, when the draft contained a bulk action.",
-    )
+    Envelope: Annotated[
+        Optional["EnvelopeSendResponse"],
+        Field(
+            default=None,
+            description="The information about the sent envelope. Populated, when the draft did not contain a bulk action.",
+        ),
+    ]
+    EnvelopeBulk: Annotated[
+        Optional["EnvelopeBulkSendResponse"],
+        Field(
+            default=None,
+            description="The information about the sent bulk envelope. Populated, when the draft contained a bulk action.",
+        ),
+    ]
 
 
 class DraftCreateLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[DraftCreateHyperLink] | None = Field(
-        None, description="The list of hyperlink elements.", max_items=50
-    )
+    HyperLinks: Annotated[
+        Optional[list["DraftCreateHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements.", max_items=50
+        ),
+    ]
 
 
 class DraftCreateFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type2 | None = Field(None, description="The type of the value.")
-    DateValidationConfiguration: DraftCreateDateValidationConfiguration | None = Field(
-        None, description="The validation rules for dates."
-    )
+    Type: Annotated[
+        Optional["Type2"],
+        Field(default=None, description="The type of the value."),
+    ]
+    DateValidationConfiguration: Annotated[
+        Optional["DraftCreateDateValidationConfiguration"],
+        Field(
+            None, description="The validation rules for dates."
+        ),
+    ]
     NumberValidationConfiguration: None | (DraftCreateNumberValidationConfiguration) = (
         Field(None, description="The validation rules for numbers.")
     )
     PhoneValidationConfiguration: DraftCreatePhoneValidationConfiguration | None = (
         Field(None, description="The validation rules for phone numbers.")
     )
-    TimeValidationConfiguration: DraftCreateTimeValidationConfiguration | None = Field(
-        None, description="The validation rules for time values."
-    )
+    TimeValidationConfiguration: Annotated[
+        Optional["DraftCreateTimeValidationConfiguration"],
+        Field(
+            None, description="The validation rules for time values."
+        ),
+    ]
 
 
 class DraftCreateAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: DraftCreateClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: DraftCreateDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: DraftCreateTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: DraftCreateLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
-    DisposableCertificate: DraftCreateDisposableCertificateSignatureType | None = Field(
-        None, description="Allow signing with a disposable certificate."
-    )
-    SwissComOnDemand: DraftCreateSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: DraftCreateATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: DraftCreateBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: DraftCreateRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: DraftCreateOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: DraftCreateSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
-    SignaturePlugins: list[DraftCreateSignaturePluginSignatureType] | None = Field(
-        None, description="Allow signing with signature plugins.", max_items=20
-    )
+    ClickToSign: Annotated[
+        Optional["DraftCreateClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["DraftCreateDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["DraftCreateTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["DraftCreateLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
+    DisposableCertificate: Annotated[
+        Optional["DraftCreateDisposableCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a disposable certificate."
+        ),
+    ]
+    SwissComOnDemand: Annotated[
+        Optional["DraftCreateSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["DraftCreateATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["DraftCreateBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftCreateRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["DraftCreateOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["DraftCreateSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
+    SignaturePlugins: Annotated[
+        Optional[list["DraftCreateSignaturePluginSignatureType"]],
+        Field(
+            None, description="Allow signing with signature plugins.", max_items=20
+        ),
+    ]
 
 
 class DraftCreateAttachment(BaseModel):
@@ -16658,15 +19267,21 @@ class DraftCreateAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None,
-        description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            default=None,
+            description="The type of the displayed icon. If no icon is provided Paperclip will be used.",
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: DraftCreateAttachmentDefinition | None = Field(
-        None,
-        description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreateAttachmentDefinition"],
+        Field(
+            default=None,
+            description="The definition of the attachment element.\r\nIt must be specified when the attachment element is added.\r\nIt must not be specified when the attachment element already exists.",
+        ),
+    ]
 
 
 class DraftCreatePredefinedText(BaseModel):
@@ -16679,10 +19294,13 @@ class DraftCreatePredefinedText(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Value: str | None = Field(None, description="The value of the predefined text.")
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateEmail(BaseModel):
@@ -16694,10 +19312,13 @@ class DraftCreateEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateGivenName(BaseModel):
@@ -16709,10 +19330,13 @@ class DraftCreateGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateSurname(BaseModel):
@@ -16724,10 +19348,13 @@ class DraftCreateSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateFullName(BaseModel):
@@ -16739,10 +19366,13 @@ class DraftCreateFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateDate(BaseModel):
@@ -16755,91 +19385,139 @@ class DraftCreateDate(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     DateFormat: str | None = Field(None, description="The format of the date.")
-    FieldDefinition: DraftCreatePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftCreatePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftCreateSignatureDataConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    DisposableCertificate: DraftCreateDisposableCertificateSignatureData | None = Field(
-        None, description="The disposable certificate configuration for the action."
-    )
-    RemoteCertificate: DraftCreateRemoteCertificateSignatureData | None = Field(
-        None, description="The remote certificate configuration for the action."
-    )
-    SwissComOnDemand: DraftCreateSwissComOnDemandSignatureData | None = Field(
-        None,
-        description="The Swisscom On-Demand certificate configuration for the action.",
-    )
-    SmsOneTimePassword: DraftCreateSmsOneTimePasswordSignatureData | None = Field(
-        None,
-        description="The one time password configuration for the action (SMS-OTP).",
-    )
-    ATrustCertificate: DraftCreateATrustCertificateSignatureData | None = Field(
-        None, description="The A-Trust certificate configuration for the action."
-    )
-    SwedishBankId: DraftCreateSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
-    SignaturePluginData: list[DraftCreateSignaturePluginSignatureData] | None = Field(
-        None,
-        description="The signature plugin configurations for the action.",
-        max_items=20,
-    )
+    DisposableCertificate: Annotated[
+        Optional["DraftCreateDisposableCertificateSignatureData"],
+        Field(
+            None, description="The disposable certificate configuration for the action."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["DraftCreateRemoteCertificateSignatureData"],
+        Field(
+            None, description="The remote certificate configuration for the action."
+        ),
+    ]
+    SwissComOnDemand: Annotated[
+        Optional["DraftCreateSwissComOnDemandSignatureData"],
+        Field(
+            default=None,
+            description="The Swisscom On-Demand certificate configuration for the action.",
+        ),
+    ]
+    SmsOneTimePassword: Annotated[
+        Optional["DraftCreateSmsOneTimePasswordSignatureData"],
+        Field(
+            default=None,
+            description="The one time password configuration for the action (SMS-OTP).",
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["DraftCreateATrustCertificateSignatureData"],
+        Field(
+            None, description="The A-Trust certificate configuration for the action."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["DraftCreateSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
+    SignaturePluginData: Annotated[
+        Optional[list["DraftCreateSignaturePluginSignatureData"]],
+        Field(
+            default=None,
+            description="The signature plugin configurations for the action.",
+            max_items=20,
+        ),
+    ]
 
 
 class DraftCreateAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: DraftCreateAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
-    SmsOneTimePassword: DraftCreateSmsOneTimePasswordAuthentication | None = Field(
-        None,
-        description="The configuration of the authentication with one time password over SMS.",
-    )
-    SwedishBankId: DraftCreateSwedishBankIdAuthentication | None = Field(
-        None, description="The configuration of the authentication with Swedish BankID."
-    )
-    OAuthAuthentications: list[DraftCreateOAuthAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with OAuth.",
-        max_items=20,
-    )
-    SamlAuthentications: list[DraftCreateSamlAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with SAML.",
-        max_items=20,
-    )
+    AccessCode: Annotated[
+        Optional["DraftCreateAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
+    SmsOneTimePassword: Annotated[
+        Optional["DraftCreateSmsOneTimePasswordAuthentication"],
+        Field(
+            default=None,
+            description="The configuration of the authentication with one time password over SMS.",
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["DraftCreateSwedishBankIdAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with Swedish BankID."
+        ),
+    ]
+    OAuthAuthentications: Annotated[
+        Optional[list["DraftCreateOAuthAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with OAuth.",
+            max_items=20,
+        ),
+    ]
+    SamlAuthentications: Annotated[
+        Optional[list["DraftCreateSamlAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with SAML.",
+            max_items=20,
+        ),
+    ]
 
 
 class DraftCreateAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftCreateContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftCreateContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    AuthenticationConfiguration: DraftCreateAuthenticationConfiguration | None = Field(
-        None,
-        description="The configuration for the authentication of the recipient.",
-    )
+    AuthenticationConfiguration: Annotated[
+        Optional["DraftCreateAuthenticationConfiguration"],
+        Field(
+            default=None,
+            description="The configuration for the authentication of the recipient.",
+        ),
+    ]
     SendEmails: bool | None = Field(
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
@@ -16848,9 +19526,12 @@ class DraftCreateAdvancedRecipientConfiguration(BaseModel):
         None,
         description="If true, the signer has to confirm the reading of all documents as first task.",
     )
-    IncludedEmailAppLinks: DraftCreateEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["DraftCreateEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None,
         description="If true, the recipient may delegate this activity to another person.",
@@ -16876,16 +19557,25 @@ class DraftCreateSignatureField(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: DraftCreateAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: DraftCreateSignatureFieldDefinition | None = Field(
-        None,
-        description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
-    )
-    TaskConfiguration: DraftCreateSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["DraftCreateAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["DraftCreateSignatureFieldDefinition"],
+        Field(
+            default=None,
+            description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["DraftCreateSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class DraftCreateTextBox(BaseModel):
@@ -16900,14 +19590,20 @@ class DraftCreateTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: DraftCreateFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: DraftCreateTextBoxDefinition | None = Field(
-        None,
-        description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    Validation: Annotated[
+        Optional["DraftCreateFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["DraftCreateTextBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class DraftReorderActivitiesActivity(BaseModel):
@@ -16915,9 +19611,12 @@ class DraftReorderActivitiesActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ActivityId: str = Field(..., description="The identifier of the activity.")
-    Action: DraftReorderActivitiesAction | None = Field(
-        None, description="Define parallel groups if needed."
-    )
+    Action: Annotated[
+        Optional["DraftReorderActivitiesAction"],
+        Field(
+            None, description="Define parallel groups if needed."
+        ),
+    ]
 
 
 class DraftActivityReplaceSignatureDataConfiguration(BaseModel):
@@ -16932,10 +19631,13 @@ class DraftActivityReplaceSignatureDataConfiguration(BaseModel):
     RemoteCertificate: DraftActivityReplaceRemoteCertificateSignatureData | None = (
         Field(None, description="The remote certificate configuration for the action.")
     )
-    SwissComOnDemand: DraftActivityReplaceSwissComOnDemandSignatureData | None = Field(
-        None,
-        description="The Swisscom On-Demand certificate configuration for the action.",
-    )
+    SwissComOnDemand: Annotated[
+        Optional["DraftActivityReplaceSwissComOnDemandSignatureData"],
+        Field(
+            default=None,
+            description="The Swisscom On-Demand certificate configuration for the action.",
+        ),
+    ]
     SmsOneTimePassword: None | (DraftActivityReplaceSmsOneTimePasswordSignatureData) = (
         Field(
             None,
@@ -16945,9 +19647,12 @@ class DraftActivityReplaceSignatureDataConfiguration(BaseModel):
     ATrustCertificate: DraftActivityReplaceATrustCertificateSignatureData | None = (
         Field(None, description="The A-Trust certificate configuration for the action.")
     )
-    SwedishBankId: DraftActivityReplaceSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
+    SwedishBankId: Annotated[
+        Optional["DraftActivityReplaceSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (
         list[DraftActivityReplaceSignaturePluginSignatureData]
     ) = Field(
@@ -16961,44 +19666,62 @@ class DraftActivityReplaceAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: DraftActivityReplaceAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
+    AccessCode: Annotated[
+        Optional["DraftActivityReplaceAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
     SmsOneTimePassword: None | (
         DraftActivityReplaceSmsOneTimePasswordAuthentication
     ) = Field(
         None,
         description="The configuration of the authentication with one time password over SMS.",
     )
-    SwedishBankId: DraftActivityReplaceSwedishBankIdAuthentication | None = Field(
-        None, description="The configuration of the authentication with Swedish BankID."
-    )
-    OAuthAuthentications: list[DraftActivityReplaceOAuthAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with OAuth.",
-        max_items=20,
-    )
-    SamlAuthentications: list[DraftActivityReplaceSamlAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with SAML.",
-        max_items=20,
-    )
+    SwedishBankId: Annotated[
+        Optional["DraftActivityReplaceSwedishBankIdAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with Swedish BankID."
+        ),
+    ]
+    OAuthAuthentications: Annotated[
+        Optional[list["DraftActivityReplaceOAuthAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with OAuth.",
+            max_items=20,
+        ),
+    ]
+    SamlAuthentications: Annotated[
+        Optional[list["DraftActivityReplaceSamlAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with SAML.",
+            max_items=20,
+        ),
+    ]
 
 
 class DraftActivityReplaceLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[DraftActivityReplaceHyperLink] | None = Field(
-        None, description="The list of hyperlink elements.", max_items=50
-    )
+    HyperLinks: Annotated[
+        Optional[list["DraftActivityReplaceHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements.", max_items=50
+        ),
+    ]
 
 
 class DraftActivityReplaceFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type4 | None = Field(None, description="The type of the value.")
+    Type: Annotated[
+        Optional["Type4"],
+        Field(default=None, description="The type of the value."),
+    ]
     DateValidationConfiguration: None | (
         DraftActivityReplaceDateValidationConfiguration
     ) = Field(None, description="The validation rules for dates.")
@@ -17023,10 +19746,13 @@ class DraftActivityReplacePredefinedText(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Value: str | None = Field(None, description="The value of the predefined text.")
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceEmail(BaseModel):
@@ -17038,10 +19764,13 @@ class DraftActivityReplaceEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceGivenName(BaseModel):
@@ -17053,10 +19782,13 @@ class DraftActivityReplaceGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceSurname(BaseModel):
@@ -17068,10 +19800,13 @@ class DraftActivityReplaceSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceFullName(BaseModel):
@@ -17083,10 +19818,13 @@ class DraftActivityReplaceFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceDate(BaseModel):
@@ -17099,10 +19837,13 @@ class DraftActivityReplaceDate(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     DateFormat: str | None = Field(None, description="The format of the date.")
-    FieldDefinition: DraftActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceTextBox(BaseModel):
@@ -17117,23 +19858,32 @@ class DraftActivityReplaceTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: DraftActivityReplaceFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: DraftActivityReplaceTextBoxDefinition | None = Field(
-        None,
-        description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    Validation: Annotated[
+        Optional["DraftActivityReplaceFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["DraftActivityReplaceTextBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class DraftActivityReplaceRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftActivityReplaceContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftActivityReplaceContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
@@ -17146,10 +19896,13 @@ class DraftActivityReplaceRecipientConfiguration(BaseModel):
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
@@ -17160,9 +19913,12 @@ class DraftActivityReplaceAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftActivityReplaceContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftActivityReplaceContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
@@ -17175,17 +19931,23 @@ class DraftActivityReplaceAdvancedRecipientConfiguration(BaseModel):
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
     )
-    IncludedEmailAppLinks: DraftActivityReplaceEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["DraftActivityReplaceEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None,
         description="If true, the recipient may delegate this activity to another person.",
@@ -17200,45 +19962,72 @@ class EnvelopeGetAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: EnvelopeGetSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignAutomatic: EnvelopeGetSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: EnvelopeGetSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: EnvelopeGetView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: EnvelopeGetSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
+    SendCopy: Annotated[
+        Optional["EnvelopeGetSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["EnvelopeGetSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["EnvelopeGetSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["EnvelopeGetView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["EnvelopeGetSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
 
 
 class EnvelopeGetFilesResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Documents: list[EnvelopeGetFilesDocument] | None = Field(
-        None, description="The finished documents of the envelope."
-    )
-    AuditTrail: EnvelopeGetFilesAuditTrail | None = Field(
-        None, description="The references for the audit trail of the envelope."
-    )
-    LegalDocuments: list[EnvelopeGetFilesLegalDocument] | None = Field(
-        None, description="The legal documents of the envelope."
-    )
+    Documents: Annotated[
+        Optional[list["EnvelopeGetFilesDocument"]],
+        Field(
+            None, description="The finished documents of the envelope."
+        ),
+    ]
+    AuditTrail: Annotated[
+        Optional["EnvelopeGetFilesAuditTrail"],
+        Field(
+            None, description="The references for the audit trail of the envelope."
+        ),
+    ]
+    LegalDocuments: Annotated[
+        Optional[list["EnvelopeGetFilesLegalDocument"]],
+        Field(
+            None, description="The legal documents of the envelope."
+        ),
+    ]
 
 
 class EnvelopeGetHistoryResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Events: list[EnvelopeGetHistoryEvent] | None = Field(
-        None, description="List of events that have or will occur"
-    )
+    Events: Annotated[
+        Optional[list["EnvelopeGetHistoryEvent"]],
+        Field(
+            None, description="List of events that have or will occur"
+        ),
+    ]
     EnvelopeHasBeenDeleted: bool | None = Field(
         None,
         description="True if the envelope has been deleted, Events will be empty for deleted envelopes",
@@ -17263,9 +20052,12 @@ class EnvelopeGetElementsCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeGetElementsCheckBoxDefinition | None = Field(
-        None, description="The definition of the check box."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsCheckBoxDefinition"],
+        Field(
+            None, description="The definition of the check box."
+        ),
+    ]
 
 
 class EnvelopeGetElementsComboBox(BaseModel):
@@ -17280,9 +20072,12 @@ class EnvelopeGetElementsComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeGetElementsComboBoxDefinition | None = Field(
-        None, description="The definition of the combo box."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsComboBoxDefinition"],
+        Field(
+            None, description="The definition of the combo box."
+        ),
+    ]
 
 
 class EnvelopeGetElementsRadioButtonGroup(BaseModel):
@@ -17302,9 +20097,12 @@ class EnvelopeGetElementsRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeGetElementsRadioButtonDefinition | None = Field(
-        None, description="The definition of the radio button group."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsRadioButtonDefinition"],
+        Field(
+            None, description="The definition of the radio button group."
+        ),
+    ]
 
 
 class EnvelopeGetElementsListBox(BaseModel):
@@ -17322,9 +20120,12 @@ class EnvelopeGetElementsListBox(BaseModel):
         description="The export values of the items which should be initially selected.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeGetElementsListBoxDefinition | None = Field(
-        None, description="The definition of the list box field."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsListBoxDefinition"],
+        Field(
+            None, description="The definition of the list box field."
+        ),
+    ]
 
 
 class EnvelopeGetElementsAttachment(BaseModel):
@@ -17338,49 +20139,79 @@ class EnvelopeGetElementsAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None, description="The type of the displayed icon."
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            None, description="The type of the displayed icon."
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: EnvelopeGetElementsAttachmentDefinition | None = Field(
-        None, description="The definition of the attachment element."
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsAttachmentDefinition"],
+        Field(
+            None, description="The definition of the attachment element."
+        ),
+    ]
 
 
 class EnvelopeGetElementsPredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[EnvelopeGetElementsPredefinedText] | None = Field(
-        None, description="The predefined text fields."
-    )
-    EmailFields: list[EnvelopeGetElementsEmail] | None = Field(
-        None, description="The recipient's email fields."
-    )
-    InitialsFields: list[EnvelopeGetElementsInitials] | None = Field(
-        None, description="The recipient's initials fields."
-    )
-    GivenNameFields: list[EnvelopeGetElementsGivenName] | None = Field(
-        None, description="The recipient's given name fields."
-    )
-    SurnameFields: list[EnvelopeGetElementsSurname] | None = Field(
-        None, description="The recipient's surname fields."
-    )
-    FullNameFields: list[EnvelopeGetElementsFullName] | None = Field(
-        None, description="The recipient's full name fields."
-    )
-    DateFields: list[EnvelopeGetElementsDate] | None = Field(
-        None, description="The current date fields."
-    )
+    TextFields: Annotated[
+        Optional[list["EnvelopeGetElementsPredefinedText"]],
+        Field(
+            None, description="The predefined text fields."
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["EnvelopeGetElementsEmail"]],
+        Field(
+            None, description="The recipient's email fields."
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["EnvelopeGetElementsInitials"]],
+        Field(
+            None, description="The recipient's initials fields."
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["EnvelopeGetElementsGivenName"]],
+        Field(
+            None, description="The recipient's given name fields."
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["EnvelopeGetElementsSurname"]],
+        Field(
+            None, description="The recipient's surname fields."
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["EnvelopeGetElementsFullName"]],
+        Field(
+            None, description="The recipient's full name fields."
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["EnvelopeGetElementsDate"]],
+        Field(
+            None, description="The current date fields."
+        ),
+    ]
 
 
 class EnvelopeGetElementsLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[EnvelopeGetElementsHyperLink] | None = Field(
-        None, description="The list of hyperlink elements."
-    )
+    HyperLinks: Annotated[
+        Optional[list["EnvelopeGetElementsHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements."
+        ),
+    ]
 
 
 class EnvelopeGetElementsReadAreaConfirmation(BaseModel):
@@ -17395,16 +20226,22 @@ class EnvelopeGetElementsReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: EnvelopeGetElementsReadingAreaDefinition | None = Field(
-        None, description="The definition of the area."
-    )
+    Definition: Annotated[
+        Optional["EnvelopeGetElementsReadingAreaDefinition"],
+        Field(
+            None, description="The definition of the area."
+        ),
+    ]
 
 
 class EnvelopeGetElementsFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type6 | None = Field(None, description="The type of the value.")
+    Type: Annotated[
+        Optional["Type6"],
+        Field(default=None, description="The type of the value."),
+    ]
     DateValidationConfiguration: None | (
         EnvelopeGetElementsDateValidationConfiguration
     ) = Field(None, description="The validation rules for dates.")
@@ -17423,39 +20260,69 @@ class EnvelopeGetElementsAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: EnvelopeGetElementsClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: EnvelopeGetElementsDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: EnvelopeGetElementsTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: EnvelopeGetElementsLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
+    ClickToSign: Annotated[
+        Optional["EnvelopeGetElementsClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["EnvelopeGetElementsDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["EnvelopeGetElementsTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["EnvelopeGetElementsLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
     DisposableCertificate: None | (
         EnvelopeGetElementsDisposableCertificateSignatureType
     ) = Field(None, description="Allow signing with a disposable certificate.")
-    SwissComOnDemand: EnvelopeGetElementsSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: EnvelopeGetElementsATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: EnvelopeGetElementsBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: EnvelopeGetElementsRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: EnvelopeGetElementsOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: EnvelopeGetElementsSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
+    SwissComOnDemand: Annotated[
+        Optional["EnvelopeGetElementsSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["EnvelopeGetElementsATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["EnvelopeGetElementsBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeGetElementsRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["EnvelopeGetElementsOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeGetElementsSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
     SignaturePlugins: None | (list[EnvelopeGetElementsSignaturePluginSignatureType]) = (
         Field(None, description="Allow signing with signature plugins.")
     )
@@ -17465,10 +20332,13 @@ class EnvelopeGetElementsSignAutomatic(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    VisibleSignatures: list[EnvelopeGetElementsVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-    )
+    VisibleSignatures: Annotated[
+        Optional[list["EnvelopeGetElementsVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationCallbackConfiguration(BaseModel):
@@ -17517,9 +20387,12 @@ class EnvelopeGetConfigurationSignatureDataConfiguration(BaseModel):
     ATrustCertificate: None | (
         EnvelopeGetConfigurationATrustCertificateSignatureData
     ) = Field(None, description="The A-Trust certificate configuration for the action.")
-    SwedishBankId: EnvelopeGetConfigurationSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
+    SwedishBankId: Annotated[
+        Optional["EnvelopeGetConfigurationSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (
         list[EnvelopeGetConfigurationSignaturePluginSignatureData]
     ) = Field(None, description="The signature plugin configurations for the action.")
@@ -17549,19 +20422,25 @@ class EnvelopeGetConfigurationAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: EnvelopeGetConfigurationAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
+    AccessCode: Annotated[
+        Optional["EnvelopeGetConfigurationAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
     SmsOneTimePassword: None | (
         EnvelopeGetConfigurationSmsOneTimePasswordAuthentication
     ) = Field(
         None,
         description="The configuration of the authentication with one time password over SMS.",
     )
-    SwedishBankId: EnvelopeGetConfigurationSwedishBankIdAuthentication | None = Field(
-        None,
-        description="The configuration of the authentication with Swedish BankID.",
-    )
+    SwedishBankId: Annotated[
+        Optional["EnvelopeGetConfigurationSwedishBankIdAuthentication"],
+        Field(
+            default=None,
+            description="The configuration of the authentication with Swedish BankID.",
+        ),
+    ]
     OAuthAuthentications: None | (list[EnvelopeGetConfigurationOAuthAuthentication]) = (
         Field(None, description="The configurations of the authentication with OAuth.")
     )
@@ -17574,19 +20453,28 @@ class EnvelopeSendFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type8 | None = Field(None, description="The type of the value.")
-    DateValidationConfiguration: EnvelopeSendDateValidationConfiguration | None = Field(
-        None, description="The validation rules for dates."
-    )
+    Type: Annotated[
+        Optional["Type8"],
+        Field(default=None, description="The type of the value."),
+    ]
+    DateValidationConfiguration: Annotated[
+        Optional["EnvelopeSendDateValidationConfiguration"],
+        Field(
+            None, description="The validation rules for dates."
+        ),
+    ]
     NumberValidationConfiguration: None | (
         EnvelopeSendNumberValidationConfiguration
     ) = Field(None, description="The validation rules for numbers.")
     PhoneValidationConfiguration: EnvelopeSendPhoneValidationConfiguration | None = (
         Field(None, description="The validation rules for phone numbers.")
     )
-    TimeValidationConfiguration: EnvelopeSendTimeValidationConfiguration | None = Field(
-        None, description="The validation rules for time values."
-    )
+    TimeValidationConfiguration: Annotated[
+        Optional["EnvelopeSendTimeValidationConfiguration"],
+        Field(
+            None, description="The validation rules for time values."
+        ),
+    ]
 
 
 class EnvelopeSendSignatureDataConfiguration(BaseModel):
@@ -17598,63 +20486,99 @@ class EnvelopeSendSignatureDataConfiguration(BaseModel):
             None, description="The disposable certificate configuration for the action."
         )
     )
-    RemoteCertificate: EnvelopeSendRemoteCertificateSignatureData | None = Field(
-        None, description="The remote certificate configuration for the action."
-    )
-    SwissComOnDemand: EnvelopeSendSwissComOnDemandSignatureData | None = Field(
-        None,
-        description="The Swisscom On-Demand certificate configuration for the action.",
-    )
-    SmsOneTimePassword: EnvelopeSendSmsOneTimePasswordSignatureData | None = Field(
-        None,
-        description="The one time password configuration for the action (SMS-OTP).",
-    )
-    ATrustCertificate: EnvelopeSendATrustCertificateSignatureData | None = Field(
-        None, description="The A-Trust certificate configuration for the action."
-    )
-    SwedishBankId: EnvelopeSendSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
-    SignaturePluginData: list[EnvelopeSendSignaturePluginSignatureData] | None = Field(
-        None,
-        description="The signature plugin configurations for the action.",
-        max_items=20,
-    )
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeSendRemoteCertificateSignatureData"],
+        Field(
+            None, description="The remote certificate configuration for the action."
+        ),
+    ]
+    SwissComOnDemand: Annotated[
+        Optional["EnvelopeSendSwissComOnDemandSignatureData"],
+        Field(
+            default=None,
+            description="The Swisscom On-Demand certificate configuration for the action.",
+        ),
+    ]
+    SmsOneTimePassword: Annotated[
+        Optional["EnvelopeSendSmsOneTimePasswordSignatureData"],
+        Field(
+            default=None,
+            description="The one time password configuration for the action (SMS-OTP).",
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["EnvelopeSendATrustCertificateSignatureData"],
+        Field(
+            None, description="The A-Trust certificate configuration for the action."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeSendSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
+    SignaturePluginData: Annotated[
+        Optional[list["EnvelopeSendSignaturePluginSignatureData"]],
+        Field(
+            default=None,
+            description="The signature plugin configurations for the action.",
+            max_items=20,
+        ),
+    ]
 
 
 class EnvelopeSendAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: EnvelopeSendAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
-    SmsOneTimePassword: EnvelopeSendSmsOneTimePasswordAuthentication | None = Field(
-        None,
-        description="The configuration of the authentication with one time password over SMS.",
-    )
-    SwedishBankId: EnvelopeSendSwedishBankIdAuthentication | None = Field(
-        None, description="The configuration of the authentication with Swedish BankID."
-    )
-    OAuthAuthentications: list[EnvelopeSendOAuthAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with OAuth.",
-        max_items=20,
-    )
-    SamlAuthentications: list[EnvelopeSendSamlAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with SAML.",
-        max_items=20,
-    )
+    AccessCode: Annotated[
+        Optional["EnvelopeSendAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
+    SmsOneTimePassword: Annotated[
+        Optional["EnvelopeSendSmsOneTimePasswordAuthentication"],
+        Field(
+            default=None,
+            description="The configuration of the authentication with one time password over SMS.",
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeSendSwedishBankIdAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with Swedish BankID."
+        ),
+    ]
+    OAuthAuthentications: Annotated[
+        Optional[list["EnvelopeSendOAuthAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with OAuth.",
+            max_items=20,
+        ),
+    ]
+    SamlAuthentications: Annotated[
+        Optional[list["EnvelopeSendSamlAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with SAML.",
+            max_items=20,
+        ),
+    ]
 
 
 class EnvelopeSendLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[EnvelopeSendHyperLink] | None = Field(
-        None, description="The list of hyperlink elements.", max_items=50
-    )
+    HyperLinks: Annotated[
+        Optional[list["EnvelopeSendHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements.", max_items=50
+        ),
+    ]
 
 
 class EnvelopeSendPredefinedText(BaseModel):
@@ -17667,10 +20591,13 @@ class EnvelopeSendPredefinedText(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Value: str | None = Field(None, description="The value of the predefined text.")
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendEmail(BaseModel):
@@ -17682,10 +20609,13 @@ class EnvelopeSendEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendGivenName(BaseModel):
@@ -17697,10 +20627,13 @@ class EnvelopeSendGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendSurname(BaseModel):
@@ -17712,10 +20645,13 @@ class EnvelopeSendSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendFullName(BaseModel):
@@ -17727,10 +20663,13 @@ class EnvelopeSendFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendDate(BaseModel):
@@ -17743,34 +20682,46 @@ class EnvelopeSendDate(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     DateFormat: str | None = Field(None, description="The format of the date.")
-    FieldDefinition: EnvelopeSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeSendRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeSendContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeSendContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    AuthenticationConfiguration: EnvelopeSendAuthenticationConfiguration | None = Field(
-        None,
-        description="The configuration for the authentication of the recipient.",
-    )
+    AuthenticationConfiguration: Annotated[
+        Optional["EnvelopeSendAuthenticationConfiguration"],
+        Field(
+            default=None,
+            description="The configuration for the authentication of the recipient.",
+        ),
+    ]
     SendEmails: bool | None = Field(
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
@@ -17781,31 +20732,43 @@ class EnvelopeSendAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeSendContactInformation = Field(
-        ..., description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeSendContactInformation"],
+        Field(
+            ..., description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    AuthenticationConfiguration: EnvelopeSendAuthenticationConfiguration | None = Field(
-        None,
-        description="The configuration for the authentication of the recipient.",
-    )
+    AuthenticationConfiguration: Annotated[
+        Optional["EnvelopeSendAuthenticationConfiguration"],
+        Field(
+            default=None,
+            description="The configuration for the authentication of the recipient.",
+        ),
+    ]
     SendEmails: bool | None = Field(
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
     )
-    IncludedEmailAppLinks: EnvelopeSendEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["EnvelopeSendEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None,
         description="If true, the recipient may delegate this activity to another person.",
@@ -17828,14 +20791,20 @@ class EnvelopeSendTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: EnvelopeSendFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: EnvelopeSendTextBoxDefinition | None = Field(
-        None,
-        description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    Validation: Annotated[
+        Optional["EnvelopeSendFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeSendTextBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSignatureDataConfiguration(BaseModel):
@@ -17865,9 +20834,12 @@ class EnvelopeActivityReplaceSignatureDataConfiguration(BaseModel):
     ATrustCertificate: None | (
         EnvelopeActivityReplaceATrustCertificateSignatureData
     ) = Field(None, description="The A-Trust certificate configuration for the action.")
-    SwedishBankId: EnvelopeActivityReplaceSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
+    SwedishBankId: Annotated[
+        Optional["EnvelopeActivityReplaceSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (
         list[EnvelopeActivityReplaceSignaturePluginSignatureData]
     ) = Field(
@@ -17881,18 +20853,24 @@ class EnvelopeActivityReplaceAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: EnvelopeActivityReplaceAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
+    AccessCode: Annotated[
+        Optional["EnvelopeActivityReplaceAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
     SmsOneTimePassword: None | (
         EnvelopeActivityReplaceSmsOneTimePasswordAuthentication
     ) = Field(
         None,
         description="The configuration of the authentication with one time password over SMS.",
     )
-    SwedishBankId: EnvelopeActivityReplaceSwedishBankIdAuthentication | None = Field(
-        None, description="The configuration of the authentication with Swedish BankID."
-    )
+    SwedishBankId: Annotated[
+        Optional["EnvelopeActivityReplaceSwedishBankIdAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with Swedish BankID."
+        ),
+    ]
     OAuthAuthentications: list[EnvelopeActivityReplaceOAuthAuthentication] | None = (
         Field(
             None,
@@ -17900,27 +20878,36 @@ class EnvelopeActivityReplaceAuthenticationConfiguration(BaseModel):
             max_items=20,
         )
     )
-    SamlAuthentications: list[EnvelopeActivityReplaceSamlAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with SAML.",
-        max_items=20,
-    )
+    SamlAuthentications: Annotated[
+        Optional[list["EnvelopeActivityReplaceSamlAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with SAML.",
+            max_items=20,
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[EnvelopeActivityReplaceHyperLink] | None = Field(
-        None, description="The list of hyperlink elements.", max_items=50
-    )
+    HyperLinks: Annotated[
+        Optional[list["EnvelopeActivityReplaceHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements.", max_items=50
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type10 | None = Field(None, description="The type of the value.")
+    Type: Annotated[
+        Optional["Type10"],
+        Field(default=None, description="The type of the value."),
+    ]
     DateValidationConfiguration: None | (
         EnvelopeActivityReplaceDateValidationConfiguration
     ) = Field(None, description="The validation rules for dates.")
@@ -17945,10 +20932,13 @@ class EnvelopeActivityReplacePredefinedText(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Value: str | None = Field(None, description="The value of the predefined text.")
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceEmail(BaseModel):
@@ -17960,10 +20950,13 @@ class EnvelopeActivityReplaceEmail(BaseModel):
         ...,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceGivenName(BaseModel):
@@ -17975,10 +20968,13 @@ class EnvelopeActivityReplaceGivenName(BaseModel):
         ...,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceSurname(BaseModel):
@@ -17990,10 +20986,13 @@ class EnvelopeActivityReplaceSurname(BaseModel):
         ...,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceFullName(BaseModel):
@@ -18005,10 +21004,13 @@ class EnvelopeActivityReplaceFullName(BaseModel):
         ...,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceDate(BaseModel):
@@ -18021,10 +21023,13 @@ class EnvelopeActivityReplaceDate(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     DateFormat: str | None = Field(None, description="The format of the date.")
-    FieldDefinition: EnvelopeActivityReplacePredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeActivityReplacePredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceTextBox(BaseModel):
@@ -18039,19 +21044,25 @@ class EnvelopeActivityReplaceTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: EnvelopeActivityReplaceFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
+    Validation: Annotated[
+        Optional["EnvelopeActivityReplaceFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeActivityReplaceContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeActivityReplaceContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
@@ -18064,10 +21075,13 @@ class EnvelopeActivityReplaceRecipientConfiguration(BaseModel):
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
@@ -18078,9 +21092,12 @@ class EnvelopeActivityReplaceAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeActivityReplaceContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeActivityReplaceContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
@@ -18093,17 +21110,23 @@ class EnvelopeActivityReplaceAdvancedRecipientConfiguration(BaseModel):
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
     )
-    IncludedEmailAppLinks: EnvelopeActivityReplaceEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["EnvelopeActivityReplaceEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None,
         description="If true, the recipient may delegate this activity to another person.",
@@ -18118,7 +21141,10 @@ class EnvelopeBulkSendFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type12 | None = Field(None, description="The type of the value.")
+    Type: Annotated[
+        Optional["Type12"],
+        Field(default=None, description="The type of the value."),
+    ]
     DateValidationConfiguration: None | (
         EnvelopeBulkSendDateValidationConfiguration
     ) = Field(None, description="The validation rules for dates.")
@@ -18142,23 +21168,38 @@ class EnvelopeBulkSendSignatureDataConfiguration(BaseModel):
     ) = Field(
         None, description="The disposable certificate configuration for the action."
     )
-    RemoteCertificate: EnvelopeBulkSendRemoteCertificateSignatureData | None = Field(
-        None, description="The remote certificate configuration for the action."
-    )
-    SwissComOnDemand: EnvelopeBulkSendSwissComOnDemandSignatureData | None = Field(
-        None,
-        description="The Swisscom On-Demand certificate configuration for the action.",
-    )
-    SmsOneTimePassword: EnvelopeBulkSendSmsOneTimePasswordSignatureData | None = Field(
-        None,
-        description="The one time password configuration for the action (SMS-OTP).",
-    )
-    ATrustCertificate: EnvelopeBulkSendATrustCertificateSignatureData | None = Field(
-        None, description="The A-Trust certificate configuration for the action."
-    )
-    SwedishBankId: EnvelopeBulkSendSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
+    RemoteCertificate: Annotated[
+        Optional["EnvelopeBulkSendRemoteCertificateSignatureData"],
+        Field(
+            None, description="The remote certificate configuration for the action."
+        ),
+    ]
+    SwissComOnDemand: Annotated[
+        Optional["EnvelopeBulkSendSwissComOnDemandSignatureData"],
+        Field(
+            default=None,
+            description="The Swisscom On-Demand certificate configuration for the action.",
+        ),
+    ]
+    SmsOneTimePassword: Annotated[
+        Optional["EnvelopeBulkSendSmsOneTimePasswordSignatureData"],
+        Field(
+            default=None,
+            description="The one time password configuration for the action (SMS-OTP).",
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["EnvelopeBulkSendATrustCertificateSignatureData"],
+        Field(
+            None, description="The A-Trust certificate configuration for the action."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeBulkSendSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (list[EnvelopeBulkSendSignaturePluginSignatureData]) = (
         Field(
             None,
@@ -18172,35 +21213,53 @@ class EnvelopeBulkSendAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: EnvelopeBulkSendAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
-    SmsOneTimePassword: EnvelopeBulkSendSmsOneTimePasswordAuthentication | None = Field(
-        None,
-        description="The configuration of the authentication with one time password over SMS.",
-    )
-    SwedishBankId: EnvelopeBulkSendSwedishBankIdAuthentication | None = Field(
-        None, description="The configuration of the authentication with Swedish BankID."
-    )
-    OAuthAuthentications: list[EnvelopeBulkSendOAuthAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with OAuth.",
-        max_items=20,
-    )
-    SamlAuthentications: list[EnvelopeBulkSendSamlAuthentication] | None = Field(
-        None,
-        description="The configurations of the authentication with SAML.",
-        max_items=20,
-    )
+    AccessCode: Annotated[
+        Optional["EnvelopeBulkSendAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
+    SmsOneTimePassword: Annotated[
+        Optional["EnvelopeBulkSendSmsOneTimePasswordAuthentication"],
+        Field(
+            default=None,
+            description="The configuration of the authentication with one time password over SMS.",
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["EnvelopeBulkSendSwedishBankIdAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with Swedish BankID."
+        ),
+    ]
+    OAuthAuthentications: Annotated[
+        Optional[list["EnvelopeBulkSendOAuthAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with OAuth.",
+            max_items=20,
+        ),
+    ]
+    SamlAuthentications: Annotated[
+        Optional[list["EnvelopeBulkSendSamlAuthentication"]],
+        Field(
+            default=None,
+            description="The configurations of the authentication with SAML.",
+            max_items=20,
+        ),
+    ]
 
 
 class EnvelopeBulkSendLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[EnvelopeBulkSendHyperLink] | None = Field(
-        None, description="The list of hyperlink elements.", max_items=50
-    )
+    HyperLinks: Annotated[
+        Optional[list["EnvelopeBulkSendHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements.", max_items=50
+        ),
+    ]
 
 
 class EnvelopeBulkSendPredefinedText(BaseModel):
@@ -18213,10 +21272,13 @@ class EnvelopeBulkSendPredefinedText(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     Value: str | None = Field(None, description="The value of the predefined text.")
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendEmail(BaseModel):
@@ -18228,10 +21290,13 @@ class EnvelopeBulkSendEmail(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendGivenName(BaseModel):
@@ -18243,10 +21308,13 @@ class EnvelopeBulkSendGivenName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendSurname(BaseModel):
@@ -18258,10 +21326,13 @@ class EnvelopeBulkSendSurname(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendFullName(BaseModel):
@@ -18273,10 +21344,13 @@ class EnvelopeBulkSendFullName(BaseModel):
         None,
         description="The reference number of the containing document. It starts with 1.",
     )
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendDate(BaseModel):
@@ -18289,19 +21363,25 @@ class EnvelopeBulkSendDate(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     DateFormat: str | None = Field(None, description="The format of the date.")
-    FieldDefinition: EnvelopeBulkSendPredefinedElementDefinition | None = Field(
-        None,
-        description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
-    )
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendPredefinedElementDefinition"],
+        Field(
+            default=None,
+            description="The definition of the predefined element.\r\nIt must be specified when the predefined element is added.\r\nIt must not be specified when the predefined element already exists.",
+        ),
+    ]
 
 
 class EnvelopeBulkSendRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeBulkSendContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeBulkSendContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
@@ -18314,10 +21394,13 @@ class EnvelopeBulkSendRecipientConfiguration(BaseModel):
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
@@ -18328,9 +21411,12 @@ class EnvelopeBulkSendAdvancedRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: EnvelopeBulkSendContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["EnvelopeBulkSendContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
@@ -18343,17 +21429,23 @@ class EnvelopeBulkSendAdvancedRecipientConfiguration(BaseModel):
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
     )
-    IncludedEmailAppLinks: EnvelopeBulkSendEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["EnvelopeBulkSendEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None,
         description="If true, the recipient may delegate this activity to another person.",
@@ -18376,14 +21468,20 @@ class EnvelopeBulkSendTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: EnvelopeBulkSendFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: EnvelopeBulkSendTextBoxDefinition | None = Field(
-        None,
-        description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
-    )
+    Validation: Annotated[
+        Optional["EnvelopeBulkSendFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeBulkSendTextBoxDefinition"],
+        Field(
+            default=None,
+            description="The definition of the text box.\r\nIt must be specified when the check box is added.\r\nIt must not be specified when the check box already exists.",
+        ),
+    ]
 
 
 class FilePrepareCheckBox(BaseModel):
@@ -18400,9 +21498,12 @@ class FilePrepareCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: FilePrepareCheckBoxDefinition | None = Field(
-        None, description="The definition of the check box."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareCheckBoxDefinition"],
+        Field(
+            None, description="The definition of the check box."
+        ),
+    ]
 
 
 class FilePrepareComboBox(BaseModel):
@@ -18417,9 +21518,12 @@ class FilePrepareComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: FilePrepareComboBoxDefinition | None = Field(
-        None, description="The definition of the combo box."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareComboBoxDefinition"],
+        Field(
+            None, description="The definition of the combo box."
+        ),
+    ]
 
 
 class FilePrepareRadioButtonGroup(BaseModel):
@@ -18439,9 +21543,12 @@ class FilePrepareRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: FilePrepareRadioButtonDefinition | None = Field(
-        None, description="The definition of the radio button group."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareRadioButtonDefinition"],
+        Field(
+            None, description="The definition of the radio button group."
+        ),
+    ]
 
 
 class FilePrepareListBox(BaseModel):
@@ -18459,9 +21566,12 @@ class FilePrepareListBox(BaseModel):
         description="The export values of the items which should be initially selected.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: FilePrepareListBoxDefinition | None = Field(
-        None, description="The definition of the list box field."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareListBoxDefinition"],
+        Field(
+            None, description="The definition of the list box field."
+        ),
+    ]
 
 
 class FilePrepareAttachment(BaseModel):
@@ -18475,149 +21585,236 @@ class FilePrepareAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None, description="The type of the displayed icon."
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            None, description="The type of the displayed icon."
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: FilePrepareAttachmentDefinition | None = Field(
-        None, description="The definition of the attachment element."
-    )
+    FieldDefinition: Annotated[
+        Optional["FilePrepareAttachmentDefinition"],
+        Field(
+            None, description="The definition of the attachment element."
+        ),
+    ]
 
 
 class FilePrepareLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[FilePrepareHyperLink] | None = Field(
-        None, description="The list of hyperlink elements."
-    )
+    HyperLinks: Annotated[
+        Optional[list["FilePrepareHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements."
+        ),
+    ]
 
 
 class FilePrepareFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type14 | None = Field(None, description="The type of the value.")
-    DateValidationConfiguration: FilePrepareDateValidationConfiguration | None = Field(
-        None, description="The validation rules for dates."
-    )
+    Type: Annotated[
+        Optional["Type14"],
+        Field(default=None, description="The type of the value."),
+    ]
+    DateValidationConfiguration: Annotated[
+        Optional["FilePrepareDateValidationConfiguration"],
+        Field(
+            None, description="The validation rules for dates."
+        ),
+    ]
     NumberValidationConfiguration: None | (FilePrepareNumberValidationConfiguration) = (
         Field(None, description="The validation rules for numbers.")
     )
     PhoneValidationConfiguration: FilePreparePhoneValidationConfiguration | None = (
         Field(None, description="The validation rules for phone numbers.")
     )
-    TimeValidationConfiguration: FilePrepareTimeValidationConfiguration | None = Field(
-        None, description="The validation rules for time values."
-    )
+    TimeValidationConfiguration: Annotated[
+        Optional["FilePrepareTimeValidationConfiguration"],
+        Field(
+            None, description="The validation rules for time values."
+        ),
+    ]
 
 
 class FilePrepareAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: FilePrepareClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: FilePrepareDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: FilePrepareTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: FilePrepareLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
-    DisposableCertificate: FilePrepareDisposableCertificateSignatureType | None = Field(
-        None, description="Allow signing with a disposable certificate."
-    )
-    SwissComOnDemand: FilePrepareSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: FilePrepareATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: FilePrepareBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: FilePrepareRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: FilePrepareOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: FilePrepareSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
-    SignaturePlugins: list[FilePrepareSignaturePluginSignatureType] | None = Field(
-        None, description="Allow signing with signature plugins."
-    )
+    ClickToSign: Annotated[
+        Optional["FilePrepareClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["FilePrepareDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["FilePrepareTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["FilePrepareLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
+    DisposableCertificate: Annotated[
+        Optional["FilePrepareDisposableCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a disposable certificate."
+        ),
+    ]
+    SwissComOnDemand: Annotated[
+        Optional["FilePrepareSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["FilePrepareATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["FilePrepareBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["FilePrepareRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["FilePrepareOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["FilePrepareSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
+    SignaturePlugins: Annotated[
+        Optional[list["FilePrepareSignaturePluginSignatureType"]],
+        Field(
+            None, description="Allow signing with signature plugins."
+        ),
+    ]
 
 
 class FilePrepareSignAutomatic(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    VisibleSignatures: list[FilePrepareVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-    )
+    VisibleSignatures: Annotated[
+        Optional[list["FilePrepareVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+        ),
+    ]
 
 
 class TeamGetAllResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Teams: list[TeamGetAllTeam] | None = Field(
-        None, description="The teams of the organization."
-    )
+    Teams: Annotated[
+        Optional[list["TeamGetAllTeam"]],
+        Field(
+            None, description="The teams of the organization."
+        ),
+    ]
 
 
 class TeamReplaceRequest(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Teams: list[TeamReplaceTeam] = Field(
-        ...,
-        description="The teams which will replace all the existing teams.",
-        max_items=1000,
-    )
+    Teams: Annotated[
+        Optional[list["TeamReplaceTeam"]],
+        Field(
+            ...,
+            description="The teams which will replace all the existing teams.",
+            max_items=1000,
+        ),
+    ]
 
 
 class TemplateGetAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: TemplateGetSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignBulk: TemplateGetSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
-    SignAutomatic: TemplateGetSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: TemplateGetSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: TemplateGetView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: TemplateGetSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
-    SignPlaceholder: TemplateGetSignPlaceholder | None = Field(
-        None, description="The definition of the signer placeholder."
-    )
+    SendCopy: Annotated[
+        Optional["TemplateGetSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["TemplateGetSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["TemplateGetSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["TemplateGetSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["TemplateGetView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["TemplateGetSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
+    SignPlaceholder: Annotated[
+        Optional["TemplateGetSignPlaceholder"],
+        Field(
+            None, description="The definition of the signer placeholder."
+        ),
+    ]
 
 
 class TemplateGetFilesResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Documents: list[TemplateGetFilesDocument] | None = Field(
-        None, description="The documents."
-    )
+    Documents: Annotated[
+        Optional[list["TemplateGetFilesDocument"]],
+        Field(
+            None, description="The documents."
+        ),
+    ]
 
 
 class TemplateGetElementsCheckBox(BaseModel):
@@ -18634,9 +21831,12 @@ class TemplateGetElementsCheckBox(BaseModel):
         None, description="If true, the check box is checked."
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: TemplateGetElementsCheckBoxDefinition | None = Field(
-        None, description="The definition of the check box."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsCheckBoxDefinition"],
+        Field(
+            None, description="The definition of the check box."
+        ),
+    ]
 
 
 class TemplateGetElementsComboBox(BaseModel):
@@ -18651,9 +21851,12 @@ class TemplateGetElementsComboBox(BaseModel):
     Required: bool | None = Field(None, description="If true, the element is required.")
     Value: str | None = Field(None, description="The selected value of the combo box.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: TemplateGetElementsComboBoxDefinition | None = Field(
-        None, description="The definition of the combo box."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsComboBoxDefinition"],
+        Field(
+            None, description="The definition of the combo box."
+        ),
+    ]
 
 
 class TemplateGetElementsRadioButtonGroup(BaseModel):
@@ -18673,9 +21876,12 @@ class TemplateGetElementsRadioButtonGroup(BaseModel):
         description="The export value of the selected item of the radio button group.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: TemplateGetElementsRadioButtonDefinition | None = Field(
-        None, description="The definition of the radio button group."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsRadioButtonDefinition"],
+        Field(
+            None, description="The definition of the radio button group."
+        ),
+    ]
 
 
 class TemplateGetElementsListBox(BaseModel):
@@ -18693,9 +21899,12 @@ class TemplateGetElementsListBox(BaseModel):
         description="The export values of the items which should be initially selected.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: TemplateGetElementsListBoxDefinition | None = Field(
-        None, description="The definition of the list box field."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsListBoxDefinition"],
+        Field(
+            None, description="The definition of the list box field."
+        ),
+    ]
 
 
 class TemplateGetElementsAttachment(BaseModel):
@@ -18709,49 +21918,79 @@ class TemplateGetElementsAttachment(BaseModel):
     )
     Required: bool | None = Field(None, description="If true, the element is required.")
     DisplayName: str | None = Field(None, description="The displayed name.")
-    DisplayIconType: DisplayIconType | None = Field(
-        None, description="The type of the displayed icon."
-    )
+    DisplayIconType: Annotated[
+        Optional["DisplayIconType"],
+        Field(
+            None, description="The type of the displayed icon."
+        ),
+    ]
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    FieldDefinition: TemplateGetElementsAttachmentDefinition | None = Field(
-        None, description="The definition of the attachment element."
-    )
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsAttachmentDefinition"],
+        Field(
+            None, description="The definition of the attachment element."
+        ),
+    ]
 
 
 class TemplateGetElementsPredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[TemplateGetElementsPredefinedText] | None = Field(
-        None, description="The predefined text fields."
-    )
-    EmailFields: list[TemplateGetElementsEmail] | None = Field(
-        None, description="The recipient's email fields."
-    )
-    InitialsFields: list[TemplateGetElementsInitials] | None = Field(
-        None, description="The recipient's initials fields."
-    )
-    GivenNameFields: list[TemplateGetElementsGivenName] | None = Field(
-        None, description="The recipient's given name fields."
-    )
-    SurnameFields: list[TemplateGetElementsSurname] | None = Field(
-        None, description="The recipient's surname fields."
-    )
-    FullNameFields: list[TemplateGetElementsFullName] | None = Field(
-        None, description="The recipient's full name fields."
-    )
-    DateFields: list[TemplateGetElementsDate] | None = Field(
-        None, description="The current date fields."
-    )
+    TextFields: Annotated[
+        Optional[list["TemplateGetElementsPredefinedText"]],
+        Field(
+            None, description="The predefined text fields."
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["TemplateGetElementsEmail"]],
+        Field(
+            None, description="The recipient's email fields."
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["TemplateGetElementsInitials"]],
+        Field(
+            None, description="The recipient's initials fields."
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["TemplateGetElementsGivenName"]],
+        Field(
+            None, description="The recipient's given name fields."
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["TemplateGetElementsSurname"]],
+        Field(
+            None, description="The recipient's surname fields."
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["TemplateGetElementsFullName"]],
+        Field(
+            None, description="The recipient's full name fields."
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["TemplateGetElementsDate"]],
+        Field(
+            None, description="The current date fields."
+        ),
+    ]
 
 
 class TemplateGetElementsLinkConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    HyperLinks: list[TemplateGetElementsHyperLink] | None = Field(
-        None, description="The list of hyperlink elements."
-    )
+    HyperLinks: Annotated[
+        Optional[list["TemplateGetElementsHyperLink"]],
+        Field(
+            None, description="The list of hyperlink elements."
+        ),
+    ]
 
 
 class TemplateGetElementsReadAreaConfirmation(BaseModel):
@@ -18766,16 +22005,22 @@ class TemplateGetElementsReadAreaConfirmation(BaseModel):
     )
     DisplayName: str | None = Field(None, description="The displayed name.")
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Definition: TemplateGetElementsReadingAreaDefinition | None = Field(
-        None, description="The definition of the area."
-    )
+    Definition: Annotated[
+        Optional["TemplateGetElementsReadingAreaDefinition"],
+        Field(
+            None, description="The definition of the area."
+        ),
+    ]
 
 
 class TemplateGetElementsFieldValidation(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Type: Type16 | None = Field(None, description="The type of the value.")
+    Type: Annotated[
+        Optional["Type16"],
+        Field(default=None, description="The type of the value."),
+    ]
     DateValidationConfiguration: None | (
         TemplateGetElementsDateValidationConfiguration
     ) = Field(None, description="The validation rules for dates.")
@@ -18794,39 +22039,69 @@ class TemplateGetElementsAllowedSignatureTypes(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ClickToSign: TemplateGetElementsClickToSignSignatureType | None = Field(
-        None, description='Allow signing with "click to sign".'
-    )
-    DrawToSign: TemplateGetElementsDrawToSignSignatureType | None = Field(
-        None, description='Allow signing with "draw to sign".'
-    )
-    TypeToSign: TemplateGetElementsTypeToSignSignatureType | None = Field(
-        None, description='Allow signing with "type to sign".'
-    )
-    LocalCertificate: TemplateGetElementsLocalCertificateSignatureType | None = Field(
-        None, description="Allow signing with a local certificate."
-    )
+    ClickToSign: Annotated[
+        Optional["TemplateGetElementsClickToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "click to sign".'
+        ),
+    ]
+    DrawToSign: Annotated[
+        Optional["TemplateGetElementsDrawToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "draw to sign".'
+        ),
+    ]
+    TypeToSign: Annotated[
+        Optional["TemplateGetElementsTypeToSignSignatureType"],
+        Field(
+            None, description='Allow signing with "type to sign".'
+        ),
+    ]
+    LocalCertificate: Annotated[
+        Optional["TemplateGetElementsLocalCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a local certificate."
+        ),
+    ]
     DisposableCertificate: None | (
         TemplateGetElementsDisposableCertificateSignatureType
     ) = Field(None, description="Allow signing with a disposable certificate.")
-    SwissComOnDemand: TemplateGetElementsSwissComOnDemandSignatureType | None = Field(
-        None, description="Allow signing with a Swisscom On-Demand certificate."
-    )
-    ATrustCertificate: TemplateGetElementsATrustCertificateSignatureType | None = Field(
-        None, description="Allow signing with an A-Trust certificate."
-    )
-    Biometric: TemplateGetElementsBiometricSignatureType | None = Field(
-        None, description="Allow signing with a biometric signature."
-    )
-    RemoteCertificate: TemplateGetElementsRemoteCertificateSignatureType | None = Field(
-        None, description="Allow signing with a remote certificate."
-    )
-    OneTimePassword: TemplateGetElementsOneTimePasswordSignatureType | None = Field(
-        None, description="Allow signing with a one time password (SMS-OTP)."
-    )
-    SwedishBankId: TemplateGetElementsSwedishBankIdSignatureType | None = Field(
-        None, description="Allow signing with Swedish BankID."
-    )
+    SwissComOnDemand: Annotated[
+        Optional["TemplateGetElementsSwissComOnDemandSignatureType"],
+        Field(
+            None, description="Allow signing with a Swisscom On-Demand certificate."
+        ),
+    ]
+    ATrustCertificate: Annotated[
+        Optional["TemplateGetElementsATrustCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with an A-Trust certificate."
+        ),
+    ]
+    Biometric: Annotated[
+        Optional["TemplateGetElementsBiometricSignatureType"],
+        Field(
+            None, description="Allow signing with a biometric signature."
+        ),
+    ]
+    RemoteCertificate: Annotated[
+        Optional["TemplateGetElementsRemoteCertificateSignatureType"],
+        Field(
+            None, description="Allow signing with a remote certificate."
+        ),
+    ]
+    OneTimePassword: Annotated[
+        Optional["TemplateGetElementsOneTimePasswordSignatureType"],
+        Field(
+            None, description="Allow signing with a one time password (SMS-OTP)."
+        ),
+    ]
+    SwedishBankId: Annotated[
+        Optional["TemplateGetElementsSwedishBankIdSignatureType"],
+        Field(
+            None, description="Allow signing with Swedish BankID."
+        ),
+    ]
     SignaturePlugins: None | (list[TemplateGetElementsSignaturePluginSignatureType]) = (
         Field(None, description="Allow signing with signature plugins.")
     )
@@ -18836,10 +22111,13 @@ class TemplateGetElementsSignAutomatic(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    VisibleSignatures: list[TemplateGetElementsVisibleSignature] | None = Field(
-        None,
-        description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
-    )
+    VisibleSignatures: Annotated[
+        Optional[list["TemplateGetElementsVisibleSignature"]],
+        Field(
+            default=None,
+            description="The visible signatures define the optional visual representations for automatic signatures.\r\nIf none are defined, the automatic signatures are applied to the documents without a visual element.",
+        ),
+    ]
 
 
 class TemplateGetConfigurationCallbackConfiguration(BaseModel):
@@ -18891,9 +22169,12 @@ class TemplateGetConfigurationSignatureDataConfiguration(BaseModel):
     ATrustCertificate: None | (
         TemplateGetConfigurationATrustCertificateSignatureData
     ) = Field(None, description="The A-Trust certificate configuration for the action.")
-    SwedishBankId: TemplateGetConfigurationSwedishBankIdSignatureData | None = Field(
-        None, description="The Swedish BankID configuration for the action."
-    )
+    SwedishBankId: Annotated[
+        Optional["TemplateGetConfigurationSwedishBankIdSignatureData"],
+        Field(
+            None, description="The Swedish BankID configuration for the action."
+        ),
+    ]
     SignaturePluginData: None | (
         list[TemplateGetConfigurationSignaturePluginSignatureData]
     ) = Field(None, description="The signature plugin configurations for the action.")
@@ -18923,19 +22204,25 @@ class TemplateGetConfigurationAuthenticationConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    AccessCode: TemplateGetConfigurationAccessCodeAuthentication | None = Field(
-        None, description="The configuration of the authentication with an access code."
-    )
+    AccessCode: Annotated[
+        Optional["TemplateGetConfigurationAccessCodeAuthentication"],
+        Field(
+            None, description="The configuration of the authentication with an access code."
+        ),
+    ]
     SmsOneTimePassword: None | (
         TemplateGetConfigurationSmsOneTimePasswordAuthentication
     ) = Field(
         None,
         description="The configuration of the authentication with one time password over SMS.",
     )
-    SwedishBankId: TemplateGetConfigurationSwedishBankIdAuthentication | None = Field(
-        None,
-        description="The configuration of the authentication with Swedish BankID.",
-    )
+    SwedishBankId: Annotated[
+        Optional["TemplateGetConfigurationSwedishBankIdAuthentication"],
+        Field(
+            default=None,
+            description="The configuration of the authentication with Swedish BankID.",
+        ),
+    ]
     OAuthAuthentications: None | (list[TemplateGetConfigurationOAuthAuthentication]) = (
         Field(None, description="The configurations of the authentication with OAuth.")
     )
@@ -18952,9 +22239,12 @@ class DraftGetActivity(BaseModel):
     PlaceholderLabel: str | None = Field(
         None, description="The label of a sign placeholder."
     )
-    Action: DraftGetAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["DraftGetAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class DraftGetElementsTextBox(BaseModel):
@@ -18969,13 +22259,19 @@ class DraftGetElementsTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: DraftGetElementsFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: DraftGetElementsTextBoxDefinition | None = Field(
-        None, description="The definition of the text box."
-    )
+    Validation: Annotated[
+        Optional["DraftGetElementsFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsTextBoxDefinition"],
+        Field(
+            None, description="The definition of the text box."
+        ),
+    ]
 
 
 class DraftGetElementsSignatureField(BaseModel):
@@ -18997,15 +22293,24 @@ class DraftGetElementsSignatureField(BaseModel):
         description="If true, an timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: DraftGetElementsAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: DraftGetElementsSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
-    TaskConfiguration: DraftGetElementsSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["DraftGetElementsAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["DraftGetElementsSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["DraftGetElementsSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class DraftGetConfigurationAdvancedRecipientConfiguration(BaseModel):
@@ -19015,10 +22320,13 @@ class DraftGetConfigurationAdvancedRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
     AuthenticationConfiguration: None | (
         DraftGetConfigurationAuthenticationConfiguration
     ) = Field(
@@ -19036,9 +22344,12 @@ class DraftGetConfigurationAdvancedRecipientConfiguration(BaseModel):
         None,
         description="If true, the signer has to confirm the reading of all documents as first task.",
     )
-    IncludedEmailAppLinks: DraftGetConfigurationEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["DraftGetConfigurationEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None, description="If true, the recipient may delegate this activity."
     )
@@ -19051,10 +22362,13 @@ class DraftGetConfigurationRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
     AuthenticationConfiguration: None | (
         DraftGetConfigurationAuthenticationConfiguration
     ) = Field(
@@ -19088,81 +22402,126 @@ class DraftCreatePredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[DraftCreatePredefinedText] | None = Field(
-        None, description="The predefined text fields.", max_items=1000
-    )
-    EmailFields: list[DraftCreateEmail] | None = Field(
-        None, description="The recipient's email fields.", max_items=1000
-    )
-    InitialsFields: list[DraftCreateInitials] | None = Field(
-        None, description="The recipient's initials fields.", max_items=1000
-    )
-    GivenNameFields: list[DraftCreateGivenName] | None = Field(
-        None, description="The recipient's given name fields.", max_items=1000
-    )
-    SurnameFields: list[DraftCreateSurname] | None = Field(
-        None, description="The recipient's surname fields.", max_items=1000
-    )
-    FullNameFields: list[DraftCreateFullName] | None = Field(
-        None, description="The recipient's full name fields.", max_items=1000
-    )
-    DateFields: list[DraftCreateDate] | None = Field(
-        None, description="The current date fields.", max_items=1000
-    )
+    TextFields: Annotated[
+        Optional[list["DraftCreatePredefinedText"]],
+        Field(
+            None, description="The predefined text fields.", max_items=1000
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["DraftCreateEmail"]],
+        Field(
+            None, description="The recipient's email fields.", max_items=1000
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["DraftCreateInitials"]],
+        Field(
+            None, description="The recipient's initials fields.", max_items=1000
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["DraftCreateGivenName"]],
+        Field(
+            None, description="The recipient's given name fields.", max_items=1000
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["DraftCreateSurname"]],
+        Field(
+            None, description="The recipient's surname fields.", max_items=1000
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["DraftCreateFullName"]],
+        Field(
+            None, description="The recipient's full name fields.", max_items=1000
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["DraftCreateDate"]],
+        Field(
+            None, description="The current date fields.", max_items=1000
+        ),
+    ]
 
 
 class DraftCreateSignAsP7M(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftCreateAdvancedRecipientConfiguration | None = Field(
-        None, description="The configuration of the recipient."
-    )
-    SignatureMethods: DraftCreateP7MSignatureMethods | None = Field(
-        None, description="The configuration of recipient data for P7M signatures."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftCreateAdvancedRecipientConfiguration"],
+        Field(
+            None, description="The configuration of the recipient."
+        ),
+    ]
+    SignatureMethods: Annotated[
+        Optional["DraftCreateP7MSignatureMethods"],
+        Field(
+            None, description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     SignAsP7MGroup: str | None = Field(
         None, description="The group for defining parallel P7M actions."
     )
-    GeneralPoliciesOverrides: DraftCreateGeneralPoliciesForP7MAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    GeneralPoliciesOverrides: Annotated[
+        Optional["DraftCreateGeneralPoliciesForP7MAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class DraftCreateBulkRecipient(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftCreateAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
-    SignatureDataConfiguration: DraftCreateSignatureDataConfiguration | None = Field(
-        None, description="The configuration of the signature data for the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftCreateAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
+    SignatureDataConfiguration: Annotated[
+        Optional["DraftCreateSignatureDataConfiguration"],
+        Field(
+            None, description="The configuration of the signature data for the recipient."
+        ),
+    ]
 
 
 class DraftCreateRecipientConfiguration(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    ContactInformation: DraftCreateContactInformation | None = Field(
-        None, description="The contact information of the recipient."
-    )
+    ContactInformation: Annotated[
+        Optional["DraftCreateContactInformation"],
+        Field(
+            None, description="The contact information of the recipient."
+        ),
+    ]
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    AuthenticationConfiguration: DraftCreateAuthenticationConfiguration | None = Field(
-        None,
-        description="The configuration for the authentication of the recipient.",
-    )
+    AuthenticationConfiguration: Annotated[
+        Optional["DraftCreateAuthenticationConfiguration"],
+        Field(
+            default=None,
+            description="The configuration for the authentication of the recipient.",
+        ),
+    ]
     SendEmails: bool | None = Field(
         None,
         description="Obsolete: If true, emails will be sent out for this recipient.\r\nUse NotificationChannel property instead, which also allows sending with other notification channels than Email.\r\nNotificationChannel.None is the equivalent of sending false.\r\nNotificationChannel.Email is the equivalent of sending true.\r\nIf the NotificationChannel property is used/sent this property will be ignored.",
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.\r\nDefault Email if not specified.",
+        ),
+    ]
     AllowAccessAfterFinish: bool | None = Field(
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.\r\nIt is required that the organization has the AllowAccessFinishedWorkstep feature enabled.\r\nThe default value is taken from the OrganizationSettings.",
@@ -19174,21 +22533,27 @@ class DraftReorderActivitiesRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     DraftId: str = Field(..., description="The identifier of the draft.")
-    Activities: list[DraftReorderActivitiesActivity] = Field(
-        ...,
-        description="Define ALL activities in the expected order.",
-        max_items=50,
-        min_items=1,
-    )
+    Activities: Annotated[
+        Optional[list["DraftReorderActivitiesActivity"]],
+        Field(
+            ...,
+            description="Define ALL activities in the expected order.",
+            max_items=50,
+            min_items=1,
+        ),
+    ]
 
 
 class DraftActivityReplaceView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftActivityReplaceRecipientConfiguration | None = Field(
-        None, description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftActivityReplaceRecipientConfiguration"],
+        Field(
+            None, description="The configuration of the recipient."
+        ),
+    ]
     GeneralPoliciesOverrides: None | (
         DraftActivityReplaceGeneralPoliciesForViewAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -19201,21 +22566,30 @@ class DraftActivityReplaceSignAsP7M(BaseModel):
     RecipientConfiguration: None | (
         DraftActivityReplaceAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    SignatureMethods: DraftActivityReplaceP7MSignatureMethods | None = Field(
-        None, description="The configuration of recipient data for P7M signatures."
-    )
-    GeneralPoliciesOverrides: DraftActivityReplacePoliciesForP7MAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    SignatureMethods: Annotated[
+        Optional["DraftActivityReplaceP7MSignatureMethods"],
+        Field(
+            None, description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
+    GeneralPoliciesOverrides: Annotated[
+        Optional["DraftActivityReplacePoliciesForP7MAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class DraftActivityReplaceBulkRecipient(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftActivityReplaceAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftActivityReplaceAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
     SignatureDataConfiguration: None | (
         DraftActivityReplaceSignatureDataConfiguration
     ) = Field(
@@ -19227,27 +22601,48 @@ class DraftActivityReplacePredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[DraftActivityReplacePredefinedText] | None = Field(
-        None, description="The predefined text fields.", max_items=1000
-    )
-    EmailFields: list[DraftActivityReplaceEmail] | None = Field(
-        None, description="The recipient's email fields.", max_items=1000
-    )
-    InitialsFields: list[DraftActivityReplaceInitials] | None = Field(
-        None, description="The recipient's initials fields.", max_items=1000
-    )
-    GivenNameFields: list[DraftActivityReplaceGivenName] | None = Field(
-        None, description="The recipient's given name fields.", max_items=1000
-    )
-    SurnameFields: list[DraftActivityReplaceSurname] | None = Field(
-        None, description="The recipient's surname fields.", max_items=1000
-    )
-    FullNameFields: list[DraftActivityReplaceFullName] | None = Field(
-        None, description="The recipient's full name fields.", max_items=1000
-    )
-    DateFields: list[DraftActivityReplaceDate] | None = Field(
-        None, description="The current date fields.", max_items=1000
-    )
+    TextFields: Annotated[
+        Optional[list["DraftActivityReplacePredefinedText"]],
+        Field(
+            None, description="The predefined text fields.", max_items=1000
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["DraftActivityReplaceEmail"]],
+        Field(
+            None, description="The recipient's email fields.", max_items=1000
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["DraftActivityReplaceInitials"]],
+        Field(
+            None, description="The recipient's initials fields.", max_items=1000
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["DraftActivityReplaceGivenName"]],
+        Field(
+            None, description="The recipient's given name fields.", max_items=1000
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["DraftActivityReplaceSurname"]],
+        Field(
+            None, description="The recipient's surname fields.", max_items=1000
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["DraftActivityReplaceFullName"]],
+        Field(
+            None, description="The recipient's full name fields.", max_items=1000
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["DraftActivityReplaceDate"]],
+        Field(
+            None, description="The current date fields.", max_items=1000
+        ),
+    ]
 
 
 class EnvelopeGetActivity(BaseModel):
@@ -19255,9 +22650,12 @@ class EnvelopeGetActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Status: Status | None = Field(
-        None, description="The status of an action within the envelope."
-    )
+    Status: Annotated[
+        Optional["Status"],
+        Field(
+            None, description="The status of an action within the envelope."
+        ),
+    ]
     StatusReason: str | None = Field(
         None,
         description="Additional information why this particular status was reached.",
@@ -19270,9 +22668,12 @@ class EnvelopeGetActivity(BaseModel):
         None,
         description="The date when the action was accessed.\r\nA datetime in the format RFC 3339, section 5.6, 'date-Time' (e.g. 2017-07-21T17:32:28Z).",
     )
-    Action: EnvelopeGetAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["EnvelopeGetAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class EnvelopeGetElementsTextBox(BaseModel):
@@ -19287,13 +22688,19 @@ class EnvelopeGetElementsTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: EnvelopeGetElementsFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: EnvelopeGetElementsTextBoxDefinition | None = Field(
-        None, description="The definition of the text box."
-    )
+    Validation: Annotated[
+        Optional["EnvelopeGetElementsFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsTextBoxDefinition"],
+        Field(
+            None, description="The definition of the text box."
+        ),
+    ]
 
 
 class EnvelopeGetElementsSignatureField(BaseModel):
@@ -19318,15 +22725,24 @@ class EnvelopeGetElementsSignatureField(BaseModel):
         description="If true, an timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: EnvelopeGetElementsAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: EnvelopeGetElementsSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
-    TaskConfiguration: EnvelopeGetElementsSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["EnvelopeGetElementsAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["EnvelopeGetElementsSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["EnvelopeGetElementsSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationAdvancedRecipientConfiguration(BaseModel):
@@ -19336,10 +22752,13 @@ class EnvelopeGetConfigurationAdvancedRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
     AuthenticationConfiguration: None | (
         EnvelopeGetConfigurationAuthenticationConfiguration
     ) = Field(
@@ -19357,9 +22776,12 @@ class EnvelopeGetConfigurationAdvancedRecipientConfiguration(BaseModel):
         None,
         description="If true, the signer has to confirm the reading of all documents as first task.",
     )
-    IncludedEmailAppLinks: EnvelopeGetConfigurationEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["EnvelopeGetConfigurationEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None, description="If true, the recipient may delegate this activity."
     )
@@ -19372,10 +22794,13 @@ class EnvelopeGetConfigurationRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
     AuthenticationConfiguration: None | (
         EnvelopeGetConfigurationAuthenticationConfiguration
     ) = Field(
@@ -19395,81 +22820,132 @@ class EnvelopeSendUnassignedElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[EnvelopeSendTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[EnvelopeSendCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[EnvelopeSendComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[EnvelopeSendRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[EnvelopeSendListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
+    TextBoxes: Annotated[
+        Optional[list["EnvelopeSendTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["EnvelopeSendCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["EnvelopeSendComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["EnvelopeSendRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["EnvelopeSendListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
 
 
 class EnvelopeSendView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeSendRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeSendRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
     ViewingGroup: str | None = Field(
         None, description="The group for defining parallel view actions."
     )
-    GeneralPoliciesOverrides: EnvelopeSendGeneralPoliciesForViewAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    GeneralPoliciesOverrides: Annotated[
+        Optional["EnvelopeSendGeneralPoliciesForViewAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class EnvelopeSendSignAsP7M(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeSendAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
-    SignatureMethods: EnvelopeSendP7MSignatureMethods = Field(
-        ..., description="The configuration of recipient data for P7M signatures."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeSendAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
+    SignatureMethods: Annotated[
+        Optional["EnvelopeSendP7MSignatureMethods"],
+        Field(
+            ..., description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     SignAsP7MGroup: str | None = Field(
         None, description="The group for defining parallel P7M actions."
     )
-    GeneralPoliciesOverrides: EnvelopeSendGeneralPoliciesForP7MAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    GeneralPoliciesOverrides: Annotated[
+        Optional["EnvelopeSendGeneralPoliciesForP7MAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class EnvelopeSendPredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[EnvelopeSendPredefinedText] | None = Field(
-        None, description="The predefined text fields.", max_items=1000
-    )
-    EmailFields: list[EnvelopeSendEmail] | None = Field(
-        None, description="The recipient's email fields.", max_items=1000
-    )
-    InitialsFields: list[EnvelopeSendInitials] | None = Field(
-        None, description="The recipient's initials fields.", max_items=1000
-    )
-    GivenNameFields: list[EnvelopeSendGivenName] | None = Field(
-        None, description="The recipient's given name fields.", max_items=1000
-    )
-    SurnameFields: list[EnvelopeSendSurname] | None = Field(
-        None, description="The recipient's surname fields.", max_items=1000
-    )
-    FullNameFields: list[EnvelopeSendFullName] | None = Field(
-        None, description="The recipient's full name fields.", max_items=1000
-    )
-    DateFields: list[EnvelopeSendDate] | None = Field(
-        None, description="The current date fields.", max_items=1000
-    )
+    TextFields: Annotated[
+        Optional[list["EnvelopeSendPredefinedText"]],
+        Field(
+            None, description="The predefined text fields.", max_items=1000
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["EnvelopeSendEmail"]],
+        Field(
+            None, description="The recipient's email fields.", max_items=1000
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["EnvelopeSendInitials"]],
+        Field(
+            None, description="The recipient's initials fields.", max_items=1000
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["EnvelopeSendGivenName"]],
+        Field(
+            None, description="The recipient's given name fields.", max_items=1000
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["EnvelopeSendSurname"]],
+        Field(
+            None, description="The recipient's surname fields.", max_items=1000
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["EnvelopeSendFullName"]],
+        Field(
+            None, description="The recipient's full name fields.", max_items=1000
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["EnvelopeSendDate"]],
+        Field(
+            None, description="The current date fields.", max_items=1000
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceView(BaseModel):
@@ -19491,9 +22967,12 @@ class EnvelopeActivityReplaceSignAsP7M(BaseModel):
     RecipientConfiguration: None | (
         EnvelopeActivityReplaceAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    SignatureMethods: EnvelopeActivityReplaceP7MSignatureMethods | None = Field(
-        None, description="The configuration of recipient data for P7M signatures."
-    )
+    SignatureMethods: Annotated[
+        Optional["EnvelopeActivityReplaceP7MSignatureMethods"],
+        Field(
+            None, description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     GeneralPoliciesOverrides: None | (
         EnvelopeActivityReplaceGeneralPoliciesForP7MAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -19503,57 +22982,96 @@ class EnvelopeActivityReplacePredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[EnvelopeActivityReplacePredefinedText] | None = Field(
-        None, description="The predefined text fields.", max_items=1000
-    )
-    EmailFields: list[EnvelopeActivityReplaceEmail] | None = Field(
-        None, description="The recipient's email fields.", max_items=1000
-    )
-    InitialsFields: list[EnvelopeActivityReplaceInitials] | None = Field(
-        None, description="The recipient's initials fields.", max_items=1000
-    )
-    GivenNameFields: list[EnvelopeActivityReplaceGivenName] | None = Field(
-        None, description="The recipient's given name fields.", max_items=1000
-    )
-    SurnameFields: list[EnvelopeActivityReplaceSurname] | None = Field(
-        None, description="The recipient's surname fields.", max_items=1000
-    )
-    FullNameFields: list[EnvelopeActivityReplaceFullName] | None = Field(
-        None, description="The recipient's full name fields.", max_items=1000
-    )
-    DateFields: list[EnvelopeActivityReplaceDate] | None = Field(
-        None, description="The current date fields.", max_items=1000
-    )
+    TextFields: Annotated[
+        Optional[list["EnvelopeActivityReplacePredefinedText"]],
+        Field(
+            None, description="The predefined text fields.", max_items=1000
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["EnvelopeActivityReplaceEmail"]],
+        Field(
+            None, description="The recipient's email fields.", max_items=1000
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["EnvelopeActivityReplaceInitials"]],
+        Field(
+            None, description="The recipient's initials fields.", max_items=1000
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["EnvelopeActivityReplaceGivenName"]],
+        Field(
+            None, description="The recipient's given name fields.", max_items=1000
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["EnvelopeActivityReplaceSurname"]],
+        Field(
+            None, description="The recipient's surname fields.", max_items=1000
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["EnvelopeActivityReplaceFullName"]],
+        Field(
+            None, description="The recipient's full name fields.", max_items=1000
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["EnvelopeActivityReplaceDate"]],
+        Field(
+            None, description="The current date fields.", max_items=1000
+        ),
+    ]
 
 
 class EnvelopeBulkSendUnassignedElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[EnvelopeBulkSendTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[EnvelopeBulkSendCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[EnvelopeBulkSendComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[EnvelopeBulkSendRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[EnvelopeBulkSendListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
+    TextBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["EnvelopeBulkSendRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
 
 
 class EnvelopeBulkSendView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeBulkSendRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeBulkSendRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
     GeneralPoliciesOverrides: EnvelopeBulkSendGeneralPoliciesForViewAction | None = (
         Field(None, description="Viewer policy settings for override.")
     )
@@ -19563,12 +23081,18 @@ class EnvelopeBulkSendSignAsP7M(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeBulkSendAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
-    SignatureMethods: EnvelopeBulkSendP7MSignatureMethods = Field(
-        ..., description="The configuration of recipient data for P7M signatures."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeBulkSendAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
+    SignatureMethods: Annotated[
+        Optional["EnvelopeBulkSendP7MSignatureMethods"],
+        Field(
+            ..., description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     GeneralPoliciesOverrides: EnvelopeBulkSendGeneralPoliciesForP7MAction | None = (
         Field(None, description="Viewer policy settings for override.")
     )
@@ -19578,9 +23102,12 @@ class EnvelopeBulkSendRecipient(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeBulkSendAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeBulkSendAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
     SignatureDataConfiguration: EnvelopeBulkSendSignatureDataConfiguration | None = (
         Field(
             None,
@@ -19593,27 +23120,48 @@ class EnvelopeBulkSendPredefinedFieldElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextFields: list[EnvelopeBulkSendPredefinedText] | None = Field(
-        None, description="The predefined text fields.", max_items=1000
-    )
-    EmailFields: list[EnvelopeBulkSendEmail] | None = Field(
-        None, description="The recipient's email fields.", max_items=1000
-    )
-    InitialsFields: list[EnvelopeBulkSendInitials] | None = Field(
-        None, description="The recipient's initials fields.", max_items=1000
-    )
-    GivenNameFields: list[EnvelopeBulkSendGivenName] | None = Field(
-        None, description="The recipient's given name fields.", max_items=1000
-    )
-    SurnameFields: list[EnvelopeBulkSendSurname] | None = Field(
-        None, description="The recipient's surname fields.", max_items=1000
-    )
-    FullNameFields: list[EnvelopeBulkSendFullName] | None = Field(
-        None, description="The recipient's full name fields.", max_items=1000
-    )
-    DateFields: list[EnvelopeBulkSendDate] | None = Field(
-        None, description="The current date fields.", max_items=1000
-    )
+    TextFields: Annotated[
+        Optional[list["EnvelopeBulkSendPredefinedText"]],
+        Field(
+            None, description="The predefined text fields.", max_items=1000
+        ),
+    ]
+    EmailFields: Annotated[
+        Optional[list["EnvelopeBulkSendEmail"]],
+        Field(
+            None, description="The recipient's email fields.", max_items=1000
+        ),
+    ]
+    InitialsFields: Annotated[
+        Optional[list["EnvelopeBulkSendInitials"]],
+        Field(
+            None, description="The recipient's initials fields.", max_items=1000
+        ),
+    ]
+    GivenNameFields: Annotated[
+        Optional[list["EnvelopeBulkSendGivenName"]],
+        Field(
+            None, description="The recipient's given name fields.", max_items=1000
+        ),
+    ]
+    SurnameFields: Annotated[
+        Optional[list["EnvelopeBulkSendSurname"]],
+        Field(
+            None, description="The recipient's surname fields.", max_items=1000
+        ),
+    ]
+    FullNameFields: Annotated[
+        Optional[list["EnvelopeBulkSendFullName"]],
+        Field(
+            None, description="The recipient's full name fields.", max_items=1000
+        ),
+    ]
+    DateFields: Annotated[
+        Optional[list["EnvelopeBulkSendDate"]],
+        Field(
+            None, description="The current date fields.", max_items=1000
+        ),
+    ]
 
 
 class FilePrepareTextBox(BaseModel):
@@ -19628,13 +23176,19 @@ class FilePrepareTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: FilePrepareFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: FilePrepareTextBoxDefinition | None = Field(
-        None, description="The definition of the text box."
-    )
+    Validation: Annotated[
+        Optional["FilePrepareFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["FilePrepareTextBoxDefinition"],
+        Field(
+            None, description="The definition of the text box."
+        ),
+    ]
 
 
 class FilePrepareSignatureField(BaseModel):
@@ -19656,15 +23210,24 @@ class FilePrepareSignatureField(BaseModel):
         description="If true, an timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: FilePrepareAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: FilePrepareSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
-    TaskConfiguration: FilePrepareSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["FilePrepareAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["FilePrepareSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["FilePrepareSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class TemplateGetActivity(BaseModel):
@@ -19672,9 +23235,12 @@ class TemplateGetActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: TemplateGetAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["TemplateGetAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class TemplateGetElementsTextBox(BaseModel):
@@ -19689,13 +23255,19 @@ class TemplateGetElementsTextBox(BaseModel):
         description="The reference number of the containing document. It starts with 1.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    Validation: TemplateGetElementsFieldValidation | None = Field(
-        None,
-        description="The configuration of the validation rules for the text box value.",
-    )
-    FieldDefinition: TemplateGetElementsTextBoxDefinition | None = Field(
-        None, description="The definition of the text box."
-    )
+    Validation: Annotated[
+        Optional["TemplateGetElementsFieldValidation"],
+        Field(
+            default=None,
+            description="The configuration of the validation rules for the text box value.",
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsTextBoxDefinition"],
+        Field(
+            None, description="The definition of the text box."
+        ),
+    ]
 
 
 class TemplateGetElementsSignatureField(BaseModel):
@@ -19717,15 +23289,24 @@ class TemplateGetElementsSignatureField(BaseModel):
         description="If true, an timestamp from an external server is embedded into the signature.",
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
-    AllowedSignatureTypes: TemplateGetElementsAllowedSignatureTypes | None = Field(
-        None, description="The allowed types for the signature."
-    )
-    FieldDefinition: TemplateGetElementsSignatureFieldDefinition | None = Field(
-        None, description="The definition of the signature field."
-    )
-    TaskConfiguration: TemplateGetElementsSignatureTaskConfiguration | None = Field(
-        None, description="The configuration of the task."
-    )
+    AllowedSignatureTypes: Annotated[
+        Optional["TemplateGetElementsAllowedSignatureTypes"],
+        Field(
+            None, description="The allowed types for the signature."
+        ),
+    ]
+    FieldDefinition: Annotated[
+        Optional["TemplateGetElementsSignatureFieldDefinition"],
+        Field(
+            None, description="The definition of the signature field."
+        ),
+    ]
+    TaskConfiguration: Annotated[
+        Optional["TemplateGetElementsSignatureTaskConfiguration"],
+        Field(
+            None, description="The configuration of the task."
+        ),
+    ]
 
 
 class TemplateGetConfigurationAdvancedRecipientConfiguration(BaseModel):
@@ -19735,10 +23316,13 @@ class TemplateGetConfigurationAdvancedRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
     AuthenticationConfiguration: None | (
         TemplateGetConfigurationAuthenticationConfiguration
     ) = Field(
@@ -19752,9 +23336,12 @@ class TemplateGetConfigurationAdvancedRecipientConfiguration(BaseModel):
         None,
         description="If true, the recipient is allowed to access the action after it has been finished.",
     )
-    IncludedEmailAppLinks: TemplateGetConfigurationEmailAppLinks | None = Field(
-        None, description="The configuration for mobile app links in email messages."
-    )
+    IncludedEmailAppLinks: Annotated[
+        Optional["TemplateGetConfigurationEmailAppLinks"],
+        Field(
+            None, description="The configuration for mobile app links in email messages."
+        ),
+    ]
     AllowDelegation: bool | None = Field(
         None, description="If true, the recipient may delegate this activity."
     )
@@ -19771,10 +23358,13 @@ class TemplateGetConfigurationRecipientConfiguration(BaseModel):
     PersonalMessage: str | None = Field(
         None, description="The personal message for the recipient."
     )
-    NotificationChannel: NotificationChannel | None = Field(
-        None,
-        description="Which channel is used for sending notifications to the recipient.",
-    )
+    NotificationChannel: Annotated[
+        Optional["NotificationChannel"],
+        Field(
+            default=None,
+            description="Which channel is used for sending notifications to the recipient.",
+        ),
+    ]
     AuthenticationConfiguration: None | (
         TemplateGetConfigurationAuthenticationConfiguration
     ) = Field(
@@ -19811,48 +23401,84 @@ class DraftGetResponse(BaseModel):
     Id: str | None = Field(None, description="The identifier of the draft.")
     Name: str | None = Field(None, description="The name of the draft.")
     CreationDate: datetime | None = Field(None, description="Date of creation.")
-    Activities: list[DraftGetActivity] | None = Field(
-        None, description="The activities of the draft."
-    )
+    Activities: Annotated[
+        Optional[list["DraftGetActivity"]],
+        Field(
+            None, description="The activities of the draft."
+        ),
+    ]
 
 
 class DraftGetElementsElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[DraftGetElementsTextBox] | None = Field(
-        None, description="The text boxes."
-    )
-    CheckBoxes: list[DraftGetElementsCheckBox] | None = Field(
-        None, description="The check boxes."
-    )
-    ComboBoxes: list[DraftGetElementsComboBox] | None = Field(
-        None, description="The combo boxes."
-    )
-    RadioButtons: list[DraftGetElementsRadioButtonGroup] | None = Field(
-        None, description="The radio buttons."
-    )
-    ListBoxes: list[DraftGetElementsListBox] | None = Field(
-        None, description="The list boxes."
-    )
-    Signatures: list[DraftGetElementsSignatureField] | None = Field(
-        None, description="The signatures."
-    )
-    Attachments: list[DraftGetElementsAttachment] | None = Field(
-        None, description="The attachments."
-    )
-    PredefinedFieldElements: DraftGetElementsPredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: DraftGetElementsLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
-    AreaReadConfirmations: list[DraftGetElementsReadAreaConfirmation] | None = Field(
-        None, description="The areas which have to be read."
-    )
-    PageReadConfirmations: list[DraftGetElementsReadPagesConfirmation] | None = Field(
-        None, description="The pages which have to be read."
-    )
+    TextBoxes: Annotated[
+        Optional[list["DraftGetElementsTextBox"]],
+        Field(
+            None, description="The text boxes."
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["DraftGetElementsCheckBox"]],
+        Field(
+            None, description="The check boxes."
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["DraftGetElementsComboBox"]],
+        Field(
+            None, description="The combo boxes."
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["DraftGetElementsRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons."
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["DraftGetElementsListBox"]],
+        Field(
+            None, description="The list boxes."
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["DraftGetElementsSignatureField"]],
+        Field(
+            None, description="The signatures."
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["DraftGetElementsAttachment"]],
+        Field(
+            None, description="The attachments."
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["DraftGetElementsPredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["DraftGetElementsLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
+    AreaReadConfirmations: Annotated[
+        Optional[list["DraftGetElementsReadAreaConfirmation"]],
+        Field(
+            None, description="The areas which have to be read."
+        ),
+    ]
+    PageReadConfirmations: Annotated[
+        Optional[list["DraftGetElementsReadPagesConfirmation"]],
+        Field(
+            None, description="The pages which have to be read."
+        ),
+    ]
     DocumentReadConfirmations: None | (
         list[DraftGetElementsReadDocumentConfirmation]
     ) = Field(None, description="The documents which have to be read.")
@@ -19862,20 +23488,32 @@ class DraftGetElementsSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: DraftGetElementsElements | None = Field(
-        None, description="The definition of the assigned elements."
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["DraftGetElementsElements"],
+        Field(
+            None, description="The definition of the assigned elements."
+        ),
+    ]
 
 
 class DraftGetElementsSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: DraftGetElementsElements | None = Field(
-        None, description="The definition of the assigned elements."
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["DraftGetElementsElements"],
+        Field(
+            None, description="The definition of the assigned elements."
+        ),
+    ]
 
 
 class DraftGetConfigurationSign(BaseModel):
@@ -19885,18 +23523,24 @@ class DraftGetConfigurationSign(BaseModel):
     RecipientConfiguration: None | (
         DraftGetConfigurationAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    FinishActionConfiguration: DraftGetConfigurationFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
+    FinishActionConfiguration: Annotated[
+        Optional["DraftGetConfigurationFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
     SignatureDataConfiguration: None | (
         DraftGetConfigurationSignatureDataConfiguration
     ) = Field(
         None, description="The configuration of recipient data for special signatures."
     )
-    BatchConfiguration: DraftGetConfigurationBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BatchConfiguration: Annotated[
+        Optional["DraftGetConfigurationBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     SigningGroup: int | None = Field(
         None, description="The parallel group for sign actions."
     )
@@ -19909,9 +23553,12 @@ class DraftGetConfigurationView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftGetConfigurationRecipientConfiguration | None = Field(
-        None, description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftGetConfigurationRecipientConfiguration"],
+        Field(
+            None, description="The configuration of the recipient."
+        ),
+    ]
     ViewingGroup: int | None = Field(
         None, description="The parallel group for view actions."
     )
@@ -19927,9 +23574,12 @@ class DraftGetConfigurationSignAsP7M(BaseModel):
     RecipientConfiguration: None | (
         DraftGetConfigurationAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    SignatureMethods: DraftGetConfigurationP7MSignatureMethods | None = Field(
-        None, description="The configuration of recipient data for P7M signatures."
-    )
+    SignatureMethods: Annotated[
+        Optional["DraftGetConfigurationP7MSignatureMethods"],
+        Field(
+            None, description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     SignAsP7MGroup: int | None = Field(
         None, description="The parallel group for P7M actions."
     )
@@ -19942,17 +23592,26 @@ class DraftGetConfigurationSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfigurations: list[DraftGetConfigurationBulkRecipient] | None = Field(
-        None,
-        description="The configurations of the recipients that are part of the bulk.",
-    )
-    FinishActionConfiguration: DraftGetConfigurationFinishAction | None = Field(
-        None,
-        description="Defined actions for different clients that will trigger after an action has been finished.",
-    )
-    BatchConfiguration: DraftGetConfigurationBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    RecipientConfigurations: Annotated[
+        Optional[list["DraftGetConfigurationBulkRecipient"]],
+        Field(
+            default=None,
+            description="The configurations of the recipients that are part of the bulk.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["DraftGetConfigurationFinishAction"],
+        Field(
+            default=None,
+            description="Defined actions for different clients that will trigger after an action has been finished.",
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["DraftGetConfigurationBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     GeneralPoliciesOverrides: None | (
         DraftGetConfigurationGeneralPoliciesForSignAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -19962,144 +23621,252 @@ class DraftCreateElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[DraftCreateTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[DraftCreateCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[DraftCreateComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[DraftCreateRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[DraftCreateListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
-    Signatures: list[DraftCreateSignatureField] | None = Field(
-        None, description="The signatures.", max_items=1000
-    )
-    Attachments: list[DraftCreateAttachment] | None = Field(
-        None, description="The attachments.", max_items=1000
-    )
-    PredefinedFieldElements: DraftCreatePredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: DraftCreateLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
-    AreaReadConfirmations: list[DraftCreateReadAreaConfirmation] | None = Field(
-        None, description="The areas which have to be read.", max_items=1000
-    )
-    PageReadConfirmations: list[DraftCreateReadPagesConfirmation] | None = Field(
-        None, description="The pages which have to be read.", max_items=1000
-    )
-    DocumentReadConfirmations: list[DraftCreateReadDocumentConfirmation] | None = Field(
-        None, description="The documents which have to be read.", max_items=1000
-    )
+    TextBoxes: Annotated[
+        Optional[list["DraftCreateTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["DraftCreateCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["DraftCreateComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["DraftCreateRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["DraftCreateListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["DraftCreateSignatureField"]],
+        Field(
+            None, description="The signatures.", max_items=1000
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["DraftCreateAttachment"]],
+        Field(
+            None, description="The attachments.", max_items=1000
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["DraftCreatePredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["DraftCreateLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
+    AreaReadConfirmations: Annotated[
+        Optional[list["DraftCreateReadAreaConfirmation"]],
+        Field(
+            None, description="The areas which have to be read.", max_items=1000
+        ),
+    ]
+    PageReadConfirmations: Annotated[
+        Optional[list["DraftCreateReadPagesConfirmation"]],
+        Field(
+            None, description="The pages which have to be read.", max_items=1000
+        ),
+    ]
+    DocumentReadConfirmations: Annotated[
+        Optional[list["DraftCreateReadDocumentConfirmation"]],
+        Field(
+            None, description="The documents which have to be read.", max_items=1000
+        ),
+    ]
 
 
 class DraftCreateView(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftCreateRecipientConfiguration | None = Field(
-        None, description="The configuration of the recipient."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftCreateRecipientConfiguration"],
+        Field(
+            None, description="The configuration of the recipient."
+        ),
+    ]
     ViewingGroup: str | None = Field(
         None, description="The group for defining parallel view actions."
     )
-    GeneralPoliciesOverrides: DraftCreateGeneralPoliciesForViewAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    GeneralPoliciesOverrides: Annotated[
+        Optional["DraftCreateGeneralPoliciesForViewAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class DraftCreateSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    BulkRecipients: list[DraftCreateBulkRecipient] | None = Field(
-        None, description="The recipients that are part of the bulk.", max_items=1000
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: DraftCreateElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: DraftCreateFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
-    BatchConfiguration: DraftCreateBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
-    GeneralPoliciesOverrides: DraftCreateGeneralPoliciesForSignAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    BulkRecipients: Annotated[
+        Optional[list["DraftCreateBulkRecipient"]],
+        Field(
+            None, description="The recipients that are part of the bulk.", max_items=1000
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["DraftCreateElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["DraftCreateFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["DraftCreateBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
+    GeneralPoliciesOverrides: Annotated[
+        Optional["DraftCreateGeneralPoliciesForSignAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class DraftCreateSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: DraftCreateAdvancedRecipientConfiguration | None = Field(
-        None, description="The configuration of the recipient."
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: DraftCreateElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: DraftCreateFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
-    SignatureDataConfiguration: DraftCreateSignatureDataConfiguration | None = Field(
-        None, description="The configuration of recipient data for special signatures."
-    )
-    BatchConfiguration: DraftCreateBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["DraftCreateAdvancedRecipientConfiguration"],
+        Field(
+            None, description="The configuration of the recipient."
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["DraftCreateElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["DraftCreateFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
+    SignatureDataConfiguration: Annotated[
+        Optional["DraftCreateSignatureDataConfiguration"],
+        Field(
+            None, description="The configuration of recipient data for special signatures."
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["DraftCreateBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     SigningGroup: str | None = Field(
         None, description="The group for defining parallel sign actions."
     )
-    GeneralPoliciesOverrides: DraftCreateGeneralPoliciesForSignAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    GeneralPoliciesOverrides: Annotated[
+        Optional["DraftCreateGeneralPoliciesForSignAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class DraftActivityReplaceElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[DraftActivityReplaceTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[DraftActivityReplaceCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[DraftActivityReplaceComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[DraftActivityReplaceRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[DraftActivityReplaceListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
-    Signatures: list[DraftActivityReplaceSignatureField] | None = Field(
-        None, description="The signatures.", max_items=1000
-    )
-    Attachments: list[DraftActivityReplaceAttachment] | None = Field(
-        None, description="The attachments.", max_items=1000
-    )
-    PredefinedFieldElements: DraftActivityReplacePredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: DraftActivityReplaceLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
+    TextBoxes: Annotated[
+        Optional[list["DraftActivityReplaceTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["DraftActivityReplaceCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["DraftActivityReplaceComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["DraftActivityReplaceRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["DraftActivityReplaceListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["DraftActivityReplaceSignatureField"]],
+        Field(
+            None, description="The signatures.", max_items=1000
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["DraftActivityReplaceAttachment"]],
+        Field(
+            None, description="The attachments.", max_items=1000
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["DraftActivityReplacePredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["DraftActivityReplaceLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
     AreaReadConfirmations: list[DraftActivityReplaceReadAreaConfirmation] | None = (
         Field(None, description="The areas which have to be read.", max_items=1000)
     )
@@ -20115,21 +23882,36 @@ class DraftActivityReplaceSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    BulkRecipients: list[DraftActivityReplaceBulkRecipient] | None = Field(
-        None, description="The recipients that are part of the bulk.", max_items=1000
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: DraftActivityReplaceElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: DraftActivityReplaceFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
-    BatchConfiguration: DraftActivityReplaceBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BulkRecipients: Annotated[
+        Optional[list["DraftActivityReplaceBulkRecipient"]],
+        Field(
+            None, description="The recipients that are part of the bulk.", max_items=1000
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["DraftActivityReplaceElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["DraftActivityReplaceFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["DraftActivityReplaceBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     GeneralPoliciesOverrides: None | (
         DraftActivityReplaceGeneralPoliciesForSignAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -20142,23 +23924,35 @@ class DraftActivityReplaceSign(BaseModel):
     RecipientConfiguration: None | (
         DraftActivityReplaceAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: DraftActivityReplaceElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: DraftActivityReplaceFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["DraftActivityReplaceElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["DraftActivityReplaceFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
     SignatureDataConfiguration: None | (
         DraftActivityReplaceSignatureDataConfiguration
     ) = Field(
         None, description="The configuration of recipient data for special signatures."
     )
-    BatchConfiguration: DraftActivityReplaceBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BatchConfiguration: Annotated[
+        Optional["DraftActivityReplaceBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     GeneralPoliciesOverrides: None | (
         DraftActivityReplaceGeneralPoliciesForSignAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -20169,9 +23963,12 @@ class EnvelopeGetResponse(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the envelope.")
-    EnvelopeStatus: EnvelopeStatus | None = Field(
-        None, description="The status of the envelope."
-    )
+    EnvelopeStatus: Annotated[
+        Optional["EnvelopeStatus"],
+        Field(
+            None, description="The status of the envelope."
+        ),
+    ]
     Name: str | None = Field(None, description="The name of the envelope.")
     SentDate: datetime | None = Field(
         None, description="Date when the envelope was sent."
@@ -20179,48 +23976,84 @@ class EnvelopeGetResponse(BaseModel):
     EnvelopeBulkParentId: str | None = Field(
         None, description="The identifier of the BulkParent."
     )
-    Activities: list[EnvelopeGetActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
-    SenderUserInformation: EnvelopeGetSenderUserInformation | None = Field(
-        None, description="The information about the user who sent the envelope."
-    )
+    Activities: Annotated[
+        Optional[list["EnvelopeGetActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
+    SenderUserInformation: Annotated[
+        Optional["EnvelopeGetSenderUserInformation"],
+        Field(
+            None, description="The information about the user who sent the envelope."
+        ),
+    ]
 
 
 class EnvelopeGetElementsElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[EnvelopeGetElementsTextBox] | None = Field(
-        None, description="The text boxes."
-    )
-    CheckBoxes: list[EnvelopeGetElementsCheckBox] | None = Field(
-        None, description="The check boxes."
-    )
-    ComboBoxes: list[EnvelopeGetElementsComboBox] | None = Field(
-        None, description="The combo boxes."
-    )
-    RadioButtons: list[EnvelopeGetElementsRadioButtonGroup] | None = Field(
-        None, description="The radio buttons."
-    )
-    ListBoxes: list[EnvelopeGetElementsListBox] | None = Field(
-        None, description="The list boxes."
-    )
-    Signatures: list[EnvelopeGetElementsSignatureField] | None = Field(
-        None, description="The signatures."
-    )
-    Attachments: list[EnvelopeGetElementsAttachment] | None = Field(
-        None, description="The attachments."
-    )
-    PredefinedFieldElements: EnvelopeGetElementsPredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: EnvelopeGetElementsLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
-    AreaReadConfirmations: list[EnvelopeGetElementsReadAreaConfirmation] | None = Field(
-        None, description="The areas which have to be read."
-    )
+    TextBoxes: Annotated[
+        Optional[list["EnvelopeGetElementsTextBox"]],
+        Field(
+            None, description="The text boxes."
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["EnvelopeGetElementsCheckBox"]],
+        Field(
+            None, description="The check boxes."
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["EnvelopeGetElementsComboBox"]],
+        Field(
+            None, description="The combo boxes."
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["EnvelopeGetElementsRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons."
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["EnvelopeGetElementsListBox"]],
+        Field(
+            None, description="The list boxes."
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["EnvelopeGetElementsSignatureField"]],
+        Field(
+            None, description="The signatures."
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["EnvelopeGetElementsAttachment"]],
+        Field(
+            None, description="The attachments."
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["EnvelopeGetElementsPredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["EnvelopeGetElementsLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
+    AreaReadConfirmations: Annotated[
+        Optional[list["EnvelopeGetElementsReadAreaConfirmation"]],
+        Field(
+            None, description="The areas which have to be read."
+        ),
+    ]
     PageReadConfirmations: list[EnvelopeGetElementsReadPagesConfirmation] | None = (
         Field(None, description="The pages which have to be read.")
     )
@@ -20233,10 +24066,16 @@ class EnvelopeGetElementsSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: EnvelopeGetElementsElements | None = Field(
-        None, description="The definition of the assigned elements."
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["EnvelopeGetElementsElements"],
+        Field(
+            None, description="The definition of the assigned elements."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationSign(BaseModel):
@@ -20246,18 +24085,24 @@ class EnvelopeGetConfigurationSign(BaseModel):
     RecipientConfiguration: None | (
         EnvelopeGetConfigurationAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    FinishActionConfiguration: EnvelopeGetConfigurationFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
+    FinishActionConfiguration: Annotated[
+        Optional["EnvelopeGetConfigurationFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
     SignatureDataConfiguration: None | (
         EnvelopeGetConfigurationSignatureDataConfiguration
     ) = Field(
         None, description="The configuration of recipient data for special signatures."
     )
-    BatchConfiguration: EnvelopeGetConfigurationBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BatchConfiguration: Annotated[
+        Optional["EnvelopeGetConfigurationBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     SigningGroup: int | None = Field(
         None, description="The parallel group for sign actions."
     )
@@ -20288,9 +24133,12 @@ class EnvelopeGetConfigurationSignAsP7M(BaseModel):
     RecipientConfiguration: None | (
         EnvelopeGetConfigurationAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    SignatureMethods: EnvelopeGetConfigurationP7MSignatureMethods | None = Field(
-        None, description="The configuration of recipient data for P7M signatures."
-    )
+    SignatureMethods: Annotated[
+        Optional["EnvelopeGetConfigurationP7MSignatureMethods"],
+        Field(
+            None, description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     SignAsP7MGroup: int | None = Field(
         None, description="The parallel group for P7M actions."
     )
@@ -20303,39 +24151,72 @@ class EnvelopeSendElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[EnvelopeSendTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[EnvelopeSendCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[EnvelopeSendComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[EnvelopeSendRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[EnvelopeSendListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
-    Signatures: list[EnvelopeSendSignatureField] | None = Field(
-        None, description="The signatures.", max_items=1000
-    )
-    Attachments: list[EnvelopeSendAttachment] | None = Field(
-        None, description="The attachments.", max_items=1000
-    )
-    PredefinedFieldElements: EnvelopeSendPredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: EnvelopeSendLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
-    AreaReadConfirmations: list[EnvelopeSendReadAreaConfirmation] | None = Field(
-        None, description="The areas which have to be read.", max_items=1000
-    )
-    PageReadConfirmations: list[EnvelopeSendReadPagesConfirmation] | None = Field(
-        None, description="The pages which have to be read.", max_items=1000
-    )
+    TextBoxes: Annotated[
+        Optional[list["EnvelopeSendTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["EnvelopeSendCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["EnvelopeSendComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["EnvelopeSendRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["EnvelopeSendListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["EnvelopeSendSignatureField"]],
+        Field(
+            None, description="The signatures.", max_items=1000
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["EnvelopeSendAttachment"]],
+        Field(
+            None, description="The attachments.", max_items=1000
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["EnvelopeSendPredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["EnvelopeSendLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
+    AreaReadConfirmations: Annotated[
+        Optional[list["EnvelopeSendReadAreaConfirmation"]],
+        Field(
+            None, description="The areas which have to be read.", max_items=1000
+        ),
+    ]
+    PageReadConfirmations: Annotated[
+        Optional[list["EnvelopeSendReadPagesConfirmation"]],
+        Field(
+            None, description="The pages which have to be read.", max_items=1000
+        ),
+    ]
     DocumentReadConfirmations: list[EnvelopeSendReadDocumentConfirmation] | None = (
         Field(None, description="The documents which have to be read.", max_items=1000)
     )
@@ -20345,64 +24226,109 @@ class EnvelopeSendSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeSendAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: EnvelopeSendElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: EnvelopeSendFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
-    SignatureDataConfiguration: EnvelopeSendSignatureDataConfiguration | None = Field(
-        None,
-        description="The configuration of recipient data for special signatures.",
-    )
-    BatchConfiguration: EnvelopeSendBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeSendAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["EnvelopeSendElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["EnvelopeSendFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
+    SignatureDataConfiguration: Annotated[
+        Optional["EnvelopeSendSignatureDataConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of recipient data for special signatures.",
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["EnvelopeSendBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     SigningGroup: str | None = Field(
         None, description="The group for defining parallel sign actions."
     )
-    GeneralPoliciesOverrides: EnvelopeSendGeneralPoliciesForSignAction | None = Field(
-        None, description="Viewer policy settings for override."
-    )
+    GeneralPoliciesOverrides: Annotated[
+        Optional["EnvelopeSendGeneralPoliciesForSignAction"],
+        Field(
+            None, description="Viewer policy settings for override."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[EnvelopeActivityReplaceTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[EnvelopeActivityReplaceCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[EnvelopeActivityReplaceComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[EnvelopeActivityReplaceRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[EnvelopeActivityReplaceListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
-    Signatures: list[EnvelopeActivityReplaceSignatureField] | None = Field(
-        None, description="The signatures.", max_items=1000
-    )
-    Attachments: list[EnvelopeActivityReplaceAttachment] | None = Field(
-        None, description="The attachments.", max_items=1000
-    )
+    TextBoxes: Annotated[
+        Optional[list["EnvelopeActivityReplaceTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["EnvelopeActivityReplaceCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["EnvelopeActivityReplaceComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["EnvelopeActivityReplaceRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["EnvelopeActivityReplaceListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["EnvelopeActivityReplaceSignatureField"]],
+        Field(
+            None, description="The signatures.", max_items=1000
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["EnvelopeActivityReplaceAttachment"]],
+        Field(
+            None, description="The attachments.", max_items=1000
+        ),
+    ]
     PredefinedFieldElements: None | (EnvelopeActivityReplacePredefinedFieldElements) = (
         Field(None, description="The predefined field elements.")
     )
-    LinkConfiguration: EnvelopeActivityReplaceLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
+    LinkConfiguration: Annotated[
+        Optional["EnvelopeActivityReplaceLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
     AreaReadConfirmations: None | (
         list[EnvelopeActivityReplaceReadAreaConfirmation]
     ) = Field(None, description="The areas which have to be read.", max_items=1000)
@@ -20421,23 +24347,35 @@ class EnvelopeActivityReplaceSign(BaseModel):
     RecipientConfiguration: None | (
         EnvelopeActivityReplaceAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    Elements: EnvelopeActivityReplaceElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: EnvelopeActivityReplaceFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
+    Elements: Annotated[
+        Optional["EnvelopeActivityReplaceElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["EnvelopeActivityReplaceFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
     SignatureDataConfiguration: None | (
         EnvelopeActivityReplaceSignatureDataConfiguration
     ) = Field(
         None, description="The configuration of recipient data for special signatures."
     )
-    BatchConfiguration: EnvelopeActivityReplaceBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
+    BatchConfiguration: Annotated[
+        Optional["EnvelopeActivityReplaceBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
     GeneralPoliciesOverrides: None | (
         EnvelopeActivityReplaceGeneralPoliciesForSignAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -20447,39 +24385,72 @@ class EnvelopeBulkSendElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[EnvelopeBulkSendTextBox] | None = Field(
-        None, description="The text boxes.", max_items=1000
-    )
-    CheckBoxes: list[EnvelopeBulkSendCheckBox] | None = Field(
-        None, description="The check boxes.", max_items=1000
-    )
-    ComboBoxes: list[EnvelopeBulkSendComboBox] | None = Field(
-        None, description="The combo boxes.", max_items=1000
-    )
-    RadioButtons: list[EnvelopeBulkSendRadioButtonGroup] | None = Field(
-        None, description="The radio buttons.", max_items=1000
-    )
-    ListBoxes: list[EnvelopeBulkSendListBox] | None = Field(
-        None, description="The list boxes.", max_items=1000
-    )
-    Signatures: list[EnvelopeBulkSendSignatureField] | None = Field(
-        None, description="The signatures.", max_items=1000
-    )
-    Attachments: list[EnvelopeBulkSendAttachment] | None = Field(
-        None, description="The attachments.", max_items=1000
-    )
-    PredefinedFieldElements: EnvelopeBulkSendPredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: EnvelopeBulkSendLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
-    AreaReadConfirmations: list[EnvelopeBulkSendReadAreaConfirmation] | None = Field(
-        None, description="The areas which have to be read.", max_items=1000
-    )
-    PageReadConfirmations: list[EnvelopeBulkSendReadPagesConfirmation] | None = Field(
-        None, description="The pages which have to be read.", max_items=1000
-    )
+    TextBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendTextBox"]],
+        Field(
+            None, description="The text boxes.", max_items=1000
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendCheckBox"]],
+        Field(
+            None, description="The check boxes.", max_items=1000
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendComboBox"]],
+        Field(
+            None, description="The combo boxes.", max_items=1000
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["EnvelopeBulkSendRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons.", max_items=1000
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["EnvelopeBulkSendListBox"]],
+        Field(
+            None, description="The list boxes.", max_items=1000
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["EnvelopeBulkSendSignatureField"]],
+        Field(
+            None, description="The signatures.", max_items=1000
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["EnvelopeBulkSendAttachment"]],
+        Field(
+            None, description="The attachments.", max_items=1000
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["EnvelopeBulkSendPredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["EnvelopeBulkSendLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
+    AreaReadConfirmations: Annotated[
+        Optional[list["EnvelopeBulkSendReadAreaConfirmation"]],
+        Field(
+            None, description="The areas which have to be read.", max_items=1000
+        ),
+    ]
+    PageReadConfirmations: Annotated[
+        Optional[list["EnvelopeBulkSendReadPagesConfirmation"]],
+        Field(
+            None, description="The pages which have to be read.", max_items=1000
+        ),
+    ]
     DocumentReadConfirmations: None | (
         list[EnvelopeBulkSendReadDocumentConfirmation]
     ) = Field(None, description="The documents which have to be read.", max_items=1000)
@@ -20489,24 +24460,39 @@ class EnvelopeBulkSendSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    BulkRecipients: list[EnvelopeBulkSendRecipient] = Field(
-        ...,
-        description="The recipients that are part of the bulk.",
-        max_items=1000,
-        min_items=1,
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: EnvelopeBulkSendElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: EnvelopeBulkSendFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
-    BatchConfiguration: EnvelopeBulkSendBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BulkRecipients: Annotated[
+        Optional[list["EnvelopeBulkSendRecipient"]],
+        Field(
+            ...,
+            description="The recipients that are part of the bulk.",
+            max_items=1000,
+            min_items=1,
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["EnvelopeBulkSendElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["EnvelopeBulkSendFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["EnvelopeBulkSendBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     GeneralPoliciesOverrides: EnvelopeBulkSendGeneralPoliciesForSignAction | None = (
         Field(None, description="Viewer policy settings for override.")
     )
@@ -20516,27 +24502,42 @@ class EnvelopeBulkSendSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfiguration: EnvelopeBulkSendAdvancedRecipientConfiguration = Field(
-        ..., description="The configuration of the recipient."
-    )
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: EnvelopeBulkSendElements | None = Field(
-        None,
-        description="The elements in the document (e.g. form fields) assigned to the recipient.",
-    )
-    FinishActionConfiguration: EnvelopeBulkSendFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
+    RecipientConfiguration: Annotated[
+        Optional["EnvelopeBulkSendAdvancedRecipientConfiguration"],
+        Field(
+            ..., description="The configuration of the recipient."
+        ),
+    ]
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["EnvelopeBulkSendElements"],
+        Field(
+            default=None,
+            description="The elements in the document (e.g. form fields) assigned to the recipient.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["EnvelopeBulkSendFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
     SignatureDataConfiguration: EnvelopeBulkSendSignatureDataConfiguration | None = (
         Field(
             None,
             description="The configuration of recipient data for special signatures.",
         )
     )
-    BatchConfiguration: EnvelopeBulkSendBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BatchConfiguration: Annotated[
+        Optional["EnvelopeBulkSendBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     GeneralPoliciesOverrides: EnvelopeBulkSendGeneralPoliciesForSignAction | None = (
         Field(None, description="Viewer policy settings for override.")
     )
@@ -20546,39 +24547,66 @@ class FilePrepareElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[FilePrepareTextBox] | None = Field(
-        None, description="The text boxes."
-    )
-    CheckBoxes: list[FilePrepareCheckBox] | None = Field(
-        None, description="The check boxes."
-    )
-    ComboBoxes: list[FilePrepareComboBox] | None = Field(
-        None, description="The combo boxes."
-    )
-    RadioButtons: list[FilePrepareRadioButtonGroup] | None = Field(
-        None, description="The radio buttons."
-    )
-    ListBoxes: list[FilePrepareListBox] | None = Field(
-        None, description="The list boxes."
-    )
-    Signatures: list[FilePrepareSignatureField] | None = Field(
-        None, description="The signatures."
-    )
-    Attachments: list[FilePrepareAttachment] | None = Field(
-        None, description="The attachments."
-    )
-    LinkConfiguration: FilePrepareLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
+    TextBoxes: Annotated[
+        Optional[list["FilePrepareTextBox"]],
+        Field(
+            None, description="The text boxes."
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["FilePrepareCheckBox"]],
+        Field(
+            None, description="The check boxes."
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["FilePrepareComboBox"]],
+        Field(
+            None, description="The combo boxes."
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["FilePrepareRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons."
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["FilePrepareListBox"]],
+        Field(
+            None, description="The list boxes."
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["FilePrepareSignatureField"]],
+        Field(
+            None, description="The signatures."
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["FilePrepareAttachment"]],
+        Field(
+            None, description="The attachments."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["FilePrepareLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
 
 
 class FilePrepareSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Elements: FilePrepareElements | None = Field(
-        None, description="The definition of the assigned elements."
-    )
+    Elements: Annotated[
+        Optional["FilePrepareElements"],
+        Field(
+            None, description="The definition of the assigned elements."
+        ),
+    ]
 
 
 class TemplateGetResponse(BaseModel):
@@ -20588,45 +24616,78 @@ class TemplateGetResponse(BaseModel):
     Id: str | None = Field(None, description="The identifier of the template.")
     Name: str | None = Field(None, description="The name of the template.")
     CreationDate: datetime | None = Field(None, description="Date of creation")
-    Activities: list[TemplateGetActivity] | None = Field(
-        None, description="The activities of the template."
-    )
+    Activities: Annotated[
+        Optional[list["TemplateGetActivity"]],
+        Field(
+            None, description="The activities of the template."
+        ),
+    ]
 
 
 class TemplateGetElementsElements(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    TextBoxes: list[TemplateGetElementsTextBox] | None = Field(
-        None, description="The text boxes."
-    )
-    CheckBoxes: list[TemplateGetElementsCheckBox] | None = Field(
-        None, description="The check boxes."
-    )
-    ComboBoxes: list[TemplateGetElementsComboBox] | None = Field(
-        None, description="The combo boxes."
-    )
-    RadioButtons: list[TemplateGetElementsRadioButtonGroup] | None = Field(
-        None, description="The radio buttons."
-    )
-    ListBoxes: list[TemplateGetElementsListBox] | None = Field(
-        None, description="The list boxes."
-    )
-    Signatures: list[TemplateGetElementsSignatureField] | None = Field(
-        None, description="The signatures."
-    )
-    Attachments: list[TemplateGetElementsAttachment] | None = Field(
-        None, description="The attachments."
-    )
-    PredefinedFieldElements: TemplateGetElementsPredefinedFieldElements | None = Field(
-        None, description="The predefined field elements."
-    )
-    LinkConfiguration: TemplateGetElementsLinkConfiguration | None = Field(
-        None, description="The links in the documents."
-    )
-    AreaReadConfirmations: list[TemplateGetElementsReadAreaConfirmation] | None = Field(
-        None, description="The areas which have to be read."
-    )
+    TextBoxes: Annotated[
+        Optional[list["TemplateGetElementsTextBox"]],
+        Field(
+            None, description="The text boxes."
+        ),
+    ]
+    CheckBoxes: Annotated[
+        Optional[list["TemplateGetElementsCheckBox"]],
+        Field(
+            None, description="The check boxes."
+        ),
+    ]
+    ComboBoxes: Annotated[
+        Optional[list["TemplateGetElementsComboBox"]],
+        Field(
+            None, description="The combo boxes."
+        ),
+    ]
+    RadioButtons: Annotated[
+        Optional[list["TemplateGetElementsRadioButtonGroup"]],
+        Field(
+            None, description="The radio buttons."
+        ),
+    ]
+    ListBoxes: Annotated[
+        Optional[list["TemplateGetElementsListBox"]],
+        Field(
+            None, description="The list boxes."
+        ),
+    ]
+    Signatures: Annotated[
+        Optional[list["TemplateGetElementsSignatureField"]],
+        Field(
+            None, description="The signatures."
+        ),
+    ]
+    Attachments: Annotated[
+        Optional[list["TemplateGetElementsAttachment"]],
+        Field(
+            None, description="The attachments."
+        ),
+    ]
+    PredefinedFieldElements: Annotated[
+        Optional["TemplateGetElementsPredefinedFieldElements"],
+        Field(
+            None, description="The predefined field elements."
+        ),
+    ]
+    LinkConfiguration: Annotated[
+        Optional["TemplateGetElementsLinkConfiguration"],
+        Field(
+            None, description="The links in the documents."
+        ),
+    ]
+    AreaReadConfirmations: Annotated[
+        Optional[list["TemplateGetElementsReadAreaConfirmation"]],
+        Field(
+            None, description="The areas which have to be read."
+        ),
+    ]
     PageReadConfirmations: list[TemplateGetElementsReadPagesConfirmation] | None = (
         Field(None, description="The pages which have to be read.")
     )
@@ -20639,20 +24700,32 @@ class TemplateGetElementsSign(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: TemplateGetElementsElements | None = Field(
-        None, description="The definition of the assigned elements."
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["TemplateGetElementsElements"],
+        Field(
+            None, description="The definition of the assigned elements."
+        ),
+    ]
 
 
 class TemplateGetElementsSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SequenceMode: SequenceMode | None = Field(None, description="The sequence mode.")
-    Elements: TemplateGetElementsElements | None = Field(
-        None, description="The definition of the assigned elements."
-    )
+    SequenceMode: Annotated[
+        Optional["SequenceMode"],
+        Field(default=None, description="The sequence mode."),
+    ]
+    Elements: Annotated[
+        Optional["TemplateGetElementsElements"],
+        Field(
+            None, description="The definition of the assigned elements."
+        ),
+    ]
 
 
 class TemplateGetConfigurationSign(BaseModel):
@@ -20662,18 +24735,24 @@ class TemplateGetConfigurationSign(BaseModel):
     RecipientConfiguration: None | (
         TemplateGetConfigurationAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    FinishActionConfiguration: TemplateGetConfigurationFinishAction | None = Field(
-        None,
-        description="Defines what happens in the signing clients, after an action has been finished.",
-    )
+    FinishActionConfiguration: Annotated[
+        Optional["TemplateGetConfigurationFinishAction"],
+        Field(
+            default=None,
+            description="Defines what happens in the signing clients, after an action has been finished.",
+        ),
+    ]
     SignatureDataConfiguration: None | (
         TemplateGetConfigurationSignatureDataConfiguration
     ) = Field(
         None, description="The configuration of recipient data for special signatures."
     )
-    BatchConfiguration: TemplateGetConfigurationBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    BatchConfiguration: Annotated[
+        Optional["TemplateGetConfigurationBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     SigningGroup: int | None = Field(
         None, description="The parallel group for sign actions."
     )
@@ -20704,9 +24783,12 @@ class TemplateGetConfigurationSignAsP7M(BaseModel):
     RecipientConfiguration: None | (
         TemplateGetConfigurationAdvancedRecipientConfiguration
     ) = Field(None, description="The configuration of the recipient.")
-    SignatureMethods: TemplateGetConfigurationP7MSignatureMethods | None = Field(
-        None, description="The configuration of recipient data for P7M signatures."
-    )
+    SignatureMethods: Annotated[
+        Optional["TemplateGetConfigurationP7MSignatureMethods"],
+        Field(
+            None, description="The configuration of recipient data for P7M signatures."
+        ),
+    ]
     SignAsP7MGroup: int | None = Field(
         None, description="The parallel group for P7M actions."
     )
@@ -20719,17 +24801,26 @@ class TemplateGetConfigurationSignBulk(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    RecipientConfigurations: list[TemplateGetConfigurationBulkRecipient] | None = Field(
-        None,
-        description="The configurations of the recipients that are part of the bulk.",
-    )
-    FinishActionConfiguration: TemplateGetConfigurationFinishAction | None = Field(
-        None,
-        description="Defined actions for different clients that will trigger after an action has been finished.",
-    )
-    BatchConfiguration: TemplateGetConfigurationBatchConfiguration | None = Field(
-        None, description="The configuration of a signing batch."
-    )
+    RecipientConfigurations: Annotated[
+        Optional[list["TemplateGetConfigurationBulkRecipient"]],
+        Field(
+            default=None,
+            description="The configurations of the recipients that are part of the bulk.",
+        ),
+    ]
+    FinishActionConfiguration: Annotated[
+        Optional["TemplateGetConfigurationFinishAction"],
+        Field(
+            default=None,
+            description="Defined actions for different clients that will trigger after an action has been finished.",
+        ),
+    ]
+    BatchConfiguration: Annotated[
+        Optional["TemplateGetConfigurationBatchConfiguration"],
+        Field(
+            None, description="The configuration of a signing batch."
+        ),
+    ]
     GeneralPoliciesOverrides: None | (
         TemplateGetConfigurationGeneralPoliciesForSignAction
     ) = Field(None, description="Viewer policy settings for override.")
@@ -20739,228 +24830,384 @@ class DraftGetElementsAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAutomatic: DraftGetElementsSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: DraftGetElementsSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    SignBulk: DraftGetElementsSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SignAutomatic: Annotated[
+        Optional["DraftGetElementsSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["DraftGetElementsSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["DraftGetElementsSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class DraftGetConfigurationAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: DraftGetConfigurationSendCopy | None = Field(
-        None, description="The configuration of the copy action."
-    )
-    Sign: DraftGetConfigurationSign | None = Field(
-        None, description="The configuration of the sign action."
-    )
-    View: DraftGetConfigurationView | None = Field(
-        None, description="The configuration of the view action."
-    )
-    SignAsP7M: DraftGetConfigurationSignAsP7M | None = Field(
-        None, description="The configuration of the P7M sign action."
-    )
-    SignBulk: DraftGetConfigurationSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SendCopy: Annotated[
+        Optional["DraftGetConfigurationSendCopy"],
+        Field(
+            None, description="The configuration of the copy action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["DraftGetConfigurationSign"],
+        Field(
+            None, description="The configuration of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["DraftGetConfigurationView"],
+        Field(
+            None, description="The configuration of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["DraftGetConfigurationSignAsP7M"],
+        Field(
+            None, description="The configuration of the P7M sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["DraftGetConfigurationSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class DraftCreateAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: DraftCreateSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignAutomatic: DraftCreateSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: DraftCreateSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: DraftCreateView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: DraftCreateSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
-    SignBulk: DraftCreateSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SendCopy: Annotated[
+        Optional["DraftCreateSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["DraftCreateSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["DraftCreateSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["DraftCreateView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["DraftCreateSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["DraftCreateSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class DraftActivityReplaceAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: DraftActivityReplaceSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignAutomatic: DraftActivityReplaceSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: DraftActivityReplaceSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: DraftActivityReplaceView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: DraftActivityReplaceSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
-    SignBulk: DraftActivityReplaceSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SendCopy: Annotated[
+        Optional["DraftActivityReplaceSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["DraftActivityReplaceSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["DraftActivityReplaceSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["DraftActivityReplaceView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["DraftActivityReplaceSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["DraftActivityReplaceSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class EnvelopeGetElementsAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAutomatic: EnvelopeGetElementsSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: EnvelopeGetElementsSign | None = Field(
-        None, description="The definition of the sign action."
-    )
+    SignAutomatic: Annotated[
+        Optional["EnvelopeGetElementsSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["EnvelopeGetElementsSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: EnvelopeGetConfigurationSendCopy | None = Field(
-        None, description="The configuration of the copy action."
-    )
-    Sign: EnvelopeGetConfigurationSign | None = Field(
-        None, description="The configuration of the sign action."
-    )
-    View: EnvelopeGetConfigurationView | None = Field(
-        None, description="The configuration of the view action."
-    )
-    SignAsP7M: EnvelopeGetConfigurationSignAsP7M | None = Field(
-        None, description="The configuration of the P7M sign action."
-    )
+    SendCopy: Annotated[
+        Optional["EnvelopeGetConfigurationSendCopy"],
+        Field(
+            None, description="The configuration of the copy action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["EnvelopeGetConfigurationSign"],
+        Field(
+            None, description="The configuration of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["EnvelopeGetConfigurationView"],
+        Field(
+            None, description="The configuration of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["EnvelopeGetConfigurationSignAsP7M"],
+        Field(
+            None, description="The configuration of the P7M sign action."
+        ),
+    ]
 
 
 class EnvelopeSendAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: EnvelopeSendSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignAutomatic: EnvelopeSendSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: EnvelopeSendSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: EnvelopeSendView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: EnvelopeSendSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
+    SendCopy: Annotated[
+        Optional["EnvelopeSendSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["EnvelopeSendSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["EnvelopeSendSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["EnvelopeSendView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["EnvelopeSendSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: EnvelopeActivityReplaceSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignAutomatic: EnvelopeActivityReplaceSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: EnvelopeActivityReplaceSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: EnvelopeActivityReplaceView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: EnvelopeActivityReplaceSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
+    SendCopy: Annotated[
+        Optional["EnvelopeActivityReplaceSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["EnvelopeActivityReplaceSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["EnvelopeActivityReplaceSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["EnvelopeActivityReplaceView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["EnvelopeActivityReplaceSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
 
 
 class EnvelopeBulkSendAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: EnvelopeBulkSendSendCopy | None = Field(
-        None, description="The definition of the copy action."
-    )
-    SignAutomatic: EnvelopeBulkSendSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: EnvelopeBulkSendSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    View: EnvelopeBulkSendView | None = Field(
-        None, description="The definition of the view action."
-    )
-    SignAsP7M: EnvelopeBulkSendSignAsP7M | None = Field(
-        None, description="The definition of the P7M sign action."
-    )
-    SignBulk: EnvelopeBulkSendSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SendCopy: Annotated[
+        Optional["EnvelopeBulkSendSendCopy"],
+        Field(
+            None, description="The definition of the copy action."
+        ),
+    ]
+    SignAutomatic: Annotated[
+        Optional["EnvelopeBulkSendSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["EnvelopeBulkSendSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["EnvelopeBulkSendView"],
+        Field(
+            None, description="The definition of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["EnvelopeBulkSendSignAsP7M"],
+        Field(
+            None, description="The definition of the P7M sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["EnvelopeBulkSendSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class FilePrepareAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAutomatic: FilePrepareSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: FilePrepareSign | None = Field(
-        None, description="The definition of the sign action."
-    )
+    SignAutomatic: Annotated[
+        Optional["FilePrepareSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["FilePrepareSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
 
 
 class TemplateGetElementsAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SignAutomatic: TemplateGetElementsSignAutomatic | None = Field(
-        None, description="The definition of the automatic sign action."
-    )
-    Sign: TemplateGetElementsSign | None = Field(
-        None, description="The definition of the sign action."
-    )
-    SignBulk: TemplateGetElementsSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SignAutomatic: Annotated[
+        Optional["TemplateGetElementsSignAutomatic"],
+        Field(
+            None, description="The definition of the automatic sign action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["TemplateGetElementsSign"],
+        Field(
+            None, description="The definition of the sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["TemplateGetElementsSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class TemplateGetConfigurationAction(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    SendCopy: TemplateGetConfigurationSendCopy | None = Field(
-        None, description="The configuration of the copy action."
-    )
-    Sign: TemplateGetConfigurationSign | None = Field(
-        None, description="The configuration of the sign action."
-    )
-    View: TemplateGetConfigurationView | None = Field(
-        None, description="The configuration of the view action."
-    )
-    SignAsP7M: TemplateGetConfigurationSignAsP7M | None = Field(
-        None, description="The configuration of the P7M sign action."
-    )
-    SignBulk: TemplateGetConfigurationSignBulk | None = Field(
-        None, description="The definition of the bulk."
-    )
+    SendCopy: Annotated[
+        Optional["TemplateGetConfigurationSendCopy"],
+        Field(
+            None, description="The configuration of the copy action."
+        ),
+    ]
+    Sign: Annotated[
+        Optional["TemplateGetConfigurationSign"],
+        Field(
+            None, description="The configuration of the sign action."
+        ),
+    ]
+    View: Annotated[
+        Optional["TemplateGetConfigurationView"],
+        Field(
+            None, description="The configuration of the view action."
+        ),
+    ]
+    SignAsP7M: Annotated[
+        Optional["TemplateGetConfigurationSignAsP7M"],
+        Field(
+            None, description="The configuration of the P7M sign action."
+        ),
+    ]
+    SignBulk: Annotated[
+        Optional["TemplateGetConfigurationSignBulk"],
+        Field(
+            None, description="The definition of the bulk."
+        ),
+    ]
 
 
 class DraftGetElementsActivity(BaseModel):
@@ -20968,9 +25215,12 @@ class DraftGetElementsActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: DraftGetElementsAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["DraftGetElementsAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class DraftGetConfigurationActivity(BaseModel):
@@ -20978,35 +25228,50 @@ class DraftGetConfigurationActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: DraftGetConfigurationAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[DraftGetConfigurationVisibilityOption] | None = Field(
-        None, description="The document visibility options for the activity."
-    )
+    Action: Annotated[
+        Optional["DraftGetConfigurationAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["DraftGetConfigurationVisibilityOption"]],
+        Field(
+            None, description="The document visibility options for the activity."
+        ),
+    ]
 
 
 class DraftCreateActivity(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Action: DraftCreateAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[DraftCreateVisibilityOption] | None = Field(
-        None,
-        description="The document visibility options for the activity.",
-        max_items=50,
-    )
+    Action: Annotated[
+        Optional["DraftCreateAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["DraftCreateVisibilityOption"]],
+        Field(
+            default=None,
+            description="The document visibility options for the activity.",
+            max_items=50,
+        ),
+    ]
 
 
 class DraftCreateRequest(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Documents: list[DraftCreateDocument] = Field(
-        ..., description="The documents for the envelope.", max_items=50
-    )
+    Documents: Annotated[
+        Optional[list["DraftCreateDocument"]],
+        Field(
+            ..., description="The documents for the envelope.", max_items=50
+        ),
+    ]
     Name: str = Field(..., description="The name of the envelope.")
     MetaData: str | None = Field(None, description="The metadata of the envelope.")
     AddDocumentTimestamp: bool | None = Field(
@@ -21024,43 +25289,73 @@ class DraftCreateRequest(BaseModel):
         None,
         description="If true, every signer and viewer will receive a copy of the finished documents.",
     )
-    UnassignedElements: DraftCreateElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[DraftCreateActivity] = Field(
-        ..., description="The steps for the envelope.", max_items=50
-    )
-    EmailConfiguration: DraftCreateEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: DraftCreateReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
-    ExpirationConfiguration: DraftCreateExpirationConfiguration | None = Field(
-        None, description="The configuration of the expiration for the envelope."
-    )
-    CallbackConfiguration: DraftCreateCallbackConfiguration | None = Field(
-        None, description="The configuration of the callbacks for a custom integration."
-    )
-    AgentRedirectConfiguration: DraftCreateAgentRedirectConfiguration | None = Field(
-        None, description="The configuration of the redirects for the agent mode."
-    )
-    RedirectConfiguration: DraftCreateRedirectConfiguration | None = Field(
-        None, description="The configuration of the draft redirect URLs."
-    )
-    AgreementConfiguration: DraftCreateAgreementConfiguration | None = Field(
-        None,
-        description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
-    )
+    UnassignedElements: Annotated[
+        Optional["DraftCreateElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["DraftCreateActivity"]],
+        Field(
+            ..., description="The steps for the envelope.", max_items=50
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["DraftCreateEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["DraftCreateReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
+    ExpirationConfiguration: Annotated[
+        Optional["DraftCreateExpirationConfiguration"],
+        Field(
+            None, description="The configuration of the expiration for the envelope."
+        ),
+    ]
+    CallbackConfiguration: Annotated[
+        Optional["DraftCreateCallbackConfiguration"],
+        Field(
+            None, description="The configuration of the callbacks for a custom integration."
+        ),
+    ]
+    AgentRedirectConfiguration: Annotated[
+        Optional["DraftCreateAgentRedirectConfiguration"],
+        Field(
+            None, description="The configuration of the redirects for the agent mode."
+        ),
+    ]
+    RedirectConfiguration: Annotated[
+        Optional["DraftCreateRedirectConfiguration"],
+        Field(
+            None, description="The configuration of the draft redirect URLs."
+        ),
+    ]
+    AgreementConfiguration: Annotated[
+        Optional["DraftCreateAgreementConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
+        ),
+    ]
     DefaultSignatureTypeConfiguration: None | (
         DraftCreateDefaultSignatureTypeConfiguration
     ) = Field(
         None,
         description="A default signature type to be used only for the draft that overwrites the default signature type of the organization.",
     )
-    SealingConfiguration: DraftCreateSealingConfiguration | None = Field(
-        None, description="The custom sealing configuration for the envelope."
-    )
+    SealingConfiguration: Annotated[
+        Optional["DraftCreateSealingConfiguration"],
+        Field(
+            None, description="The custom sealing configuration for the envelope."
+        ),
+    ]
 
 
 class DraftActivityReplaceRequest(BaseModel):
@@ -21068,14 +25363,20 @@ class DraftActivityReplaceRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ActivityId: str = Field(..., description="The identifier of the activity.")
-    Action: DraftActivityReplaceAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[DraftActivityReplaceVisibilityOption] | None = Field(
-        None,
-        description="The document visibility options for the activity.",
-        max_items=50,
-    )
+    Action: Annotated[
+        Optional["DraftActivityReplaceAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["DraftActivityReplaceVisibilityOption"]],
+        Field(
+            default=None,
+            description="The document visibility options for the activity.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeGetElementsActivity(BaseModel):
@@ -21083,9 +25384,12 @@ class EnvelopeGetElementsActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: EnvelopeGetElementsAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["EnvelopeGetElementsAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationActivity(BaseModel):
@@ -21093,26 +25397,38 @@ class EnvelopeGetConfigurationActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: EnvelopeGetConfigurationAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[EnvelopeGetConfigurationVisibilityOption] | None = Field(
-        None, description="The document visibility options for the activity."
-    )
+    Action: Annotated[
+        Optional["EnvelopeGetConfigurationAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["EnvelopeGetConfigurationVisibilityOption"]],
+        Field(
+            None, description="The document visibility options for the activity."
+        ),
+    ]
 
 
 class EnvelopeSendActivity(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Action: EnvelopeSendAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[EnvelopeSendVisibilityOption] | None = Field(
-        None,
-        description="The document visibility options for the activity.",
-        max_items=50,
-    )
+    Action: Annotated[
+        Optional["EnvelopeSendAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["EnvelopeSendVisibilityOption"]],
+        Field(
+            default=None,
+            description="The document visibility options for the activity.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeSendRequest(BaseModel):
@@ -21124,9 +25440,12 @@ class EnvelopeSendRequest(BaseModel):
             "arbitrary_types_allowed": True,
         }
 
-    Documents: list[EnvelopeSendDocument] = Field(
-        ..., description="The documents for the envelope.", max_items=50, min_items=1
-    )
+    Documents: Annotated[
+        Optional[list["EnvelopeSendDocument"]],
+        Field(
+            ..., description="The documents for the envelope.", max_items=50, min_items=1
+        ),
+    ]
     Name: str = Field(..., description="The name of the envelope.")
     MetaData: str | None = Field(None, description="The metadata of the envelope.")
     AddDocumentTimestamp: bool | None = Field(
@@ -21140,31 +25459,55 @@ class EnvelopeSendRequest(BaseModel):
         None,
         description="If true, form fields are locked after the envelope is finished.",
     )
-    UnassignedElements: EnvelopeSendUnassignedElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[EnvelopeSendActivity] = Field(
-        ..., description="The steps for the envelope.", max_items=50, min_items=1
-    )
-    EmailConfiguration: EnvelopeSendEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: EnvelopeSendReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
-    ExpirationConfiguration: EnvelopeSendExpirationConfiguration | None = Field(
-        None, description="The configuration of the expiration for the envelope."
-    )
-    CallbackConfiguration: EnvelopeSendCallbackConfiguration | None = Field(
-        None, description="The configuration of the callbacks for a custom integration."
-    )
-    AgreementConfiguration: EnvelopeSendAgreementConfiguration | None = Field(
-        None,
-        description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
-    )
-    SealingConfiguration: EnvelopeSendSealingConfiguration | None = Field(
-        None, description="The custom sealing configuration for the envelope."
-    )
+    UnassignedElements: Annotated[
+        Optional["EnvelopeSendUnassignedElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["EnvelopeSendActivity"]],
+        Field(
+            ..., description="The steps for the envelope.", max_items=50, min_items=1
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["EnvelopeSendEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["EnvelopeSendReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
+    ExpirationConfiguration: Annotated[
+        Optional["EnvelopeSendExpirationConfiguration"],
+        Field(
+            None, description="The configuration of the expiration for the envelope."
+        ),
+    ]
+    CallbackConfiguration: Annotated[
+        Optional["EnvelopeSendCallbackConfiguration"],
+        Field(
+            None, description="The configuration of the callbacks for a custom integration."
+        ),
+    ]
+    AgreementConfiguration: Annotated[
+        Optional["EnvelopeSendAgreementConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
+        ),
+    ]
+    SealingConfiguration: Annotated[
+        Optional["EnvelopeSendSealingConfiguration"],
+        Field(
+            None, description="The custom sealing configuration for the envelope."
+        ),
+    ]
 
 
 class EnvelopeActivityReplaceRequest(BaseModel):
@@ -21172,37 +25515,52 @@ class EnvelopeActivityReplaceRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ActivityId: str = Field(..., description="The identifier of the activity.")
-    Action: EnvelopeActivityReplaceAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[EnvelopeActivityReplaceVisibilityOption] | None = Field(
-        None,
-        description="The document visibility options for the activity.",
-        max_items=50,
-    )
+    Action: Annotated[
+        Optional["EnvelopeActivityReplaceAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["EnvelopeActivityReplaceVisibilityOption"]],
+        Field(
+            default=None,
+            description="The document visibility options for the activity.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeBulkSendActivity(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Action: EnvelopeBulkSendAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[EnvelopeBulkSendVisibilityOption] | None = Field(
-        None,
-        description="The document visibility options for the activity.",
-        max_items=50,
-    )
+    Action: Annotated[
+        Optional["EnvelopeBulkSendAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["EnvelopeBulkSendVisibilityOption"]],
+        Field(
+            default=None,
+            description="The document visibility options for the activity.",
+            max_items=50,
+        ),
+    ]
 
 
 class EnvelopeBulkSendRequest(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Documents: list[EnvelopeBulkSendDocument] = Field(
-        ..., description="The documents for the envelope.", max_items=50, min_items=1
-    )
+    Documents: Annotated[
+        Optional[list["EnvelopeBulkSendDocument"]],
+        Field(
+            ..., description="The documents for the envelope.", max_items=50, min_items=1
+        ),
+    ]
     Name: str = Field(..., description="The name of the envelope.")
     MetaData: str | None = Field(None, description="The metadata of the envelope.")
     AddDocumentTimestamp: bool | None = Field(
@@ -21216,40 +25574,67 @@ class EnvelopeBulkSendRequest(BaseModel):
         None,
         description="If true, form fields are locked after the envelope is finished.",
     )
-    UnassignedElements: EnvelopeBulkSendUnassignedElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[EnvelopeBulkSendActivity] = Field(
-        ..., description="The steps for the envelope.", max_items=50, min_items=1
-    )
-    EmailConfiguration: EnvelopeBulkSendEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: EnvelopeBulkSendReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
-    ExpirationConfiguration: EnvelopeBulkSendExpirationConfiguration | None = Field(
-        None, description="The configuration of the expiration for the envelope."
-    )
-    CallbackConfiguration: EnvelopeBulkSendCallbackConfiguration | None = Field(
-        None, description="The configuration of the callbacks for a custom integration."
-    )
-    AgreementConfiguration: EnvelopeBulkSendAgreementConfiguration | None = Field(
-        None,
-        description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
-    )
-    SealingConfiguration: EnvelopeBulkSendSealingConfiguration | None = Field(
-        None, description="The custom sealing configuration for the envelope."
-    )
+    UnassignedElements: Annotated[
+        Optional["EnvelopeBulkSendUnassignedElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["EnvelopeBulkSendActivity"]],
+        Field(
+            ..., description="The steps for the envelope.", max_items=50, min_items=1
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["EnvelopeBulkSendEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["EnvelopeBulkSendReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
+    ExpirationConfiguration: Annotated[
+        Optional["EnvelopeBulkSendExpirationConfiguration"],
+        Field(
+            None, description="The configuration of the expiration for the envelope."
+        ),
+    ]
+    CallbackConfiguration: Annotated[
+        Optional["EnvelopeBulkSendCallbackConfiguration"],
+        Field(
+            None, description="The configuration of the callbacks for a custom integration."
+        ),
+    ]
+    AgreementConfiguration: Annotated[
+        Optional["EnvelopeBulkSendAgreementConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of the agreement.\r\nRequires that the organization allows custom agreement settings.",
+        ),
+    ]
+    SealingConfiguration: Annotated[
+        Optional["EnvelopeBulkSendSealingConfiguration"],
+        Field(
+            None, description="The custom sealing configuration for the envelope."
+        ),
+    ]
 
 
 class FilePrepareActivity(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    Action: FilePrepareAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["FilePrepareAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class TemplateGetElementsActivity(BaseModel):
@@ -21257,9 +25642,12 @@ class TemplateGetElementsActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: TemplateGetElementsAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
+    Action: Annotated[
+        Optional["TemplateGetElementsAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
 
 
 class TemplateGetConfigurationActivity(BaseModel):
@@ -21267,24 +25655,36 @@ class TemplateGetConfigurationActivity(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Id: str | None = Field(None, description="The identifier of the activity.")
-    Action: TemplateGetConfigurationAction | None = Field(
-        None, description="The action assigned to the activity."
-    )
-    VisibilityOptions: list[TemplateGetConfigurationVisibilityOption] | None = Field(
-        None, description="The document visibility options for the activity."
-    )
+    Action: Annotated[
+        Optional["TemplateGetConfigurationAction"],
+        Field(
+            None, description="The action assigned to the activity."
+        ),
+    ]
+    VisibilityOptions: Annotated[
+        Optional[list["TemplateGetConfigurationVisibilityOption"]],
+        Field(
+            None, description="The document visibility options for the activity."
+        ),
+    ]
 
 
 class DraftGetElementsResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UnassignedElements: DraftGetElementsElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[DraftGetElementsActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
+    UnassignedElements: Annotated[
+        Optional["DraftGetElementsElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["DraftGetElementsActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
 
 
 class DraftGetConfigurationResponse(BaseModel):
@@ -21306,50 +25706,77 @@ class DraftGetConfigurationResponse(BaseModel):
         None,
         description="If true, every signer and viewer will receive a copy of the finished documents.",
     )
-    Activities: list[DraftGetConfigurationActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
-    EmailConfiguration: DraftGetConfigurationEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: DraftGetConfigurationReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
+    Activities: Annotated[
+        Optional[list["DraftGetConfigurationActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["DraftGetConfigurationEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["DraftGetConfigurationReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
     ExpirationConfiguration: DraftGetConfigurationExpirationConfiguration | None = (
         Field(None, description="The configuration of the expiration for the envelope.")
     )
-    CallbackConfiguration: DraftGetConfigurationCallbackConfiguration | None = Field(
-        None, description="The configuration of the callbacks for a custom integration."
-    )
-    AgreementConfiguration: DraftGetConfigurationAgreementConfiguration | None = Field(
-        None, description="The configuration of the agreement."
-    )
+    CallbackConfiguration: Annotated[
+        Optional["DraftGetConfigurationCallbackConfiguration"],
+        Field(
+            None, description="The configuration of the callbacks for a custom integration."
+        ),
+    ]
+    AgreementConfiguration: Annotated[
+        Optional["DraftGetConfigurationAgreementConfiguration"],
+        Field(
+            None, description="The configuration of the agreement."
+        ),
+    ]
     AgentRedirectConfiguration: None | (
         DraftGetConfigurationAgentRedirectConfiguration
     ) = Field(
         None, description="The configuration of the redirects for the agent mode."
     )
-    RedirectConfiguration: DraftGetConfigurationRedirectConfiguration | None = Field(
-        None, description="The configuration of the redirects for the agent mode."
-    )
+    RedirectConfiguration: Annotated[
+        Optional["DraftGetConfigurationRedirectConfiguration"],
+        Field(
+            None, description="The configuration of the redirects for the agent mode."
+        ),
+    ]
     DefaultSignatureTypeConfiguration: None | (
         DraftGetConfigurationDefaultSignatureTypeConfiguration
     ) = Field(None, description="Draft default signature type configuration.")
-    SealingConfiguration: DraftGetConfigurationSealingConfiguration | None = Field(
-        None, description="The configuration for sealing."
-    )
+    SealingConfiguration: Annotated[
+        Optional["DraftGetConfigurationSealingConfiguration"],
+        Field(
+            None, description="The configuration for sealing."
+        ),
+    ]
 
 
 class EnvelopeGetElementsResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UnassignedElements: EnvelopeGetElementsElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[EnvelopeGetElementsActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
+    UnassignedElements: Annotated[
+        Optional["EnvelopeGetElementsElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["EnvelopeGetElementsActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
 
 
 class EnvelopeGetConfigurationResponse(BaseModel):
@@ -21367,53 +25794,80 @@ class EnvelopeGetConfigurationResponse(BaseModel):
     LockFormFieldsOnFinish: bool | None = Field(
         None, description="If true, form fields are locked after envelope is finished."
     )
-    Activities: list[EnvelopeGetConfigurationActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
-    EmailConfiguration: EnvelopeGetConfigurationEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: EnvelopeGetConfigurationReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
+    Activities: Annotated[
+        Optional[list["EnvelopeGetConfigurationActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["EnvelopeGetConfigurationEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["EnvelopeGetConfigurationReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
     ExpirationConfiguration: None | (
         EnvelopeGetConfigurationExpirationConfiguration
     ) = Field(None, description="The configuration of the expiration for the envelope.")
-    CallbackConfiguration: EnvelopeGetConfigurationCallbackConfiguration | None = Field(
-        None,
-        description="The configuration of the callbacks for a custom integration.",
-    )
+    CallbackConfiguration: Annotated[
+        Optional["EnvelopeGetConfigurationCallbackConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of the callbacks for a custom integration.",
+        ),
+    ]
     AgreementConfiguration: EnvelopeGetConfigurationAgreementConfiguration | None = (
         Field(None, description="The configuration of the agreement.")
     )
-    SealingConfiguration: EnvelopeGetConfigurationSealingConfiguration | None = Field(
-        None, description="The configuration for sealing."
-    )
+    SealingConfiguration: Annotated[
+        Optional["EnvelopeGetConfigurationSealingConfiguration"],
+        Field(
+            None, description="The configuration for sealing."
+        ),
+    ]
 
 
 class FilePrepareResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UnassignedElements: FilePrepareElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[FilePrepareActivity] | None = Field(
-        None,
-        description="The steps for the envelope.\r\nOne activity may contain elements from multiple documents assigned to the same recipient.\r\nThe activities will only be generated for advanced document tags.",
-    )
+    UnassignedElements: Annotated[
+        Optional["FilePrepareElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["FilePrepareActivity"]],
+        Field(
+            default=None,
+            description="The steps for the envelope.\r\nOne activity may contain elements from multiple documents assigned to the same recipient.\r\nThe activities will only be generated for advanced document tags.",
+        ),
+    ]
 
 
 class TemplateGetElementsResponse(BaseModel):
 
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
-    UnassignedElements: TemplateGetElementsElements | None = Field(
-        None, description="The elements which are not assigned to any action."
-    )
-    Activities: list[TemplateGetElementsActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
+    UnassignedElements: Annotated[
+        Optional["TemplateGetElementsElements"],
+        Field(
+            None, description="The elements which are not assigned to any action."
+        ),
+    ]
+    Activities: Annotated[
+        Optional[list["TemplateGetElementsActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
 
 
 class TemplateGetConfigurationResponse(BaseModel):
@@ -21435,22 +25889,34 @@ class TemplateGetConfigurationResponse(BaseModel):
         None,
         description="If true, every signer and viewer will receive a copy of the finished documents.",
     )
-    Activities: list[TemplateGetConfigurationActivity] | None = Field(
-        None, description="The steps for the envelope."
-    )
-    EmailConfiguration: TemplateGetConfigurationEmailConfiguration | None = Field(
-        None, description="The configuration for notifications."
-    )
-    ReminderConfiguration: TemplateGetConfigurationReminderConfiguration | None = Field(
-        None, description="The configuration for reminders."
-    )
+    Activities: Annotated[
+        Optional[list["TemplateGetConfigurationActivity"]],
+        Field(
+            None, description="The steps for the envelope."
+        ),
+    ]
+    EmailConfiguration: Annotated[
+        Optional["TemplateGetConfigurationEmailConfiguration"],
+        Field(
+            None, description="The configuration for notifications."
+        ),
+    ]
+    ReminderConfiguration: Annotated[
+        Optional["TemplateGetConfigurationReminderConfiguration"],
+        Field(
+            None, description="The configuration for reminders."
+        ),
+    ]
     ExpirationConfiguration: None | (
         TemplateGetConfigurationExpirationConfiguration
     ) = Field(None, description="The configuration of the expiration for the envelope.")
-    CallbackConfiguration: TemplateGetConfigurationCallbackConfiguration | None = Field(
-        None,
-        description="The configuration of the callbacks for a custom integration.",
-    )
+    CallbackConfiguration: Annotated[
+        Optional["TemplateGetConfigurationCallbackConfiguration"],
+        Field(
+            default=None,
+            description="The configuration of the callbacks for a custom integration.",
+        ),
+    ]
     AgreementConfiguration: TemplateGetConfigurationAgreementConfiguration | None = (
         Field(None, description="The configuration of the agreement.")
     )
@@ -21459,15 +25925,21 @@ class TemplateGetConfigurationResponse(BaseModel):
     ) = Field(
         None, description="The configuration of the redirects for the agent mode."
     )
-    RedirectConfiguration: TemplateGetConfigurationRedirectConfiguration | None = Field(
-        None, description="The configuration of the redirects for the agent mode."
-    )
+    RedirectConfiguration: Annotated[
+        Optional["TemplateGetConfigurationRedirectConfiguration"],
+        Field(
+            None, description="The configuration of the redirects for the agent mode."
+        ),
+    ]
     DefaultSignatureTypeConfiguration: None | (
         TemplateGetConfigurationDefaultSignatureTypeConfiguration
     ) = Field(None, description="Draft default signature type configuration.")
-    SealingConfiguration: TemplateGetConfigurationSealingConfiguration | None = Field(
-        None, description="The configuration for sealing."
-    )
+    SealingConfiguration: Annotated[
+        Optional["TemplateGetConfigurationSealingConfiguration"],
+        Field(
+            None, description="The configuration for sealing."
+        ),
+    ]
 
 
 TeamGetAllTeamMember.update_forward_refs()
