@@ -1974,7 +1974,7 @@ class DraftCreateAgreementTranslation(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     LanguageCode: Annotated[
-        Optional["LanguageCode"],
+        "LanguageCode",
         Field(
             ...,
             description="The language of the translated agreement."
@@ -2039,14 +2039,14 @@ class DraftCreateLinkDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             ...,
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             ...,
             description="The size of the element."
@@ -3114,14 +3114,14 @@ class DraftCreateRadioButtonItemDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             default=...,
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -3141,7 +3141,7 @@ class DraftCreateListBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional["DraftCreateChoiceItem"],
+        list["DraftCreateChoiceItem"],
         Field(
             default=...,
             description="A list of items that can be selected for the element.",
@@ -3153,14 +3153,14 @@ class DraftCreateListBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             default=...,
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -3197,7 +3197,7 @@ class DraftCreateComboBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional["DraftCreateChoiceItem"],
+        list["DraftCreateChoiceItem"],
         Field(
             default=...,
             description="A list of items that can be selected for the element.",
@@ -3209,14 +3209,14 @@ class DraftCreateComboBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             default=...,
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -3231,14 +3231,14 @@ class DraftCreateCheckBoxDefinition(BaseModel):
         None, description="The value of the check box when it is checked."
     )
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             default=...,
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -3268,14 +3268,14 @@ class DraftCreateTextBoxDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             default=...,
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -3468,7 +3468,7 @@ class DraftUpdateAgreementTranslation(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     LanguageCode: Annotated[
-        Optional["LanguageCode"],
+        "LanguageCode",
         Field(
             default=...,
             description="The language of the translated agreement."
@@ -3942,14 +3942,14 @@ class DraftActivityReplaceAttachmentDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., 
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(
             ..., 
             description="The size of the element."
@@ -3962,14 +3962,14 @@ class DraftActivityReplaceReadingAreaDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., 
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(
             ..., 
             description="The size of the element."
@@ -4014,14 +4014,14 @@ class DraftActivityReplaceLinkDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., 
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(
             ..., 
             description="The size of the element."
@@ -4599,14 +4599,14 @@ class DraftActivityReplaceRadioButtonItemDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., 
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(
             ..., 
             description="The size of the element."
@@ -4632,7 +4632,7 @@ class DraftActivityReplaceTextFormat(BaseModel):
     Bold: bool | None = Field(None, description="If true, the bold font is used.")
     Italic: bool | None = Field(None, description="If true, the italic font is used.")
     TextAlign: Annotated[
-        Optional["TextAlign"],
+        "TextAlign",
         Field(
             ..., 
             description="The alignment of the text. The default alignment is left."
@@ -4705,7 +4705,7 @@ class DraftActivityReplaceListBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional[list["DraftActivityReplaceChoiceItem"]],
+        list["DraftActivityReplaceChoiceItem"],
         Field(
             None,
             description="A list of items that can be selected for the element.",
@@ -4717,14 +4717,14 @@ class DraftActivityReplaceListBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., 
             description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(
             ..., 
             description="The size of the element."
@@ -4759,7 +4759,7 @@ class DraftActivityReplaceComboBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional[list["DraftActivityReplaceChoiceItem"]],
+        list["DraftActivityReplaceChoiceItem"],
         Field(
             ...,
             description="A list of items that can be selected for the element.",
@@ -4771,13 +4771,13 @@ class DraftActivityReplaceComboBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -4790,13 +4790,13 @@ class DraftActivityReplaceCheckBoxDefinition(BaseModel):
         None, description="The value of the check box when it is checked."
     )
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(..., description="The size of the element."),
     ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
@@ -4822,13 +4822,13 @@ class DraftActivityReplaceTextBoxDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -6480,7 +6480,7 @@ class EnvelopeSendAgreementTranslation(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     LanguageCode: Annotated[
-        Optional["LanguageCode"],
+        "LanguageCode",
         Field(
             default=...,
             description="The language of the translated agreement."
@@ -6569,13 +6569,13 @@ class EnvelopeSendSignatureFieldDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -6709,13 +6709,13 @@ class EnvelopeSendAttachmentDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -6725,13 +6725,13 @@ class EnvelopeSendReadingAreaDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -6761,13 +6761,13 @@ class EnvelopeSendLinkDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -7570,7 +7570,7 @@ class EnvelopeSendVisibleSignature(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     FieldDefinition: Annotated[
-        Optional["EnvelopeSendSignatureFieldDefinition"],
+        "EnvelopeSendSignatureFieldDefinition",
         Field(
             ...,
             description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
@@ -7583,7 +7583,7 @@ class EnvelopeSendBasicRecipientConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ContactInformation: Annotated[
-        Optional["EnvelopeSendContactInformation"],
+        "EnvelopeSendContactInformation",
         Field(
             ..., description="The contact information of the recipient."
         ),
@@ -7612,13 +7612,13 @@ class EnvelopeSendRadioButtonItemDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -7854,7 +7854,7 @@ class EnvelopeSendListBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional[list["EnvelopeSendChoiceItem"]],
+        list["EnvelopeSendChoiceItem"],
         Field(
             ...,
             description="A list of items that can be selected for the element.",
@@ -7867,13 +7867,13 @@ class EnvelopeSendListBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -7907,7 +7907,7 @@ class EnvelopeSendComboBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional[list["EnvelopeSendChoiceItem"]],
+        list["EnvelopeSendChoiceItem"],
         Field(
             ...,
             description="A list of items that can be selected for the element.",
@@ -7919,13 +7919,13 @@ class EnvelopeSendComboBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -7938,13 +7938,13 @@ class EnvelopeSendCheckBoxDefinition(BaseModel):
         None, description="The value of the check box when it is checked."
     )
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
@@ -7970,13 +7970,13 @@ class EnvelopeSendTextBoxDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -8376,13 +8376,13 @@ class EnvelopeActivityReplaceAttachmentDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeActivityReplacePosition"],
+        "EnvelopeActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeActivityReplaceSize"],
+        "EnvelopeActivityReplaceSize",
         Field(
             ..., description="The size of the element."
         ),
@@ -8394,13 +8394,13 @@ class EnvelopeActivityReplaceReadingAreaDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeActivityReplacePosition"],
+        "EnvelopeActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeActivityReplaceSize"],
+        "EnvelopeActivityReplaceSize",
         Field(
             ..., description="The size of the element."
         ),
@@ -8432,13 +8432,13 @@ class EnvelopeActivityReplaceLinkDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeActivityReplacePosition"],
+        "EnvelopeActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeActivityReplaceSize"],
+        "EnvelopeActivityReplaceSize",
         Field(
             ..., description="The size of the element."
         ),
@@ -9523,7 +9523,7 @@ class EnvelopeBulkSendAgreementTranslation(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     LanguageCode: Annotated[
-        Optional["LanguageCode"],
+        "LanguageCode",
         Field(
             default=...,
             description="The language of the translated agreement."
@@ -9612,13 +9612,13 @@ class EnvelopeBulkSendSignatureFieldDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -9754,13 +9754,13 @@ class EnvelopeBulkSendAttachmentDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -9770,13 +9770,13 @@ class EnvelopeBulkSendReadingAreaDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -9806,13 +9806,13 @@ class EnvelopeBulkSendLinkDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -10611,7 +10611,7 @@ class EnvelopeBulkSendVisibleSignature(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     FieldDefinition: Annotated[
-        Optional["EnvelopeBulkSendSignatureFieldDefinition"],
+        "EnvelopeBulkSendSignatureFieldDefinition",
         Field(
             ...,
             description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
@@ -10624,7 +10624,7 @@ class EnvelopeBulkSendBasicRecipientConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ContactInformation: Annotated[
-        Optional["EnvelopeBulkSendContactInformation"],
+        "EnvelopeBulkSendContactInformation",
         Field(
             ..., description="The contact information of the recipient."
         ),
@@ -10653,13 +10653,13 @@ class EnvelopeBulkSendRadioButtonItemDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -10893,7 +10893,7 @@ class EnvelopeBulkSendListBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional[list["EnvelopeBulkSendChoiceItem"]],
+        list["EnvelopeBulkSendChoiceItem"],
         Field(
             ...,
             description="A list of items that can be selected for the element.",
@@ -10906,13 +10906,13 @@ class EnvelopeBulkSendListBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+       "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -10946,7 +10946,7 @@ class EnvelopeBulkSendComboBoxDefinition(BaseModel):
         ),
     ]
     Items: Annotated[
-        Optional[list["EnvelopeBulkSendChoiceItem"]],
+        list["EnvelopeBulkSendChoiceItem"],
         Field(
             ...,
             description="A list of items that can be selected for the element.",
@@ -10958,13 +10958,13 @@ class EnvelopeBulkSendComboBoxDefinition(BaseModel):
     )
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -10977,13 +10977,13 @@ class EnvelopeBulkSendCheckBoxDefinition(BaseModel):
         None, description="The value of the check box when it is checked."
     )
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
     ReadOnly: bool | None = Field(None, description="If true, the element is readonly.")
@@ -11009,13 +11009,13 @@ class EnvelopeBulkSendTextBoxDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -14023,13 +14023,13 @@ class DraftCreateSignatureFieldDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -14052,13 +14052,13 @@ class DraftCreateAttachmentDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -14090,13 +14090,13 @@ class DraftCreateReadingAreaDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -14156,13 +14156,13 @@ class DraftCreatePredefinedElementDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["DraftCreatePosition"],
+        "DraftCreatePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftCreateSize"],
+        "DraftCreateSize",
         Field(
             default=...,
             description="The size of the element."
@@ -14326,7 +14326,7 @@ class DraftCreateVisibleSignature(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     FieldDefinition: Annotated[
-        Optional["DraftCreateSignatureFieldDefinition"],
+        "DraftCreateSignatureFieldDefinition",
         Field(
             ...,
             description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
@@ -14692,13 +14692,13 @@ class DraftActivityReplaceSignatureFieldDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -14880,13 +14880,13 @@ class DraftActivityReplacePredefinedElementDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["DraftActivityReplacePosition"],
+        "DraftActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["DraftActivityReplaceSize"],
+        "DraftActivityReplaceSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -14990,7 +14990,7 @@ class DraftActivityReplaceVisibleSignature(BaseModel):
         description="If true, a timestamp from an external server is embedded into the signature.",
     )
     FieldDefinition: Annotated[
-        Optional["DraftActivityReplaceSignatureFieldDefinition"],
+        "DraftActivityReplaceSignatureFieldDefinition",
         Field(
             ...,
             description="The definition of the signature field.\r\nIt must be specified when the signature field is added.\r\nIt must not be specified when the signature field already exists.",
@@ -15971,7 +15971,7 @@ class EnvelopeSendSendCopy(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeSendBasicRecipientConfiguration"],
+        "EnvelopeSendBasicRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -16202,13 +16202,13 @@ class EnvelopeSendPredefinedElementDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["EnvelopeSendPosition"],
+        "EnvelopeSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeSendSize"],
+        "EnvelopeSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -16255,7 +16255,7 @@ class EnvelopeSendSignatureField(BaseModel):
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
     AllowedSignatureTypes: Annotated[
-        Optional["EnvelopeSendAllowedSignatureTypes"],
+        "EnvelopeSendAllowedSignatureTypes",
         Field(
             ..., description="The allowed types for the signature."
         ),
@@ -16372,13 +16372,13 @@ class EnvelopeActivityReplaceSignatureFieldDefinition(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Position: Annotated[
-        Optional["EnvelopeActivityReplacePosition"],
+        "EnvelopeActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeActivityReplaceSize"],
+        "EnvelopeActivityReplaceSize",
         Field(
             ..., description="The size of the element."
         ),
@@ -16560,13 +16560,13 @@ class EnvelopeActivityReplacePredefinedElementDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["EnvelopeActivityReplacePosition"],
+        "EnvelopeActivityReplacePosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeActivityReplaceSize"],
+        "EnvelopeActivityReplaceSize",
         Field(
             ..., description="The size of the element."
         ),
@@ -16768,7 +16768,7 @@ class EnvelopeBulkSendSendCopy(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeBulkSendBasicRecipientConfiguration"],
+        "EnvelopeBulkSendBasicRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -17000,13 +17000,13 @@ class EnvelopeBulkSendPredefinedElementDefinition(BaseModel):
         ),
     ]
     Position: Annotated[
-        Optional["EnvelopeBulkSendPosition"],
+        "EnvelopeBulkSendPosition",
         Field(
             ..., description="The position of the element within the document."
         ),
     ]
     Size: Annotated[
-        Optional["EnvelopeBulkSendSize"],
+        "EnvelopeBulkSendSize",
         Field(..., description="The size of the element."),
     ]
 
@@ -17053,7 +17053,7 @@ class EnvelopeBulkSendSignatureField(BaseModel):
     )
     GuidingOrder: int | None = Field(None, description="The order of the element.")
     AllowedSignatureTypes: Annotated[
-        Optional["EnvelopeBulkSendAllowedSignatureTypes"],
+        "EnvelopeBulkSendAllowedSignatureTypes",
         Field(
             ..., description="The allowed types for the signature."
         ),
@@ -17124,7 +17124,7 @@ class FilePrepareRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     FileIds: Annotated[
-        Optional[list["FileId"]],
+        list["FileId"],
         Field(
             ...,
             description="The identifiers of the uploaded files.",
@@ -20733,7 +20733,7 @@ class EnvelopeSendAdvancedRecipientConfiguration(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     ContactInformation: Annotated[
-        Optional["EnvelopeSendContactInformation"],
+        "EnvelopeSendContactInformation",
         Field(
             ..., description="The contact information of the recipient."
         ),
@@ -21748,7 +21748,7 @@ class TeamReplaceRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Teams: Annotated[
-        Optional[list["TeamReplaceTeam"]],
+        list["TeamReplaceTeam"],
         Field(
             ...,
             description="The teams which will replace all the existing teams.",
@@ -22478,7 +22478,7 @@ class DraftCreateBulkRecipient(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["DraftCreateAdvancedRecipientConfiguration"],
+        "DraftCreateAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -22534,7 +22534,7 @@ class DraftReorderActivitiesRequest(BaseModel):
 
     DraftId: str = Field(..., description="The identifier of the draft.")
     Activities: Annotated[
-        Optional[list["DraftReorderActivitiesActivity"]],
+        list["DraftReorderActivitiesActivity"],
         Field(
             ...,
             description="Define ALL activities in the expected order.",
@@ -22585,7 +22585,7 @@ class DraftActivityReplaceBulkRecipient(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["DraftActivityReplaceAdvancedRecipientConfiguration"],
+        "DraftActivityReplaceAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -22857,7 +22857,7 @@ class EnvelopeSendView(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeSendRecipientConfiguration"],
+        "EnvelopeSendRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -22878,13 +22878,13 @@ class EnvelopeSendSignAsP7M(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeSendAdvancedRecipientConfiguration"],
+        "EnvelopeSendAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
     ]
     SignatureMethods: Annotated[
-        Optional["EnvelopeSendP7MSignatureMethods"],
+        "EnvelopeSendP7MSignatureMethods",
         Field(
             ..., description="The configuration of recipient data for P7M signatures."
         ),
@@ -23067,7 +23067,7 @@ class EnvelopeBulkSendView(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeBulkSendRecipientConfiguration"],
+        "EnvelopeBulkSendRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -23082,13 +23082,13 @@ class EnvelopeBulkSendSignAsP7M(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeBulkSendAdvancedRecipientConfiguration"],
+        "EnvelopeBulkSendAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
     ]
     SignatureMethods: Annotated[
-        Optional["EnvelopeBulkSendP7MSignatureMethods"],
+        "EnvelopeBulkSendP7MSignatureMethods",
         Field(
             ..., description="The configuration of recipient data for P7M signatures."
         ),
@@ -23103,7 +23103,7 @@ class EnvelopeBulkSendRecipient(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeBulkSendAdvancedRecipientConfiguration"],
+        "EnvelopeBulkSendAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -24227,7 +24227,7 @@ class EnvelopeSendSign(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeSendAdvancedRecipientConfiguration"],
+        "EnvelopeSendAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -24461,7 +24461,7 @@ class EnvelopeBulkSendSignBulk(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     BulkRecipients: Annotated[
-        Optional[list["EnvelopeBulkSendRecipient"]],
+        list["EnvelopeBulkSendRecipient"],
         Field(
             ...,
             description="The recipients that are part of the bulk.",
@@ -24503,7 +24503,7 @@ class EnvelopeBulkSendSign(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     RecipientConfiguration: Annotated[
-        Optional["EnvelopeBulkSendAdvancedRecipientConfiguration"],
+        "EnvelopeBulkSendAdvancedRecipientConfiguration",
         Field(
             ..., description="The configuration of the recipient."
         ),
@@ -25267,7 +25267,7 @@ class DraftCreateRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Documents: Annotated[
-        Optional[list["DraftCreateDocument"]],
+        list["DraftCreateDocument"],
         Field(
             ..., description="The documents for the envelope.", max_items=50
         ),
@@ -25296,7 +25296,7 @@ class DraftCreateRequest(BaseModel):
         ),
     ]
     Activities: Annotated[
-        Optional[list["DraftCreateActivity"]],
+        list["DraftCreateActivity"],
         Field(
             ..., description="The steps for the envelope.", max_items=50
         ),
@@ -25441,7 +25441,7 @@ class EnvelopeSendRequest(BaseModel):
         }
 
     Documents: Annotated[
-        Optional[list["EnvelopeSendDocument"]],
+        list["EnvelopeSendDocument"],
         Field(
             ..., description="The documents for the envelope.", max_items=50, min_items=1
         ),
@@ -25466,7 +25466,7 @@ class EnvelopeSendRequest(BaseModel):
         ),
     ]
     Activities: Annotated[
-        Optional[list["EnvelopeSendActivity"]],
+        list["EnvelopeSendActivity"],
         Field(
             ..., description="The steps for the envelope.", max_items=50, min_items=1
         ),
@@ -25556,7 +25556,7 @@ class EnvelopeBulkSendRequest(BaseModel):
     model_config = {"use_enum_values": True, "arbitrary_types_allowed": True}
 
     Documents: Annotated[
-        Optional[list["EnvelopeBulkSendDocument"]],
+        list["EnvelopeBulkSendDocument"],
         Field(
             ..., description="The documents for the envelope.", max_items=50, min_items=1
         ),
@@ -25581,7 +25581,7 @@ class EnvelopeBulkSendRequest(BaseModel):
         ),
     ]
     Activities: Annotated[
-        Optional[list["EnvelopeBulkSendActivity"]],
+        list["EnvelopeBulkSendActivity"],
         Field(
             ..., description="The steps for the envelope.", max_items=50, min_items=1
         ),
