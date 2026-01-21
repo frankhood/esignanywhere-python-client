@@ -190,9 +190,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = envelope_data.model_dump_json()
+        request_data = envelope_data.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         logger.debug(f"create_and_send_envelope Request : {request_data}")
         if response.status_code == 200:
@@ -241,9 +241,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = envelope_data.model_dump_json()
+        request_data = envelope_data.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         logger.debug(f"create_and_send_envelope Request : {request_data}")
         if response.status_code == 200:
@@ -528,9 +528,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = cancel_request.model_dump_json()
+        request_data = cancel_request.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.info(
@@ -566,9 +566,9 @@ class ESignAnyWhereClient:
 
         request_data = models_v6.EnvelopeDeleteRequest(
             EnvelopeId=envelope_id
-        ).model_dump_json()
+        ).model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -645,9 +645,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = draft_create_model.model_dump_json()
+        request_data = draft_create_model.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -686,9 +686,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = create_from_template_model.model_dump_json()
+        request_data = create_from_template_model.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -723,9 +723,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = descriptor.model_dump_json()
+        request_data = descriptor.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -760,9 +760,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = prepare_model.model_dump_json()
+        request_data = prepare_model.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -801,9 +801,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = restart_expired_request.model_dump_json()
+        request_data = restart_expired_request.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -841,9 +841,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = send_from_template_model.model_dump_json()
+        request_data = send_from_template_model.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -882,9 +882,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = remind_request.model_dump_json()
+        request_data = remind_request.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -997,9 +997,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = activity_delete_request.model_dump_json()
+        request_data = activity_delete_request.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -1037,9 +1037,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = activity_replace_request.model_dump_json()
+        request_data = activity_replace_request.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -1077,9 +1077,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = delete_request.model_dump_json()
+        request_data = delete_request.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             logger.debug(
@@ -1149,9 +1149,9 @@ class ESignAnyWhereClient:
                 version=version, supported_versions=["v6"]
             )
 
-        request_data = teams.model_dump_json()
+        request_data = teams.model_dump(mode="json")
         response = requests.post(
-            url=service_url, data=request_data, headers=self._get_request_headers()
+            url=service_url, json=request_data, headers=self._get_request_headers()
         )
         if response.status_code == 200:
             return {}
